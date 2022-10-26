@@ -1,0 +1,41 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+header {
+    background-color: rgb(255, 169, 57);
+    grid-column: 1 / -1;
+}
+
+.header_row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+}
+
+ul {
+    display: flex;
+    flex-direction: row;
+}
+
+.item {
+    list-style: none;
+}
+
+.item a {
+    color: white;
+}
+
+.header_row li + li {
+    margin-left: 15px;
+}
+
+.logo {
+    height: 40px;
+    width: 40px;
+    background-color: brown;
+    border-radius: 50%;
+}
