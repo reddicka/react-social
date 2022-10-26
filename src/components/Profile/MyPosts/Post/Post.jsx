@@ -1,7 +1,7 @@
-import style from './Post.module.css';
+import styles from './Post.module.css';
 
-function Post() {
-    return <div className={style.item}>post 1</div>;
+function Post(props) {
+    return <div className={styles.item}>{props.message}</div>;
 }
 
 export default Post;

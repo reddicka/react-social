@@ -1,4 +1,4 @@
-import style from './MyPosts.module.css';
+import styles from './MyPosts.module.css';
 import Post from './Post/Post';
 
 function MyPosts() {
@@ -9,12 +9,9 @@ function MyPosts() {
                 <textarea></textarea>
                 <button>Опубликовать</button>
             </div>
-            <div className={style.posts}>
-                <Post />
-                <Post />
-                <Post />
-                <Post />
-                <Post />
+            <div className={styles.posts}>
+                <Post message="Сообщение 1" />
+                <Post message="Сообщение 2" />
             </div>
         </div>
     );

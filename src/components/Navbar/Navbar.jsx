@@ -1,19 +1,19 @@
-import style from './Navbar.module.css';
+import styles from './Navbar.module.css';
 
 function Navbar() {
     return (
-        <nav className={style.nav}>
+        <nav className={styles.nav}>
             <ul>
-                <li className={`${style.item} ${style.active}`}>
+                <li className={`${styles.item} ${styles.active}`}>
                     <a href="/">Профиль</a>
                 </li>
-                <li className={style.item}>
+                <li className={styles.item}>
                     <a href="/">Моя музыка</a>
                 </li>
-                <li className={style.item}>
+                <li className={styles.item}>
                     <a href="/">Моя видео</a>
                 </li>
-                <li className={style.item}>
+                <li className={styles.item}>
                     <a href="/">Моя друзя</a>
                 </li>
             </ul>

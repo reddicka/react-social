@@ -1,5 +1,4 @@
 .profile {
-    grid-column: 3 / 4;
     display: flex;
     flex-direction: column;
 }

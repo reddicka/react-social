@@ -1,12 +1,12 @@
 import React from 'react';
-import style from './Header.module.css';
+import styles from './Header.module.css';
 
 function Header() {
     return (
         <header>
-            <div className={style.container}>
-                <div className={style.header_row}>
-                    <div className={style.logo}></div>
+            <div className={styles.container}>
+                <div className={styles.header_row}>
+                    <div className={styles.logo}></div>
                     <div>
                         <ul>
                             <li>
