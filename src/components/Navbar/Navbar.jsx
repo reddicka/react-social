@@ -1,20 +1,24 @@
 import styles from './Navbar.module.css';
+import {Link} from "react-router-dom";
 
 function Navbar() {
     return (
         <nav className={styles.nav}>
             <ul>
                 <li className={`${styles.item} ${styles.active}`}>
-                    <a href="/">Профиль</a>
+                    <Link to="/profile">Профиль</Link>
                 </li>
                 <li className={styles.item}>
-                    <a href="/">Моя музыка</a>
+                    <Link to="/dialogs">Диалоги</Link>
                 </li>
                 <li className={styles.item}>
-                    <a href="/">Моя видео</a>
+                    <a href="/friends">Моя друзя</a>
                 </li>
                 <li className={styles.item}>
-                    <a href="/">Моя друзя</a>
+                    <a href="/music">Моя музыка</a>
+                </li>
+                <li className={styles.item}>
+                    <a href="/video">Моя видео</a>
                 </li>
             </ul>
         </nav>

@@ -11,7 +11,7 @@ function Profile() {
             />
 
             <div className={styles.profile__about}>
-                <div className={styles.profile__about_avatar}>
+                <div className={styles.profile__avatar}>
                     <img
                         className={styles.profile__avatar_image}
                         src="https://pbs.twimg.com/media/DMiQk1SWkAEDF0G.jpg"
