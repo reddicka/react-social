@@ -1,24 +1,48 @@
 import styles from './Navbar.module.css';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 function Navbar() {
+    function isActiveLink() {
+        return ({isActive}) => isActive ? styles.active : undefined
+    }
+
     return (
         <nav className={styles.nav}>
             <ul>
-                <li className={`${styles.item} ${styles.active}`}>
-                    <Link to="/profile">Профиль</Link>
+                <li className={styles.item}>
+                    <NavLink to="/profile"
+                        className={isActiveLink()}
+                    >
+                        Профиль
+                    </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <Link to="/dialogs">Диалоги</Link>
+                    <NavLink to="/dialogs"
+                        className={isActiveLink()}
+                    >
+                        Диалоги
+                    </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <a href="/friends">Моя друзя</a>
+                    <NavLink to="/friends"
+                        className={isActiveLink()}
+                    >
+                        Моя друзя
+                    </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <a href="/music">Моя музыка</a>
+                    <NavLink to="/music"
+                        className={isActiveLink()}
+                    >
+                        Моя музыка
+                    </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <a href="/video">Моя видео</a>
+                    <NavLink to="/video"
+                        className={isActiveLink()}
+                    >
+                        Моя видео
+                    </NavLink>
                 </li>
             </ul>
         </nav>

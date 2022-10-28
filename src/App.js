@@ -21,6 +21,7 @@ function App() {
                     <Route path='/friends' element={<Friends />} />
                     <Route path='/music' element={<Music />} />
                     <Route path='/video' element={<Video />} />
+                    {/*<Route path='*' element={<NotFound />} />*/}
                 </Routes>
             </div>
         </div>

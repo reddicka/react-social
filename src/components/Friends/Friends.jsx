@@ -1,4 +1,4 @@
-import styles from './Friends.module.css'
+// import styles from './Friends.module.css'
 
 function Friends() {
     return (

@@ -22,3 +22,7 @@ a {
 a:hover {
     color: purple;
 }
+
+li {
+    list-style: none;
+}
