@@ -10,7 +10,7 @@ function MyPosts() {
                 <button>Опубликовать</button>
             </div>
             <div className={styles.posts}>
-                <Post message="Сообщение 1" />
+                <Post message="Сообщение 1"  />
                 <Post message="Сообщение 2" />
             </div>
         </div>

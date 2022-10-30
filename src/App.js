@@ -2,7 +2,7 @@ import './App.css';
 import Header from './components/Header/Header';
 // import Profile from './components/Profile/Profile';
 import Navbar from './components/Navbar/Navbar';
-import Dialog from './components/Dialog/Dialog';
+import DialogPage from './components/Dialog/DialogPage';
 import {Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Friends from "./components/Friends/Friends";
@@ -16,8 +16,8 @@ function App() {
             <Navbar />
             <div className="content">
                 <Routes>
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/dialogs' element={<Dialog />} />
+                    <Route path='/' element={<Profile />} />
+                    <Route path='/dialogs/*' element={<DialogPage />} />
                     <Route path='/friends' element={<Friends />} />
                     <Route path='/music' element={<Music />} />
                     <Route path='/video' element={<Video />} />

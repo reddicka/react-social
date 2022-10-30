@@ -10,7 +10,7 @@ function Navbar() {
         <nav className={styles.nav}>
             <ul>
                 <li className={styles.item}>
-                    <NavLink to="/profile"
+                    <NavLink to="/"
                         className={isActiveLink()}
                     >
                         Профиль
