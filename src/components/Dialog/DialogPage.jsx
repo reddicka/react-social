@@ -4,11 +4,11 @@ import MessageItem from "./MessageItem/MessageItem";
 
 function DialogPage(props) {
 
-    let dialogsList = props.dialogsList.map(dialog =>
+    let dialogsList = props.data.dialogs.map(dialog =>
         <DialogItem id={dialog.id} name={dialog.name} key={dialog.id} />
     )
 
-    let messagesList = props.messagesList.map(message =>
+    let messagesList = props.data.messages.map(message =>
         <MessageItem message={message.message} type={message.type} key={message.id} />
     )
 
