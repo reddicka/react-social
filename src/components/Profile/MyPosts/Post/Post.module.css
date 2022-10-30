@@ -1,3 +1,14 @@
 .item {
-    /* color: brown; */
+    width: 500px;
+    padding: 20px;
+    margin-bottom: 10px;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #636363;
+    color: #bababa;
+}
+
+.item:hover {
+    background-color: #848484;
 }

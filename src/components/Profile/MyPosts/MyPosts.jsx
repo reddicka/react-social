@@ -1,7 +1,11 @@
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
 
-function MyPosts() {
+function MyPosts(props) {
+    let postsList = props.posts.map(item =>
+        <Post text={item.text} likes={item.likes} key={item.id} />
+    )
+
     return (
         <div>
             My posts
@@ -10,8 +14,7 @@ function MyPosts() {
                 <button>Опубликовать</button>
             </div>
             <div className={styles.posts}>
-                <Post message="Сообщение 1"  />
-                <Post message="Сообщение 2" />
+                { postsList }
             </div>
         </div>
     );

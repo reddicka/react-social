@@ -1,0 +1,11 @@
+.dialogs_item {
+    padding: 15px;
+    margin-bottom: 5px;
+    background-color: #636363;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
+.dialog_active {
+    background-color: #848484;
+}
