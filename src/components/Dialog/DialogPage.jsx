@@ -18,6 +18,7 @@ function DialogPage(props) {
     function sendMessage() {
         let text = newMessageElement.current.value
         alert(text)
+        newMessageElement.current.value = ''
     }
 
     return (

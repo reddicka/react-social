@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 let stateTipa = {
     profilePageData: {
         posts: [
@@ -55,6 +57,17 @@ let stateTipa = {
             }
         ]
     }
+}
+
+export let addPost = (newPostText) => {
+    let newPost = {
+        id: 5,
+        text: newPostText,
+        likes: 0
+    }
+    stateTipa.profilePageData.posts.push(newPost)
+
+    rerenderEntireTree(stateTipa)
 }
 
 export default stateTipa
