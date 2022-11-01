@@ -4,6 +4,7 @@ import stateTipa from "./reduxTipa/stateTipa";
 
 import {rerenderEntireTree} from "./render";
 
+
 rerenderEntireTree(stateTipa)
 
 // If you want to start measuring performance in your app, pass a function

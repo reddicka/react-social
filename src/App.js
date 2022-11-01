@@ -10,22 +10,20 @@ import Video from "./components/Video/Video";
 
 function App(props) {
     return (
-
-            <div className="App">
-                <Header />
-                <Navbar />
-                <div className="content">
-                    <Routes>
-                        <Route path='/' element={<Profile data={props.state.profilePageData} addPost={props.addPost} />} />
-                        <Route path='/dialogs/*' element={ <DialogPage data={props.state.dialogsPageData} />} />
-                        <Route path='/friends' element={<Friends />} />
-                        <Route path='/music' element={<Music />} />
-                        <Route path='/video' element={<Video />} />
-                        {/*<Route path='*' element={<NotFound />} />*/}
-                    </Routes>
-                </div>
+        <div className="App">
+            <Header />
+            <Navbar />
+            <div className="content">
+                <Routes>
+                    <Route path='/' element={<Profile data={props.state.profilePageData} addPost={props.addPost} updateNewPostText={props.updateNewPostText} />} />
+                    <Route path='/dialogs/*' element={ <DialogPage data={props.state.dialogsPageData} />} />
+                    <Route path='/friends' element={<Friends />} />
+                    <Route path='/music' element={<Music />} />
+                    <Route path='/video' element={<Video />} />
+                    {/*<Route path='*' element={<NotFound />} />*/}
+                </Routes>
             </div>
-
+        </div>
     );
 }
 

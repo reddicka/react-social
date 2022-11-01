@@ -13,7 +13,8 @@ let stateTipa = {
                 text: 'Пост про сиськи',
                 likes: 15
             },
-        ]
+        ],
+        newPostText: ''
     },
     dialogsPageData: {
         dialogs: [
@@ -59,14 +60,25 @@ let stateTipa = {
     }
 }
 
-export let addPost = (newPostText) => {
-    let newPost = {
-        id: 5,
-        text: newPostText,
-        likes: 0
-    }
-    stateTipa.profilePageData.posts.push(newPost)
+export let addPost = () => {
+    let newPostText = stateTipa.profilePageData.newPostText
 
+    if (newPostText !== '') {
+        let newPost = {
+            id: stateTipa.profilePageData.posts.length + 1,
+            text: newPostText,
+            likes: 0
+        }
+
+        stateTipa.profilePageData.posts.push(newPost)
+        stateTipa.profilePageData.newPostText = ''
+
+        rerenderEntireTree(stateTipa)
+    }
+}
+
+export let updateNewPostText = (newText) => {
+    stateTipa.profilePageData.newPostText = newText
     rerenderEntireTree(stateTipa)
 }
 
