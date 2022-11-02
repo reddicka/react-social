@@ -56,12 +56,13 @@ let stateTipa = {
                 message: 'Привет писька',
                 type: 'outbox'
             }
-        ]
+        ],
+        newMessageText: ''
     }
 }
 
 export let addPost = () => {
-    let newPostText = stateTipa.profilePageData.newPostText
+    const newPostText = stateTipa.profilePageData.newPostText
 
     if (newPostText !== '') {
         let newPost = {
@@ -79,6 +80,29 @@ export let addPost = () => {
 
 export let updateNewPostText = (newText) => {
     stateTipa.profilePageData.newPostText = newText
+    rerenderEntireTree(stateTipa)
+}
+
+export let sendMessage = () => {
+    const newMessageText = stateTipa.dialogsPageData.newMessageText
+
+    if (newMessageText !== '') {
+        let myNewMessage = {
+            id: stateTipa.dialogsPageData.messages.length + 1,
+            message: newMessageText,
+            type: 'outbox'
+        }
+
+        stateTipa.dialogsPageData.messages.push(myNewMessage)
+        stateTipa.dialogsPageData.newMessageText = ''
+
+        rerenderEntireTree(stateTipa)
+    }
+
+}
+
+export let updateNewMessageText = (newText) => {
+    stateTipa.dialogsPageData.newMessageText = newText
     rerenderEntireTree(stateTipa)
 }
 

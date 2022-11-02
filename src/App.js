@@ -15,11 +15,34 @@ function App(props) {
             <Navbar />
             <div className="content">
                 <Routes>
-                    <Route path='/' element={<Profile data={props.state.profilePageData} addPost={props.addPost} updateNewPostText={props.updateNewPostText} />} />
-                    <Route path='/dialogs/*' element={ <DialogPage data={props.state.dialogsPageData} />} />
-                    <Route path='/friends' element={<Friends />} />
-                    <Route path='/music' element={<Music />} />
-                    <Route path='/video' element={<Video />} />
+                    <Route path='/' element={
+                        <Profile
+                            data={props.state.profilePageData}
+                            addPost={props.addPost}
+                            updateNewPostText={props.updateNewPostText}
+                        />
+                    }/>
+
+                    <Route path='/dialogs/*' element={
+                        <DialogPage
+                            data={props.state.dialogsPageData}
+                            sendMessage={props.sendMessage}
+                            updateNewMessageText={props.updateNewMessageText}
+                        />}
+                    />
+
+                    <Route path='/friends' element={
+                        <Friends />}
+                    />
+
+                    <Route path='/music' element={
+                        <Music />}
+                    />
+
+                    <Route path='/video' element={
+                        <Video />}
+                    />
+
                     {/*<Route path='*' element={<NotFound />} />*/}
                 </Routes>
             </div>

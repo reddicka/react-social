@@ -14,11 +14,13 @@ function DialogPage(props) {
     )
 
     let newMessageElement = React.createRef()
+    let sendMessage = () => {
+        props.sendMessage()
+    }
 
-    function sendMessage() {
-        let text = newMessageElement.current.value
-        alert(text)
-        newMessageElement.current.value = ''
+    let onMessageChange = () => {
+        let newText = newMessageElement.current.value
+        props.updateNewMessageText(newText)
     }
 
     return (
@@ -33,8 +35,12 @@ function DialogPage(props) {
                 { messagesList }
             </div>
 
-            <textarea ref={ newMessageElement }></textarea>
-            <button onClick={ sendMessage }> Отправить</button>
+            <textarea
+                ref={ newMessageElement }
+                onChange={ onMessageChange }
+                value={ props.data.newMessageText }
+            />
+            <button onClick={ sendMessage }>Отправить</button>
         </div>
     );
 }

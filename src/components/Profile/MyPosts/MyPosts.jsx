@@ -21,7 +21,11 @@ function MyPosts(props) {
         <div>
             My posts
             <div>
-                <textarea ref={ newPostElement } onChange={ onPostChange } value={ props.newPostText } />
+                <textarea
+                    ref={ newPostElement }
+                    onChange={ onPostChange }
+                    value={ props.newPostText }
+                />
                 <button onClick={ addPost } >Опубликовать</button>
             </div>
             <div className={styles.posts}>
