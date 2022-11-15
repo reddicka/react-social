@@ -6,6 +6,9 @@ function Post(props) {
             {props.text}
             <br />
             likes: <span>{props.likes}</span>
+            <br />
+            qweqweqwe
+            qwe
         </div>
     );
 }
