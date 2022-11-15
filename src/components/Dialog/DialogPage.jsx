@@ -5,22 +5,22 @@ import MessageItem from "./MessageItem/MessageItem";
 
 function DialogPage(props) {
 
-    let dialogsList = props.data.dialogs.map(dialog =>
+    let dialogsList = props.state.dialogs.map(dialog =>
         <DialogItem id={dialog.id} name={dialog.name} key={dialog.id} />
     )
 
-    let messagesList = props.data.messages.map(message =>
+    let messagesList = props.state.messages.map(message =>
         <MessageItem message={message.message} type={message.type} key={message.id} />
     )
 
     let newMessageElement = React.createRef()
     let sendMessage = () => {
-        props.sendMessage()
+        props.state.sendMessage()
     }
 
     let onMessageChange = () => {
         let newText = newMessageElement.current.value
-        props.updateNewMessageText(newText)
+        props.state.updateNewMessageText(newText)
     }
 
     return (
@@ -38,7 +38,7 @@ function DialogPage(props) {
             <textarea
                 ref={ newMessageElement }
                 onChange={ onMessageChange }
-                value={ props.data.newMessageText }
+                value={ props.state.newMessageText }
             />
             <button onClick={ sendMessage }>Отправить</button>
         </div>

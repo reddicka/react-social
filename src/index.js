@@ -4,28 +4,25 @@ import {BrowserRouter} from "react-router-dom";
 import './index.css';
 // import reportWebVitals from './reportWebVitals';
 import App from "./App";
-import stateTipa, {addPost, sendMessage, updateNewMessageText, updateNewPostText, subscribe} from "./reduxTipa/stateTipa";
+import store from "./reduxTipa/stateTipa";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 let rerenderEntireTree = () => {
+
     root.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    state={stateTipa}
-                    addPost={addPost}
-                    updateNewPostText={updateNewPostText}
-                    sendMessage={sendMessage}
-                    updateNewMessageText={updateNewMessageText}
+                    store={store}
                 />
             </BrowserRouter>
         </React.StrictMode>,
     );
 }
 
-rerenderEntireTree(stateTipa)
+rerenderEntireTree()
 
-subscribe(rerenderEntireTree)
+store.subscribe(rerenderEntireTree)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

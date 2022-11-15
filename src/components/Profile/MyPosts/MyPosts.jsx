@@ -5,15 +5,15 @@ import Post from './Post/Post';
 function MyPosts(props) {
     let newPostElement = React.createRef()
     let addPost = () => {
-        props.addPost();
+        props.state.addPost();
     }
 
     let onPostChange = () => {
         let text = newPostElement.current.value
-        props.updateNewPostText(text)
+        props.state.updateNewPostText(text)
     }
 
-    let postsList = props.posts.map(item =>
+    let postsList = props.state.posts.map(item =>
         <Post text={item.text} likes={item.likes} key={item.id} />
     )
 
@@ -24,7 +24,7 @@ function MyPosts(props) {
                 <textarea
                     ref={ newPostElement }
                     onChange={ onPostChange }
-                    value={ props.newPostText }
+                    value={ props.state.newPostText }
                 />
                 <button onClick={ addPost } >Опубликовать</button>
             </div>
