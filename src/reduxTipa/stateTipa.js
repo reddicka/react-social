@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = () => {
+    console.log('rerender')
+}
 
 let stateTipa = {
     profilePageData: {
@@ -61,7 +63,9 @@ let stateTipa = {
     }
 }
 
-export let addPost = () => {
+window.state = stateTipa
+
+export const addPost = () => {
     const newPostText = stateTipa.profilePageData.newPostText
 
     if (newPostText !== '') {
@@ -78,12 +82,12 @@ export let addPost = () => {
     }
 }
 
-export let updateNewPostText = (newText) => {
+export const updateNewPostText = (newText) => {
     stateTipa.profilePageData.newPostText = newText
     rerenderEntireTree(stateTipa)
 }
 
-export let sendMessage = () => {
+export const sendMessage = () => {
     const newMessageText = stateTipa.dialogsPageData.newMessageText
 
     if (newMessageText !== '') {
@@ -101,9 +105,13 @@ export let sendMessage = () => {
 
 }
 
-export let updateNewMessageText = (newText) => {
+export const updateNewMessageText = (newText) => {
     stateTipa.dialogsPageData.newMessageText = newText
     rerenderEntireTree(stateTipa)
+}
+
+export const subscribe = (observer) => {
+    rerenderEntireTree = observer
 }
 
 export default stateTipa
