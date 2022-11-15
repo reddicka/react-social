@@ -1,10 +1,6 @@
-let rerenderEntireTree = () => {
-    console.log('rerender')
-}
-
 let store = {
     stateTipa: {
-        profilePageData: {
+        profilePage: {
             posts: [
                 {
                     id: 1,
@@ -19,27 +15,27 @@ let store = {
             ],
             newPostText: '',
             addPost() {
-                const newPostText = store.stateTipa.profilePageData.newPostText
+                const newPostText = store.stateTipa.profilePage.newPostText
 
                 if (newPostText !== '') {
                     let newPost = {
-                        id: store.stateTipa.profilePageData.posts.length + 1,
+                        id: store.stateTipa.profilePage.posts.length + 1,
                         text: newPostText,
                         likes: 0
                     }
 
-                    store.stateTipa.profilePageData.posts.push(newPost)
-                    store.stateTipa.profilePageData.newPostText = ''
+                    store.stateTipa.profilePage.posts.push(newPost)
+                    store.stateTipa.profilePage.newPostText = ''
 
-                    rerenderEntireTree(store.stateTipa)
+                    store.rerenderEntireTree(store.stateTipa)
                 }
             },
             updateNewPostText(newText) {
-                store.stateTipa.profilePageData.newPostText = newText
-                rerenderEntireTree(store.stateTipa)
+                store.stateTipa.profilePage.newPostText = newText
+                store.rerenderEntireTree(store.stateTipa)
             }
         },
-        dialogsPageData: {
+        dialogsPage: {
             dialogs: [
                 {
                     id: 1,
@@ -82,29 +78,30 @@ let store = {
             ],
             newMessageText: '',
             sendMessage() {
-                const newMessageText = store.stateTipa.dialogsPageData.newMessageText
+                const newMessageText = store.stateTipa.dialogsPage.newMessageText
 
                 if (newMessageText !== '') {
                     let myNewMessage = {
-                        id: store.stateTipa.dialogsPageData.messages.length + 1,
+                        id: store.stateTipa.dialogsPage.messages.length + 1,
                         message: newMessageText,
                         type: 'outbox'
                     }
 
-                    store.stateTipa.dialogsPageData.messages.push(myNewMessage)
-                    store.stateTipa.dialogsPageData.newMessageText = ''
+                    store.stateTipa.dialogsPage.messages.push(myNewMessage)
+                    store.stateTipa.dialogsPage.newMessageText = ''
 
-                    rerenderEntireTree(store.stateTipa)
+                    store.rerenderEntireTree(store.stateTipa)
                 }
             },
             updateNewMessageText(newText) {
-                store.stateTipa.dialogsPageData.newMessageText = newText
-                rerenderEntireTree(store.stateTipa)
+                store.stateTipa.dialogsPage.newMessageText = newText
+                store.rerenderEntireTree(store.stateTipa)
             }
         },
     },
+    rerenderEntireTree() {},
     subscribe(observer) {
-        rerenderEntireTree = observer
+        store.rerenderEntireTree = observer
     }
 }
 
