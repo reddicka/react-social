@@ -2,25 +2,25 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {BrowserRouter} from "react-router-dom";
 import './index.css';
-// import reportWebVitals from './reportWebVitals';
 import App from "./App";
 import store from "./reduxTipa/stateTipa";
+// import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-let rerenderEntireTree = () => {
 
+let rerenderEntireTree = (state) => {
     root.render(
         <React.StrictMode>
             <BrowserRouter>
                 <App
-                    store={store}
+                    state={state}
                 />
             </BrowserRouter>
         </React.StrictMode>,
     );
 }
 
-rerenderEntireTree()
+rerenderEntireTree(store.getState())
 
 store.subscribe(rerenderEntireTree)
 

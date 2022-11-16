@@ -17,13 +17,13 @@ function App(props) {
                 <Routes>
                     <Route path='/' element={
                         <Profile
-                            state={props.store.stateTipa.profilePage}
+                            stateProfilePage={props.state.profilePage}
                         />
                     }/>
 
                     <Route path='/dialogs/*' element={
                         <DialogPage
-                            state={props.store.stateTipa.dialogsPage}
+                            stateDialogsPage={props.state.dialogsPage}
                         />}
                     />
 
