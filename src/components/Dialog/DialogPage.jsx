@@ -14,12 +14,12 @@ function DialogPage(props) {
 
     let newMessageElement = React.createRef()
     let sendMessage = () => {
-        props.stateDialogsPage.sendMessage()
+        props.sendMessage()
     }
 
     let onMessageChange = () => {
         let newText = newMessageElement.current.value
-        props.stateDialogsPage.updateNewMessageText(newText)
+        props.updateNewMessageText(newText)
     }
 
     return (

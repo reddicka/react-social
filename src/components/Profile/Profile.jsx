@@ -6,7 +6,11 @@ function Profile(props) {
     return (
         <div className={styles.profile}>
             <ProfileInfo />
-            <MyPosts stateProfilePage={props.stateProfilePage} />
+            <MyPosts
+                state={props.state}
+                addPost={props.addPost}
+                updateNewPostText={props.updateNewPostText}
+            />
         </div>
     );
 }

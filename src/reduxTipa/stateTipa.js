@@ -1,6 +1,6 @@
 let store = {
     _stateTipa: {
-        profilePage: {
+        profilePageData: {
             posts: [
                 {
                     id: 1,
@@ -13,29 +13,9 @@ let store = {
                     likes: 15
                 },
             ],
-            newPostText: '',
-            addPost() {
-                const newPostText = this._stateTipa.profilePage.newPostText
-
-                if (newPostText !== '') {
-                    let newPost = {
-                        id: this._stateTipa.profilePage.posts.length + 1,
-                        text: newPostText,
-                        likes: 0
-                    }
-
-                    this._stateTipa.profilePage.posts.push(newPost)
-                    this._stateTipa.profilePage.newPostText = ''
-
-                    this._callSubscriber(this._stateTipa)
-                }
-            },
-            updateNewPostText(newText) {
-                this._stateTipa.profilePage.newPostText = newText
-                this._callSubscriber(this._stateTipa.profilePage)
-            }
+            newPostText: ''
         },
-        dialogsPage: {
+        dialogsPageData: {
             dialogs: [
                 {
                     id: 1,
@@ -76,32 +56,55 @@ let store = {
                     type: 'outbox'
                 }
             ],
-            newMessageText: '',
-            sendMessage() {
-                const newMessageText = this._stateTipa.dialogsPage.newMessageText
-
-                if (newMessageText !== '') {
-                    let myNewMessage = {
-                        id: this._stateTipa.dialogsPage.messages.length + 1,
-                        message: newMessageText,
-                        type: 'outbox'
-                    }
-
-                    this._stateTipa.dialogsPage.messages.push(myNewMessage)
-                    this._stateTipa.dialogsPage.newMessageText = ''
-
-                    this._callSubscriber(this._stateTipa)
-                }
-            },
-            updateNewMessageText(newText) {
-                this._stateTipa.dialogsPage.newMessageText = newText
-                this._callSubscriber(this._stateTipa.dialogsPage)
-            }
+            newMessageText: ''
         },
     },
     getState() {
-       return this._stateTipa
+        return this._stateTipa
     },
+
+    addPost() {
+        const newPostText = this._stateTipa.profilePageData.newPostText
+
+        if (newPostText !== '') {
+            let newPost = {
+                id: this._stateTipa.profilePageData.posts.length + 1,
+                text: newPostText,
+                likes: 0
+            }
+
+            this._stateTipa.profilePageData.posts.push(newPost)
+            this._stateTipa.profilePageData.newPostText = ''
+
+            this._callSubscriber(this._stateTipa)
+        }
+    },
+    updateNewPostText(newText) {
+        this._stateTipa.profilePageData.newPostText = newText
+        this._callSubscriber(this._stateTipa.profilePageData)
+    },
+
+    sendMessage() {
+        const newMessageText = this._stateTipa.dialogsPageData.newMessageText
+
+        if (newMessageText !== '') {
+            let myNewMessage = {
+                id: this._stateTipa.dialogsPageData.messages.length + 1,
+                message: newMessageText,
+                type: 'outbox'
+            }
+
+            this._stateTipa.dialogsPageData.messages.push(myNewMessage)
+            this._stateTipa.dialogsPageData.newMessageText = ''
+
+            this._callSubscriber(this._stateTipa)
+        }
+    },
+    updateNewMessageText(newText) {
+        this._stateTipa.dialogsPageData.newMessageText = newText
+        this._callSubscriber(this._stateTipa.dialogsPageData)
+    },
+
     _callSubscriber() {},
     subscribe(observer) {
         this._callSubscriber = observer
