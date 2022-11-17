@@ -59,11 +59,12 @@ let store = {
             newMessageText: ''
         },
     },
+    _callSubscriber() {},
     getState() {
         return this._stateTipa
     },
 
-    addPost() {
+    _addPost() {
         const newPostText = this._stateTipa.profilePageData.newPostText
 
         if (newPostText !== '') {
@@ -79,12 +80,12 @@ let store = {
             this._callSubscriber(this._stateTipa)
         }
     },
-    updateNewPostText(newText) {
+    _updateNewPostText(newText) {
         this._stateTipa.profilePageData.newPostText = newText
         this._callSubscriber(this._stateTipa.profilePageData)
     },
 
-    sendMessage() {
+    _sendMessage() {
         const newMessageText = this._stateTipa.dialogsPageData.newMessageText
 
         if (newMessageText !== '') {
@@ -100,14 +101,32 @@ let store = {
             this._callSubscriber(this._stateTipa)
         }
     },
-    updateNewMessageText(newText) {
+    _updateNewMessageText(newText) {
         this._stateTipa.dialogsPageData.newMessageText = newText
         this._callSubscriber(this._stateTipa.dialogsPageData)
     },
 
-    _callSubscriber() {},
     subscribe(observer) {
         this._callSubscriber = observer
+    },
+
+    dispatch(action) {
+        switch (action.type) {
+            case 'ADD-POST':
+                this._addPost()
+                break
+            case 'UPDATE-NEW-POST-TEXT':
+                this._updateNewPostText(action.newText)
+                return
+            case 'SEND-MESSAGE':
+                this._sendMessage()
+                break
+            case 'UPDATE-NEW-MESSAGE-TEXT':
+                this._updateNewMessageText(action.newText)
+                return
+            default:
+                break
+        }
     }
 }
 
