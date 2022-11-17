@@ -1,3 +1,19 @@
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+const SEND_MESSAGE = 'SEND-MESSAGE'
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT'
+
+export const addPostActionCreator = () => ({ type: ADD_POST })
+export const updateNewPostTextActionCreator = (newText) => (
+    { type: UPDATE_NEW_POST_TEXT, newText: newText }
+)
+export const sendMessageActionCreator = () => ({ type: SEND_MESSAGE })
+export const updateNewMessageTextActionCreator = (newText) => (
+    { type: UPDATE_NEW_MESSAGE_TEXT, newText: newText }
+)
+
+
+
 let store = {
     _stateTipa: {
         profilePageData: {

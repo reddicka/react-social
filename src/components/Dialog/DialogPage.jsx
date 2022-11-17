@@ -2,6 +2,7 @@ import React from "react";
 import styles from './DialogPage.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
+import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../reduxTipa/stateTipa";
 
 function DialogPage(props) {
     let dialogsList = props.state.dialogs.map(dialog =>
@@ -14,12 +15,12 @@ function DialogPage(props) {
 
     let newMessageElement = React.createRef()
     let sendMessage = () => {
-        props.dispatch({ type: 'SEND-MESSAGE' })
+        props.dispatch(sendMessageActionCreator())
     }
 
     let onMessageChange = () => {
         let newText = newMessageElement.current.value
-        props.dispatch({ type: 'UPDATE-NEW-MESSAGE-TEXT', newText: newText})
+        props.dispatch(updateNewMessageTextActionCreator(newText))
     }
 
     return (
