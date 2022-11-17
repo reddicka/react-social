@@ -1,11 +1,11 @@
 import React from "react";
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../reduxTipa/stateTipa";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../reduxTipa/profile-reducer";
 
 function MyPosts(props) {
     let newPostElement = React.createRef()
-    let addPost = () => {
+    let onAddPostClick = () => {
         props.dispatch(addPostActionCreator());
     }
 
@@ -27,7 +27,7 @@ function MyPosts(props) {
                     onChange={ onPostChange }
                     value={ props.state.newPostText }
                 />
-                <button onClick={ addPost } >Опубликовать</button>
+                <button onClick={ onAddPostClick } >Опубликовать</button>
             </div>
             <div className={styles.posts}>
                 { postsList }
