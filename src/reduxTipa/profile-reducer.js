@@ -1,8 +1,24 @@
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 
-const profileReducer = (state, action) => {
 
+let initialState = {
+    posts: [
+        {
+            id: 1,
+            text: 'Пост про письки',
+            likes: 12
+        },
+        {
+            id: 2,
+            text: 'Пост про сиськи',
+            likes: 15
+        },
+    ],
+    newPostText: ''
+}
+
+const profileReducer = (state = initialState, action) => {
     let addPost = () => {
         const newPostText = state.newPostText
 
