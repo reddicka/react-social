@@ -1,20 +1,20 @@
 import React from "react";
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../reduxTipa/profile-reducer";
 
 function MyPosts(props) {
     let newPostElement = React.createRef()
-    let onAddPostClick = () => {
-        props.dispatch(addPostActionCreator());
+
+    let onAddPost = () => {
+        props.addPost()
     }
 
     let onPostChange = () => {
         let newText = newPostElement.current.value
-        props.dispatch(updateNewPostTextActionCreator(newText));
+        props.updateNewPostText(newText)
     }
 
-    let postsList = props.state.posts.map(item =>
+    let postsElements = props.posts.map(item =>
         <Post text={item.text} likes={item.likes} key={item.id} />
     )
 
@@ -25,12 +25,12 @@ function MyPosts(props) {
                 <textarea
                     ref={ newPostElement }
                     onChange={ onPostChange }
-                    value={ props.state.newPostText }
+                    value={ props.newPostText }
                 />
-                <button onClick={ onAddPostClick } >Опубликовать</button>
+                <button onClick={ onAddPost }>Опубликовать</button>
             </div>
             <div className={styles.posts}>
-                { postsList }
+                { postsElements }
             </div>
         </div>
     );

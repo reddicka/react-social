@@ -1,31 +1,26 @@
 import React from "react";
-import styles from './DialogPage.module.css';
+import styles from './DialogsPage.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../reduxTipa/dialogs-reducer";
 
-function DialogPage(props) {
-    let dialogsList = props.state.dialogs.map(dialog =>
+function DialogsPage(props) {
+    let state = props.dialogsPageData
+
+    let dialogsList = state.dialogs.map(dialog =>
         <DialogItem id={dialog.id} name={dialog.name} key={dialog.id} />
     )
 
-    let messagesList = props.state.messages.map(message =>
+    let messagesList = state.messages.map(message =>
         <MessageItem message={message.message} type={message.type} key={message.id} />
     )
 
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageActionCreator())
+        props.sendMessage()
     }
-
-    // let newMessageElement = React.createRef()
-    // let onMessageChange = () => {
-    //     let newText = newMessageElement.current.value
-    //     props.dispatch(updateNewMessageTextActionCreator(newText))
-    // }
 
     let onMessageChange = (e) => {
         let newText = e.target.value
-        props.dispatch(updateNewMessageTextActionCreator(newText))
+        props.updateNewMessageText(newText)
     }
 
     return (
@@ -43,11 +38,11 @@ function DialogPage(props) {
             <textarea
                 // ref={ newMessageElement }
                 onChange={ onMessageChange }
-                value={ props.state.newMessageText }
+                value={ state.newMessageText }
             />
             <button onClick={ onSendMessageClick }>Отправить</button>
         </div>
     );
 }
 
-export default DialogPage;
+export default DialogsPage;

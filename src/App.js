@@ -1,12 +1,12 @@
+import {Route, Routes} from "react-router-dom";
 import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import DialogPage from './components/Dialog/DialogPage';
-import {Route, Routes} from "react-router-dom";
 import Profile from "./components/Profile/Profile";
 import Friends from "./components/Friends/Friends";
 import Music from "./components/Music/Music";
 import Video from "./components/Video/Video";
+import DialogsPageContainer from "./components/Dialogs/DialogsPageContainer";
 
 function App(props) {
     return (
@@ -16,17 +16,11 @@ function App(props) {
             <div className="content">
                 <Routes>
                     <Route path='/' element={
-                        <Profile
-                            state={props.state.profilePageData}
-                            dispatch={props.dispatch}
-                        />
+                        <Profile />
                     }/>
 
                     <Route path='/dialogs/*' element={
-                        <DialogPage
-                            state={props.state.dialogsPageData}
-                            dispatch={props.dispatch}
-                        />}
+                        <DialogsPageContainer />}
                     />
 
                     <Route path='/friends' element={
