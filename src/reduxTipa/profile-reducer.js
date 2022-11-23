@@ -19,32 +19,36 @@ let initialState = {
 }
 
 const profileReducer = (state = initialState, action) => {
+    const stateCopy = {...state} // Создаём копию для иммутабельности
+
     let addPost = () => {
-        const newPostText = state.newPostText
+        stateCopy.posts = [...state.posts]
+
+        const newPostText = stateCopy.newPostText
 
         if (newPostText !== '') {
             let newPost = {
-                id: state.posts.length + 1,
+                id: stateCopy.posts.length + 1,
                 text: newPostText,
                 likes: 0
             }
 
-            state.posts.push(newPost)
-            state.newPostText = ''
+            stateCopy.posts.push(newPost)
+            stateCopy.newPostText = ''
         }
     }
 
     let updateNewPostText = (newText) => {
-        state.newPostText = newText
+        stateCopy.newPostText = newText
     }
 
     switch (action.type) {
         case 'ADD_POST':
             addPost()
-            return state
+            return stateCopy
         case 'UPDATE_NEW_POST_TEXT':
             updateNewPostText(action.newText)
-            return state
+            return stateCopy
         default:
             return state
     }
