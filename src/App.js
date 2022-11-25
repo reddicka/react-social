@@ -7,6 +7,7 @@ import Friends from "./components/Friends/Friends";
 import Music from "./components/Music/Music";
 import Video from "./components/Video/Video";
 import DialogsPageContainer from "./components/Dialogs/DialogsPageContainer";
+import FindUserContainer from "./components/FindUser/FindUserPageContainer";
 
 function App(props) {
     return (
@@ -33,6 +34,10 @@ function App(props) {
 
                     <Route path='/video' element={
                         <Video />}
+                    />
+
+                    <Route path='/finduser' element={
+                        <FindUserContainer />}
                     />
 
                     {/*<Route path='*' element={<NotFound />} />*/}

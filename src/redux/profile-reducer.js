@@ -45,9 +45,9 @@ const profileReducer = (state = initialState, action) => {
     }
 
     switch (action.type) {
-        case 'ADD_POST':
+        case ADD_POST:
             return addPost()
-        case 'UPDATE_NEW_POST_TEXT':
+        case UPDATE_NEW_POST_TEXT:
             return updateNewPostText(action.newText)
         default:
             return state

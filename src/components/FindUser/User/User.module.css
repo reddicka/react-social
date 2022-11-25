@@ -1,0 +1,48 @@
+.user_item {
+    display: flex;
+    flex-direction: row;
+
+    padding: 5px;
+    width: 100%;
+    min-height: 50px;
+
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.user_avatar img {
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.user_info {
+    margin-right: auto;
+}
+
+.user_name {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.user_location {
+
+}
+
+.user_status {
+    font-size: 14px;
+}
+
+.user_buttons button {
+    width: 100px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #787fff;
+    font-size: 18px;
+}

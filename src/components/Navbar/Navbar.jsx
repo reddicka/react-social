@@ -44,6 +44,13 @@ function Navbar() {
                         Моя видео
                     </NavLink>
                 </li>
+                <li className={styles.item}>
+                    <NavLink to="/finduser"
+                        className={isActiveLink()}
+                    >
+                        Найти
+                    </NavLink>
+                </li>
             </ul>
         </nav>
     );

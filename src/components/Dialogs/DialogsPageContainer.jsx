@@ -1,4 +1,4 @@
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../reduxTipa/dialogs-reducer";
+import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../redux/dialogs-reducer";
 import DialogsPage from "./DialogsPage";
 // import StoreContext from "../../StoreContext";
 import {connect} from "react-redux";
@@ -48,6 +48,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const DialogsPageContainer = connect(mapStateToProps, mapDispatchToProps)(DialogsPage)
-
-export default DialogsPageContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(DialogsPage)

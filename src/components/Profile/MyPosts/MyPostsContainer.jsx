@@ -1,4 +1,4 @@
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../reduxTipa/profile-reducer";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPosts from "./MyPosts";
 import {connect} from "react-redux";
 // import StoreContext from "../../../StoreContext";
@@ -50,6 +50,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
-
-export default MyPostsContainer
+export default connect(mapStateToProps, mapDispatchToProps)(MyPosts)
