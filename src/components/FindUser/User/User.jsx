@@ -1,4 +1,5 @@
 import style from './User.module.css'
+import avatar from '../../../assets/img/user.png'
 
 const User = (props) => {
     const follow = () => {
@@ -12,14 +13,14 @@ const User = (props) => {
     return (
         <li className={style.user_item}>
             <div className={style.user_avatar}>
-                <img src={props.avatarUrl} alt={props.fullname} title={props.fullname} />
+                <img src={props.photos.small || avatar } alt={props.name} title={props.name} />
             </div>
             <div className={style.user_info}>
                 <p className={style.user_name}>
-                    {props.fullname}
+                    {props.name}
                 </p>
                 <p className={style.user_location}>
-                    {`${props.location.country}, ${props.location.city}`}
+                    {/*{`${props.location.country}, ${props.location.city}`}*/}
                 </p>
                 <p className={style.user_status}>
                     {props.status}
