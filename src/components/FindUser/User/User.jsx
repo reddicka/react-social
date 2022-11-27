@@ -2,11 +2,12 @@ import style from './User.module.css'
 import avatar from '../../../assets/img/user.png'
 
 const User = (props) => {
-    const follow = () => {
+    let follow = () => {
         props.follow(props.id)
+        console.log(props.id)
     }
 
-    const unfollow = () => {
+    let unfollow = () => {
         props.unfollow(props.id)
     }
 
