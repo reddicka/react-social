@@ -4,7 +4,6 @@ import avatar from '../../../assets/img/user.png'
 const User = (props) => {
     let follow = () => {
         props.follow(props.id)
-        console.log(props.id)
     }
 
     let unfollow = () => {

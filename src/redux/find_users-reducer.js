@@ -1,14 +1,16 @@
 const SET_USERS = 'SET_USERS'
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_TOTAL_USERS = 'SET_TOTAL_USERS'
+const SET_CURRENT_PAGE_NUMBER = 'SET_CURRENT_PAGE_NUMBER'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const SET_IS_LOADING = 'SET_IS_LOADING'
 
 const initialState = {
     users: [],
-    currentPage: 1,
-    totalUsers: 0,
-    pageSize: 20
+    currentPageNumber: 1,
+    totalUsersCount: 0,
+    pageSize: 20,
+    isLoading: false,
 }
 
 const findUserReducer = (state = initialState, action) => {
@@ -39,25 +41,31 @@ const findUserReducer = (state = initialState, action) => {
                 ...state,
                 users: action.users
             }
-        case SET_CURRENT_PAGE:
+        case SET_CURRENT_PAGE_NUMBER:
             return {
                 ...state,
-                currentPage: action.currentPage
+                currentPageNumber: action.currentPageNumber
             }
-        case SET_TOTAL_USERS:
+        case SET_TOTAL_USERS_COUNT:
             return {
             ...state,
-            totalUsers: action.totalUsers
+                totalUsersCount: action.totalUsersCount
         }
+        case SET_IS_LOADING:
+            return {
+                ...state,
+                isLoading: action.isLoading
+            }
         default:
             return state
     }
 }
 
-export const followAC = (userId) => ({ type: FOLLOW, userId })
-export const unfollowAC = (userId) => ({ type: UNFOLLOW, userId })
-export const setUsersAC = (users) => ({ type: SET_USERS, users })
-export const setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
-export const setTotalUsersAC = (totalUsers) => ({ type: SET_TOTAL_USERS, totalUsers })
+export const follow = (userId) => ({ type: FOLLOW, userId })
+export const unfollow = (userId) => ({ type: UNFOLLOW, userId })
+export const setUsers = (users) => ({ type: SET_USERS, users })
+export const setCurrentPageNumber = (currentPageNumber) => ({ type: SET_CURRENT_PAGE_NUMBER, currentPageNumber })
+export const setTotalUsersCount = (totalUsersCount) => ({ type: SET_TOTAL_USERS_COUNT, totalUsersCount })
+export const setIsLoading = (isLoading) => ({ type: SET_IS_LOADING, isLoading })
 
 export default findUserReducer
