@@ -12,63 +12,43 @@ const initialState = {
 }
 
 const findUserReducer = (state = initialState, action) => {
-    const toFollow = (userId) => {
-        return {
-            ...state,
-            users: state.users.map(user => {
-                if (user.id === userId) {
-                    return {...user, followed: true }
-                }
-                return user
-            })
-        }
-    }
-
-    const toUnfollow = (userId) => {
-        return {
-            ...state,
-            users: state.users.map(user => {
-                if (user.id === userId) {
-                    return {...user, followed: false}
-                }
-                return user
-            })
-
-        }
-    }
-
-    const setUsers = (users) => {
-        return {
-            ...state,
-            users
-        }
-    }
-
-    const setCurrentPage = (currentPage) => {
-        return {
-            ...state,
-            currentPage
-        }
-    }
-
-    const setTotalUsers = (totalUsers) => {
-        return {
-            ...state,
-            totalUsers
-        }
-    }
-    window.state = state
     switch (action.type) {
         case FOLLOW:
-            return toFollow(action.userId)
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if (user.id === action.userId) {
+                        return {...user, followed: true }
+                    }
+                    return user
+                })
+            }
         case UNFOLLOW:
-            return toUnfollow(action.userId)
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if (user.id === action.userId) {
+                        return {...user, followed: false}
+                    }
+                    return user
+                })
+
+            }
         case SET_USERS:
-            return setUsers(action.users)
+            return {
+                ...state,
+                users: action.users
+            }
         case SET_CURRENT_PAGE:
-            return setCurrentPage(action.currentPage)
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
         case SET_TOTAL_USERS:
-            return setTotalUsers(action.totalUsers)
+            return {
+            ...state,
+            totalUsers: action.totalUsers
+        }
         default:
             return state
     }
