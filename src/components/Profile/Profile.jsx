@@ -1,11 +1,11 @@
 import styles from './Profile.module.css';
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from './MyPosts/MyPostsContainer';
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 function Profile() {
     return (
         <div className={styles.profile}>
-            <ProfileInfo />
+            <ProfileInfoContainer />
             <MyPostsContainer />
         </div>
     );

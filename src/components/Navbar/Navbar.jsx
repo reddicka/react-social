@@ -10,7 +10,7 @@ function Navbar() {
         <nav className={styles.nav}>
             <ul>
                 <li className={styles.item}>
-                    <NavLink to="/"
+                    <NavLink to="/profile"
                         className={isActiveLink()}
                     >
                         Профиль
@@ -45,7 +45,7 @@ function Navbar() {
                     </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/finduser"
+                    <NavLink to="/search"
                         className={isActiveLink()}
                     >
                         Найти

@@ -16,7 +16,7 @@ function App(props) {
             <Navbar />
             <div className="content">
                 <Routes>
-                    <Route path='/' element={
+                    <Route path='/profile/*' element={
                         <Profile />
                     }/>
 
@@ -36,7 +36,7 @@ function App(props) {
                         <Video />}
                     />
 
-                    <Route path='/finduser' element={
+                    <Route path='/search' element={
                         <FindUserPageContainer />}
                     />
 
