@@ -1,7 +1,12 @@
 import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
+import Preloader from "../../common/Proloader/Preloader";
 
 function ProfileInfo(props) {
+    if (Object.entries(props).length === 0) {
+        return <Preloader />
+    }
+
     let notEmptyContacts = () => {
         let arr = []
 
@@ -21,8 +26,6 @@ function ProfileInfo(props) {
         }
         return arr
     }
-
-
 
     return (
         <div>

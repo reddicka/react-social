@@ -10,6 +10,7 @@ import {
 } from "../../redux/find_users-reducer";
 import React from "react";
 import axios from "axios";
+import {setCurrentUserId} from "../../redux/profile-reducer";
 
 class FindUserPageContainer extends React.Component {
     componentDidMount() {
@@ -49,20 +50,22 @@ class FindUserPageContainer extends React.Component {
                 currentPageNumber={this.props.currentPageNumber}
                 onSetPageClick={this.onSetPageClick}
                 isLoading={this.props.isLoading}
+
+                currentUserId={this.props.currentUserId}
             />
         )
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        users: state.findUserPageData.users,
-        currentPageNumber: state.findUserPageData.currentPageNumber,
-        totalUsersCount: state.findUserPageData.totalUsersCount,
-        pageSize: state.findUserPageData.pageSize,
-        isLoading: state.findUserPageData.isLoading
-    }
-}
+const mapStateToProps = (state) => ({
+    users: state.findUserPageData.users,
+    currentPageNumber: state.findUserPageData.currentPageNumber,
+    totalUsersCount: state.findUserPageData.totalUsersCount,
+    pageSize: state.findUserPageData.pageSize,
+    isLoading: state.findUserPageData.isLoading,
+
+    // currentUserId: state.profilePageData.currentUserId
+})
 
 export default connect(mapStateToProps, {
     follow,
@@ -70,5 +73,7 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPageNumber,
     setTotalUsersCount,
-    setIsLoading
+    setIsLoading,
+
+    // setCurrentUserId
 })(FindUserPageContainer)

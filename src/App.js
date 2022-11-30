@@ -2,12 +2,12 @@ import {Route, Routes} from "react-router-dom";
 import './App.css';
 import Header from './components/Header/Header';
 import Navbar from './components/Navbar/Navbar';
-import Profile from "./components/Profile/Profile";
 import Friends from "./components/Friends/Friends";
 import Music from "./components/Music/Music";
 import Video from "./components/Video/Video";
 import DialogsPageContainer from "./components/Dialogs/DialogsPageContainer";
 import FindUserPageContainer from "./components/FindUser/FindUserPageContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 function App(props) {
     return (
@@ -17,7 +17,7 @@ function App(props) {
             <div className="content">
                 <Routes>
                     <Route path='/profile/*' element={
-                        <Profile />
+                        <ProfileContainer />
                     }/>
 
                     <Route path='/dialogs/*' element={

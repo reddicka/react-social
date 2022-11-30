@@ -29,23 +29,19 @@ import {connect} from "react-redux";
 //     );
 // }
 
-const mapStateToProps = (state) => {
-    return {
-        dialogsPageData: state.dialogsPageData
-    }
-}
+const mapStateToProps = (state) => ({
+    dialogsPageData: state.dialogsPageData
+})
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        sendMessage: () => {
-            let action = sendMessageActionCreator()
-            dispatch(action)
-        },
-        updateNewMessageText: (newText) => {
-            let action = updateNewMessageTextActionCreator(newText)
-            dispatch(action)
-        }
+const mapDispatchToProps = (dispatch) => ({
+    sendMessage: () => {
+        let action = sendMessageActionCreator()
+        dispatch(action)
+    },
+    updateNewMessageText: (newText) => {
+        let action = updateNewMessageTextActionCreator(newText)
+        dispatch(action)
     }
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(DialogsPage)
