@@ -1,9 +1,10 @@
 import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
+import {Link} from "react-router-dom";
 
 function ProfileInfo(props) {
-    if (Object.entries(props).length === 0) {
+    if (!props.userId) {
         return <Preloader />
     }
 
@@ -12,8 +13,9 @@ function ProfileInfo(props) {
 
         for (let contact in props.contacts) {
             props.contacts[contact] && arr.push(
-                <a
-                    href={props.contacts[contact]}
+                <Link
+                    to={props.contacts[contact]}
+                    reloadDocument
                     target='_blank'
                     rel='noreferrer'
                     key={contact}
@@ -21,7 +23,7 @@ function ProfileInfo(props) {
                     className={styles[contact]}
                 >
                     {contact}
-                </a>
+                </Link>
             )
         }
         return arr
@@ -52,8 +54,8 @@ function ProfileInfo(props) {
                             ? 'В поиске работы'
                             : 'Работу не ищу'
                     }</p>
-                    <p>Описание работы: {props.lookingForAJobDescription}</p>
-                    <p>писька сантиметр</p>
+                    {props.lookingForAJob && <p>Описание работы: {props.lookingForAJobDescription}</p>}
+                    {/*<p>писька сантиметр</p>*/}
 
                     <div>
                         {notEmptyContacts()}

@@ -58,11 +58,11 @@ class FindUserPageContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    users: state.findUserPageData.users,
-    currentPageNumber: state.findUserPageData.currentPageNumber,
-    totalUsersCount: state.findUserPageData.totalUsersCount,
-    pageSize: state.findUserPageData.pageSize,
-    isLoading: state.findUserPageData.isLoading,
+    users: state.findUserPage.users,
+    currentPageNumber: state.findUserPage.currentPageNumber,
+    totalUsersCount: state.findUserPage.totalUsersCount,
+    pageSize: state.findUserPage.pageSize,
+    isLoading: state.findUserPage.isLoading,
 
     // currentUserId: state.profilePageData.currentUserId
 })

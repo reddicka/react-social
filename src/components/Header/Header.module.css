@@ -33,9 +33,12 @@ ul {
     margin-left: 15px;
 }
 
-.logo {
+.logo, .logo img {
     height: 40px;
     width: 40px;
-    background-color: brown;
     border-radius: 50%;
+}
+
+.logo img {
+    object-fit: cover;
 }

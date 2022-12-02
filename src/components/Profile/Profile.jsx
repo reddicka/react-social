@@ -7,7 +7,7 @@ import React from "react";
 const Profile = (props) => {
   return (
       <div className={styles.profile}>
-          <ProfileInfo {...props.profileInfo} />
+          <ProfileInfo {...props.profileInfo}/>
           <MyPosts
               posts={props.posts}
               newPostText={props.newPostText}
