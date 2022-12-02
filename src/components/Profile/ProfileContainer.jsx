@@ -1,18 +1,25 @@
 import React from "react";
 import {connect} from "react-redux";
 import {addPost, setProfileInfo, updateNewPostText} from "../../redux/profile-reducer";
-import axios from "axios";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {usersAPI} from "../../api/api";
 
 class ProfileContainer extends React.Component{
     componentDidMount() {
         let userId = this.props.router.params.userId
         if (!userId) {userId = 2}
         // if (this.props.currentUserId) {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-            .then(response => {
-                this.props.setProfileInfo(response.data)
+
+        usersAPI.isAuthorized()
+            .then(data => {
+                (data.resultCode === 0) &&
+                (userId = data.data)
+            })
+
+        usersAPI.getProfileData(userId)
+            .then(data => {
+                this.props.setProfileInfo(data)
                 // this.props.setProfileInfo(response.data.userId)
                 // console.log(response.data.userId)
             })

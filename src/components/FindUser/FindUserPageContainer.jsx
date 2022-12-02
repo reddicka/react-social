@@ -9,36 +9,31 @@ import {
     unfollow
 } from "../../redux/find_users-reducer";
 import React from "react";
-import axios from "axios";
-import {setCurrentUserId} from "../../redux/profile-reducer";
+import {usersAPI} from "../../api/api";
 
 class FindUserPageContainer extends React.Component {
     componentDidMount() {
         if (this.props.users.length === 0) {
             this.props.setIsLoading(true)
-            axios
-                .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPageNumber}`, {
-                    withCredentials: true
-                })
-                .then(response => {
-                    this.props.setIsLoading(false)
-                    this.props.setUsers(response.data.items)
-                    this.props.setTotalUsersCount(response.data.totalCount)
-                })
 
+            usersAPI.getUsers(this.props.currentPageNumber, this.props.pageSize)
+                .then(data => {
+                    this.props.setIsLoading(false)
+                    this.props.setUsers(data.items)
+                    this.props.setTotalUsersCount(data.totalCount)
+                })
         }
     }
 
     onSetPageClick = (pageNumber) => {
         this.props.setCurrentPageNumber(pageNumber)
         this.props.setIsLoading(true)
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`, {withCredentials: true})
-            .then(response => {
-                this.props.setIsLoading(false)
-                this.props.setUsers(response.data.items)
-            })
 
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.setIsLoading(false)
+                this.props.setUsers(data.items)
+            })
     }
 
     render() {
@@ -52,7 +47,6 @@ class FindUserPageContainer extends React.Component {
                 currentPageNumber={this.props.currentPageNumber}
                 onSetPageClick={this.onSetPageClick}
                 isLoading={this.props.isLoading}
-
                 currentUserId={this.props.currentUserId}
             />
         )
@@ -65,8 +59,6 @@ const mapStateToProps = (state) => ({
     totalUsersCount: state.findUserPage.totalUsersCount,
     pageSize: state.findUserPage.pageSize,
     isLoading: state.findUserPage.isLoading,
-
-    // currentUserId: state.profilePageData.currentUserId
 })
 
 export default connect(mapStateToProps, {
@@ -76,6 +68,4 @@ export default connect(mapStateToProps, {
     setCurrentPageNumber,
     setTotalUsersCount,
     setIsLoading,
-
-    // setCurrentUserId
 })(FindUserPageContainer)
