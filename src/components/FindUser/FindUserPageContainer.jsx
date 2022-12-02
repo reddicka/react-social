@@ -17,7 +17,9 @@ class FindUserPageContainer extends React.Component {
         if (this.props.users.length === 0) {
             this.props.setIsLoading(true)
             axios
-                .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPageNumber}`)
+                .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPageNumber}`, {
+                    withCredentials: true
+                })
                 .then(response => {
                     this.props.setIsLoading(false)
                     this.props.setUsers(response.data.items)
@@ -31,7 +33,7 @@ class FindUserPageContainer extends React.Component {
         this.props.setCurrentPageNumber(pageNumber)
         this.props.setIsLoading(true)
         axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`)
+            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`, {withCredentials: true})
             .then(response => {
                 this.props.setIsLoading(false)
                 this.props.setUsers(response.data.items)
