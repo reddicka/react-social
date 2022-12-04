@@ -1,10 +1,10 @@
+import {usersAPI} from "../api/api";
+
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_PROFILE_INFO = 'SET_PROFILE_INFO'
-// const SET_CURRENT_USER_ID = 'SET_CURRENT_USER_ID'
 
 let initialState = {
-    // currentUserId: null,
     profileInfo: null,
     posts: [
         {
@@ -52,16 +52,14 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileInfo: action.profileInfo
             }
-        // case SET_CURRENT_USER_ID:
-        //     return {
-        //         ...state,
-        //         currentUserId: action.currentUserId
-        //     }
         default:
             return state
     }
 }
 
+export default profileReducer
+
+// actions
 export const addPost = () => ({type: ADD_POST})
 export const updateNewPostText = (newText) => (
     {type: UPDATE_NEW_POST_TEXT, newText}
@@ -69,8 +67,29 @@ export const updateNewPostText = (newText) => (
 export const setProfileInfo = (profileInfo) => (
     {type: SET_PROFILE_INFO, profileInfo}
 )
-// export const setCurrentUserId = (id) => (
-//     {type: SET_CURRENT_USER_ID, id}
-// )
 
-export default profileReducer
+// thunk-creators
+export const getProfileData = (userId = 2) => {
+    return (dispatch) => {
+        // ПО ХОРОШЕМУ СДЕЛАТЬ ФЛАГ ЗАГРУЗКИ И СЕТАТЬ ЕГО ДО/ПОСЛЕ
+
+        // let userId = id
+        // if (!userId) {userId = 2}
+        // if (this.props.currentUserId) {
+
+        usersAPI.isAuthorized()
+            .then(data => {
+                (data.resultCode === 0) &&
+                (userId = data.data)
+            })
+
+        usersAPI.getProfileData(userId)
+            .then(data => {
+                dispatch(setProfileInfo(data))
+                // this.props.setProfileInfo(response.data.userId)
+                // console.log(response.data.userId)
+            })
+        // }
+    }
+}
+

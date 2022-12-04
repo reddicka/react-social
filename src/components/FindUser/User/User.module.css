@@ -49,6 +49,10 @@
     transition: background-color 0.2s ease-in;
 }
 
+.user_buttons button:disabled {
+    background-color: #484848;
+}
+
 .user_buttons button:hover {
     background-color: #9ba1ff;
 }

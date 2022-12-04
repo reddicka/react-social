@@ -1,29 +1,31 @@
 import React from 'react';
 import Header from "./Header";
 import {connect} from "react-redux";
-import {setAuthUserData, setAvatarUrl, setIsLoading} from "../../redux/auth-reducer";
+import {isAuthorized, setAuthUserData, setAvatarUrl, setIsLoading} from "../../redux/auth-reducer";
 import {usersAPI} from "../../api/api";
 
 class HeaderContainer extends React.Component {
     componentDidMount() {
-        if (!this.props.isAuth) {
-            setIsLoading(true)
+        this.props.isAuthorized(this.props.isAuth)
 
-            usersAPI.isAuthorized()
-                .then(data => {
-
-                    if (data.resultCode === 0) {
-                        let {id, login, email} = data.data
-                        this.props.setAuthUserData(id, login, email)
-
-                        usersAPI.getProfileData(id)
-                            .then(data => {
-                                this.props.setAvatarUrl(data.photos.small)
-                                setIsLoading(false)
-                            })
-                    }
-                })
-        }
+        // if (!this.props.isAuth) {
+        //     setIsLoading(true)
+        //
+        //     usersAPI.isAuthorized()
+        //         .then(data => {
+        //
+        //             if (data.resultCode === 0) {
+        //                 let {id, login, email} = data.data
+        //                 this.props.setAuthUserData(id, login, email)
+        //
+        //                 usersAPI.getProfileData(id)
+        //                     .then(data => {
+        //                         this.props.setAvatarUrl(data.photos.small)
+        //                         setIsLoading(false)
+        //                     })
+        //             }
+        //         })
+        // }
     }
 
     render() {
@@ -44,7 +46,5 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-    setAuthUserData,
-    setIsLoading,
-    setAvatarUrl
+    isAuthorized
 })(HeaderContainer);

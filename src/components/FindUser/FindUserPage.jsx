@@ -42,6 +42,11 @@ const FindUserPage = (props) => {
             status={user.status}
             follow={props.follow}
             unfollow={props.unfollow}
+
+            isLockedButtons={props.isLockedButtons}
+            setIsFollowingProgress={props.setIsFollowingProgress}
+
+
         />
     )
 

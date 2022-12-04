@@ -17,12 +17,12 @@ export const usersAPI = {
         return instance.get(`profile/${userId}`)
             .then(response => response.data)
     },
-    follow(id) {
-        return instance.post(`follow/${id}`)
+    follow(userId) {
+        return instance.post(`follow/${userId}`)
             .then(response => response.data)
     },
-    unfollow(id) {
-        return instance.delete(`follow/${id}`)
+    unfollow(userId) {
+        return instance.delete(`follow/${userId}`)
             .then(response => response.data)
     },
     isAuthorized() {

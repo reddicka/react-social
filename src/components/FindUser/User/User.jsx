@@ -1,24 +1,17 @@
 import style from './User.module.css'
 import avatar from '../../../assets/img/user.png'
 import {NavLink} from "react-router-dom";
-import {usersAPI} from "../../../api/api";
 
 const User = (props) => {
+
     let follow = () => {
-        usersAPI.follow(props.id)
-            .then(data => {
-                data.resultCode === 0 &&
-                    props.follow(props.id)
-            })
+        props.follow(props.id)
     }
 
     let unfollow = () => {
-        usersAPI.unfollow(props.id)
-            .then(data => {
-                data.resultCode === 0 &&
-                    props.unfollow(props.id)
-            })
+        props.unfollow(props.id)
     }
+
 
     return (
         <li className={style.user_item}>
@@ -31,9 +24,6 @@ const User = (props) => {
                 <p className={style.user_name}>
                     {props.name}
                 </p>
-                <p className={style.user_location}>
-                    {/*{`${props.location.country}, ${props.location.city}`}*/}
-                </p>
                 <p className={style.user_status}>
                     {props.status}
                 </p>
@@ -41,8 +31,16 @@ const User = (props) => {
             <div className={style.user_buttons}>
                 {
                     props.followed
-                    ? <button onClick={ unfollow }>unfollow</button>
-                    : <button onClick={ follow } >follow</button>
+                    ? <button
+                            disabled={props.isLockedButtons.includes(props.id)}
+                            onClick={ unfollow }>
+                            unfollow
+                    </button>
+                    : <button
+                            disabled={props.isLockedButtons.includes(props.id)}
+                            onClick={ follow } >
+                            follow
+                    </button>
                 }
             </div>
         </li>

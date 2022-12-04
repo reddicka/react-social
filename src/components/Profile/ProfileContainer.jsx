@@ -1,32 +1,35 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addPost, setProfileInfo, updateNewPostText} from "../../redux/profile-reducer";
+import {addPost, setProfileInfo, updateNewPostText, getProfileData} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {usersAPI} from "../../api/api";
 
-class ProfileContainer extends React.Component{
+class ProfileContainer extends React.Component {
     componentDidMount() {
-        let userId = this.props.router.params.userId
-        if (!userId) {userId = 2}
-        // if (this.props.currentUserId) {
+        this.props.getProfileData(this.props.router.params.userId)
+        /*
+                let userId = this.props.router.params.userId
+                if (!userId) {userId = 2}
+                // if (this.props.currentUserId) {
 
-        usersAPI.isAuthorized()
-            .then(data => {
-                (data.resultCode === 0) &&
-                (userId = data.data)
-            })
+                usersAPI.isAuthorized()
+                    .then(data => {
+                        (data.resultCode === 0) &&
+                            (userId = data.data)
+                    })
 
-        usersAPI.getProfileData(userId)
-            .then(data => {
-                this.props.setProfileInfo(data)
-                // this.props.setProfileInfo(response.data.userId)
-                // console.log(response.data.userId)
-            })
-        // }
+                usersAPI.getProfileData(userId)
+                    .then(data => {
+                        this.props.setProfileInfo(data)
+                        // this.props.setProfileInfo(response.data.userId)
+                        // console.log(response.data.userId)
+                    })
+                // }
+         */
     }
 
-    render () {
+    render() {
         return (
             <Profile {...this.props}/>
         )
@@ -51,7 +54,7 @@ function withRouter(Component) {
         return (
             <Component
                 {...props}
-                router={{ location, navigate, params }}
+                router={{location, navigate, params}}
             />
         );
     }
@@ -59,10 +62,8 @@ function withRouter(Component) {
     return ComponentWithRouterProp;
 }
 
-
 export default connect(mapStateToProps, {
-    setProfileInfo,
     addPost,
-    updateNewPostText
-    // setCurrentUserId
+    updateNewPostText,
+    getProfileData
 })(WithUrlContainer)
