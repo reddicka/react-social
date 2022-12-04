@@ -1,32 +1,12 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addPost, setProfileInfo, updateNewPostText, getProfileData} from "../../redux/profile-reducer";
+import {addPost, updateNewPostText, getUserProfile} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
-import {usersAPI} from "../../api/api";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        this.props.getProfileData(this.props.router.params.userId)
-        /*
-                let userId = this.props.router.params.userId
-                if (!userId) {userId = 2}
-                // if (this.props.currentUserId) {
-
-                usersAPI.isAuthorized()
-                    .then(data => {
-                        (data.resultCode === 0) &&
-                            (userId = data.data)
-                    })
-
-                usersAPI.getProfileData(userId)
-                    .then(data => {
-                        this.props.setProfileInfo(data)
-                        // this.props.setProfileInfo(response.data.userId)
-                        // console.log(response.data.userId)
-                    })
-                // }
-         */
+        this.props.getUserProfile(this.props.router.params.userId)
     }
 
     render() {
@@ -65,5 +45,5 @@ function withRouter(Component) {
 export default connect(mapStateToProps, {
     addPost,
     updateNewPostText,
-    getProfileData
+    getUserProfile
 })(WithUrlContainer)

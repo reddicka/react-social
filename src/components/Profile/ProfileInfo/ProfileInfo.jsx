@@ -1,7 +1,7 @@
 import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 
 function ProfileInfo(props) {
     if (!props.userId) {
@@ -15,7 +15,8 @@ function ProfileInfo(props) {
             props.contacts[contact] && arr.push(
                 <Link
                     to={props.contacts[contact]}
-                    reloadDocument
+                    // replace
+                    // reloadDocument
                     target='_blank'
                     rel='noreferrer'
                     key={contact}

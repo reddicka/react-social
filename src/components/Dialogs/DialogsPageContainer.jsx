@@ -1,47 +1,13 @@
-import {sendMessageActionCreator, updateNewMessageTextActionCreator} from "../../redux/dialogs-reducer";
+import {sendMessage,updateNewMessageText} from "../../redux/dialogs-reducer";
 import DialogsPage from "./DialogsPage";
-// import StoreContext from "../../StoreContext";
 import {connect} from "react-redux";
 
-// function old__DialogsPageContainer() {
-//     return (
-//         <StoreContext.Consumer>
-//             { store => {
-//                 let state = store.getState().dialogsPageData
-//
-//                 let onSendMessageClick = () => {
-//                     let action = sendMessageActionCreator()
-//                     store.dispatch(action)
-//                 }
-//
-//                 let onMessageChange = (newText) => {
-//                     let action = updateNewMessageTextActionCreator(newText)
-//                     store.dispatch(action)
-//                 }
-//
-//                 return <DialogsPage
-//                     updateNewMessageText={onMessageChange}
-//                     sendMessage={onSendMessageClick}
-//                     dialogsPageData={state}
-//                 />
-//             }}
-//         </StoreContext.Consumer>
-//     );
-// }
-
 const mapStateToProps = (state) => ({
-    dialogsPageData: state.dialogsPage
+    dialogsPageData: state.dialogsPage,
+    isAuth: state.auth.isAuth
 })
 
-const mapDispatchToProps = (dispatch) => ({
-    sendMessage: () => {
-        let action = sendMessageActionCreator()
-        dispatch(action)
-    },
-    updateNewMessageText: (newText) => {
-        let action = updateNewMessageTextActionCreator(newText)
-        dispatch(action)
-    }
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(DialogsPage)
+export default connect(mapStateToProps, {
+    sendMessage,
+    updateNewMessageText
+})(DialogsPage)

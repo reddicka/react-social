@@ -8,6 +8,7 @@ import DialogsPageContainer from "./components/Dialogs/DialogsPageContainer";
 import FindUserPageContainer from "./components/FindUser/FindUserPageContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 
 function App(props) {
     return (
@@ -39,6 +40,10 @@ function App(props) {
 
                     <Route path='/search' element={
                         <FindUserPageContainer/>}
+                    />
+
+                    <Route path='/login' element={
+                        <Login/>}
                     />
 
                     {/*<Route path='*' element={<NotFound />} />*/}

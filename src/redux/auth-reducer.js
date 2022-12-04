@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/api";
+import {authAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_IS_LOADING = 'SET_IS_LOADING'
@@ -44,14 +44,13 @@ export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 export const setAvatarUrl = (avatarUrl) => ({type: SET_IS_LOADING, avatarUrl})
 
 // thunk-creators
-export const isAuthorized = (isAuth) => {
+export const getAuthUserData = (isAuth) => {
     return (dispatch) => {
         if (!isAuth) {
             dispatch(setIsLoading(true))
 
-            usersAPI.isAuthorized()
+            authAPI.me()
                 .then(data => {
-
                     if (data.resultCode === 0) {
                         let {id, login, email} = data.data
                         dispatch(setAuthUserData(id, login, email))

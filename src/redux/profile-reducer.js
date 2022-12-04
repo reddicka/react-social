@@ -1,8 +1,8 @@
-import {usersAPI} from "../api/api";
+import {authAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
-const SET_PROFILE_INFO = 'SET_PROFILE_INFO'
+const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
 let initialState = {
     profileInfo: null,
@@ -47,7 +47,7 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 newPostText: action.newText
             }
-        case SET_PROFILE_INFO:
+        case SET_USER_PROFILE:
             return {
                 ...state,
                 profileInfo: action.profileInfo
@@ -64,12 +64,12 @@ export const addPost = () => ({type: ADD_POST})
 export const updateNewPostText = (newText) => (
     {type: UPDATE_NEW_POST_TEXT, newText}
 )
-export const setProfileInfo = (profileInfo) => (
-    {type: SET_PROFILE_INFO, profileInfo}
+export const setUserProfile = (profileInfo) => (
+    {type: SET_USER_PROFILE, profileInfo}
 )
 
 // thunk-creators
-export const getProfileData = (userId = 2) => {
+export const getUserProfile = (userId = 2) => {
     return (dispatch) => {
         // ПО ХОРОШЕМУ СДЕЛАТЬ ФЛАГ ЗАГРУЗКИ И СЕТАТЬ ЕГО ДО/ПОСЛЕ
 
@@ -77,7 +77,7 @@ export const getProfileData = (userId = 2) => {
         // if (!userId) {userId = 2}
         // if (this.props.currentUserId) {
 
-        usersAPI.isAuthorized()
+        authAPI.me()
             .then(data => {
                 (data.resultCode === 0) &&
                 (userId = data.data)
@@ -85,8 +85,8 @@ export const getProfileData = (userId = 2) => {
 
         usersAPI.getProfileData(userId)
             .then(data => {
-                dispatch(setProfileInfo(data))
-                // this.props.setProfileInfo(response.data.userId)
+                dispatch(setUserProfile(data))
+                // this.props.setUserProfile(response.data.userId)
                 // console.log(response.data.userId)
             })
         // }
