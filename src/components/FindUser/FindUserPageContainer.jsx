@@ -2,6 +2,8 @@ import {connect} from "react-redux";
 import FindUserPage from "./FindUserPage";
 import {follow,getUsers,unfollow} from "../../redux/find_users-reducer";
 import React from "react";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {compose} from "redux";
 
 class FindUserPageContainer extends React.Component {
     componentDidMount() {
@@ -28,8 +30,12 @@ const mapStateToProps = (state) => ({
     isLockedButtons: state.findUserPage.isLockedButtons
 })
 
-export default connect(mapStateToProps, {
-    getUsers,
-    follow,
-    unfollow
-})(FindUserPageContainer)
+
+export default compose(
+    connect(mapStateToProps, {
+        getUsers,
+        follow,
+        unfollow
+    }),
+    WithAuthRedirect
+)(FindUserPageContainer)
