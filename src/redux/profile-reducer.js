@@ -4,6 +4,8 @@ const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 
+const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
+
 let initialState = {
     profileInfo: null,
     posts: [
@@ -18,7 +20,9 @@ let initialState = {
             likes: 12
         },
     ],
-    newPostText: ''
+    newPostText: '',
+
+    profileStatus: ''
 }
 
 
@@ -52,6 +56,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileInfo: action.profileInfo
             }
+        case SET_PROFILE_STATUS:
+            return {
+                ...state,
+                profileStatus: action.profileStatus
+            }
         default:
             return state
     }
@@ -61,12 +70,10 @@ export default profileReducer
 
 // actions
 export const addPost = () => ({type: ADD_POST})
-export const updateNewPostText = (newText) => (
-    {type: UPDATE_NEW_POST_TEXT, newText}
-)
-export const setUserProfile = (profileInfo) => (
-    {type: SET_USER_PROFILE, profileInfo}
-)
+export const updateNewPostText = (newText) => ({type: UPDATE_NEW_POST_TEXT, newText})
+export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
+
+export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
 
 // thunk-creators
 export const getUserProfile = (userId = 2) => {
@@ -93,3 +100,24 @@ export const getUserProfile = (userId = 2) => {
     }
 }
 
+
+
+
+
+export const getProfileStatus = (userId) => {
+    return (dispatch) => {
+        usersAPI.getProfileStatus(userId)
+            .then(status => {
+                dispatch(setProfileStatus(status))
+            })
+    }
+}
+
+export const putProfileStatus = (status) => {
+    return (dispatch) => {
+        usersAPI.putMyStatus(status)
+            .then(data => {
+                dispatch(setProfileStatus)
+            })
+    }
+}

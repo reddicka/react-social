@@ -1,6 +1,11 @@
 import React from "react";
 import {connect} from "react-redux";
-import {addPost, updateNewPostText, getUserProfile} from "../../redux/profile-reducer";
+import {
+    addPost,
+    updateNewPostText,
+    getUserProfile,
+    putProfileStatus, getProfileStatus,
+} from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
@@ -9,6 +14,7 @@ import {compose} from "redux";
 class ProfileContainer extends React.Component {
     componentDidMount() {
         this.props.getUserProfile(this.props.router.params.userId)
+        this.props.getProfileStatus(this.props.router.params.userId)
     }
 
     render() {
@@ -20,9 +26,12 @@ class ProfileContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
     profileInfo: state.profilePage.profileInfo,
-    // currentUserId: state.currentUserId
     posts: state.profilePage.posts,
-    newPostText: state.profilePage.newPostText
+    newPostText: state.profilePage.newPostText,
+
+    myUserId: state.auth.userId,
+
+    profileStatus: state.profilePage.profileStatus
 })
 
 // костыль, сейчас делается через хуки
@@ -47,8 +56,11 @@ export default compose(
     connect(mapStateToProps, {
         addPost,
         updateNewPostText,
-        getUserProfile
+        getUserProfile,
+
+        getProfileStatus,
+        putProfileStatus
     }),
-    WithAuthRedirect,
+    // WithAuthRedirect,
     withRouter
 )(ProfileContainer)

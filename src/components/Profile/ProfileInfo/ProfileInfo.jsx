@@ -2,6 +2,7 @@ import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
 import {Link, Navigate} from "react-router-dom";
+import ProfileStatus from "./ProfileStatus";
 
 function ProfileInfo(props) {
     if (!props.userId) {
@@ -49,6 +50,16 @@ function ProfileInfo(props) {
 
                 <div className={styles.profile__about_description}>
                     <p style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.fullName}</p>
+
+                    <p>статус из запроса ---- {props.profileStatus}</p>
+
+                    <ProfileStatus
+                        userId={props.userId}
+                        status={props.profileStatus}
+                        putProfileStatus={props.putProfileStatus}
+                        getProfileStatus={props.getProfileStatus}
+                    />
+
                     <p>{props.aboutMe}</p>
                     <p>{
                         props.lookingForAJob
