@@ -1,9 +1,8 @@
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
-
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
 
 let initialState = {
@@ -72,7 +71,6 @@ export default profileReducer
 export const addPost = () => ({type: ADD_POST})
 export const updateNewPostText = (newText) => ({type: UPDATE_NEW_POST_TEXT, newText})
 export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
-
 export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
 
 // thunk-creators
@@ -90,7 +88,7 @@ export const getUserProfile = (userId = 2) => {
                 (userId = data.data)
             })
 
-        usersAPI.getProfileData(userId)
+        profileAPI.getProfile(userId)
             .then(data => {
                 dispatch(setUserProfile(data))
                 // this.props.setUserProfile(response.data.userId)
@@ -100,24 +98,22 @@ export const getUserProfile = (userId = 2) => {
     }
 }
 
-
-
-
-
 export const getProfileStatus = (userId) => {
     return (dispatch) => {
-        usersAPI.getProfileStatus(userId)
+        profileAPI.getProfileStatus(userId)
             .then(status => {
                 dispatch(setProfileStatus(status))
             })
     }
 }
 
-export const putProfileStatus = (status) => {
+export const updateProfileStatus = (status) => {
     return (dispatch) => {
-        usersAPI.putMyStatus(status)
+        profileAPI.updateProfileStatus(status)
             .then(data => {
-                dispatch(setProfileStatus)
+                if (data.resultCode === 0) {
+                    dispatch(setProfileStatus)
+                }
             })
     }
 }

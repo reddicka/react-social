@@ -3,25 +3,32 @@ import React from "react";
 class ProfileStatus extends React.Component {
     state = {
         editMode: false,
-        textValue: this.props.status
+        status: this.props.profileStatus
     }
 
-    activateEditMode = () => {
+    toggleEditMode = () => {
         this.setState({
             editMode: !this.state.editMode
         })
     }
 
-    onPutStatus = () => {
-        this.props.putProfileStatus(this.state.textValue)
+    onUpdateStatus = () => {
         this.props.getProfileStatus(this.props.userId) // НЕ РАБОТАЕТ ЕСЛИ В АДРЕСНОЙ СТРОКЕ НИЧЕГО
+        this.props.updateProfileStatus(this.state.status)
     }
 
     onStatusChange = (e) => {
-        let newText = e.target.value
         this.setState({
-            textValue: newText
+            status: e.currentTarget.value
         })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.profileStatus !== this.props.profileStatus) {
+            this.setState({
+                status: this.props.profileStatus
+            })
+        }
     }
 
     render() {
@@ -32,31 +39,31 @@ class ProfileStatus extends React.Component {
                     <>
                         <div>
                             <input
-                                onBlur={this.activateEditMode}
+                                onBlur={this.toggleEditMode}
                                 autoFocus={true}
                                 // readOnly={true} // ПОКА ЧТО ЧТОБ НЕ РУГАЛОСЬ
                                 type='text'
                                 onChange={this.onStatusChange}
-                                value={this.state.textValue}/>
+                                value={this.state.status}/>
                         </div>
                         {/*<button*/}
                         {/*    style={{width: '50px', height: '50px', margin: '10px'}}*/}
-                        {/*    onClick={this.onPutStatus}*/}
+                        {/*    onClick={this.onUpdateStatus}*/}
                         {/*/>*/}
                     </>
                 }
                 {
-                    this.state.editMode ||
+                    !this.state.editMode &&
                     <div>
                         <span
-                            onClick={this.activateEditMode}>
-                            {this.props.status}
+                            onClick={this.toggleEditMode}>
+                            {this.props.profileStatus || 'статуса нет'}
                         </span>
                     </div>
                 }
                 <button
                     style={{width: '50px', height: '50px', margin: '10px'}}
-                    onClick={this.onPutStatus}
+                    onClick={this.onUpdateStatus}
                 />
             </>
         )

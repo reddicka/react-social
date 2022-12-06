@@ -10,8 +10,8 @@ const Profile = (props) => {
           <ProfileInfo
               {...props.profileInfo}
               profileStatus={props.profileStatus}
-              putProfileStatus={props.putProfileStatus}
               getProfileStatus={props.getProfileStatus}
+              updateProfileStatus={props.updateProfileStatus}
           />
 
           <MyPosts

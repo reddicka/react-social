@@ -4,7 +4,7 @@ import {
     addPost,
     updateNewPostText,
     getUserProfile,
-    putProfileStatus, getProfileStatus,
+    getProfileStatus, updateProfileStatus,
 } from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
@@ -13,8 +13,13 @@ import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     componentDidMount() {
-        this.props.getUserProfile(this.props.router.params.userId)
-        this.props.getProfileStatus(this.props.router.params.userId)
+        let userId = this.props.router.params.userId
+        if (!userId) {
+            userId = 2
+        }
+
+        this.props.getUserProfile(userId)
+        this.props.getProfileStatus(userId)
     }
 
     render() {
@@ -59,7 +64,7 @@ export default compose(
         getUserProfile,
 
         getProfileStatus,
-        putProfileStatus
+        updateProfileStatus
     }),
     // WithAuthRedirect,
     withRouter

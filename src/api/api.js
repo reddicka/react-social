@@ -13,10 +13,6 @@ export const usersAPI = {
         return instance.get(`users?page=${pageNumber}&count=${pageSize}`)
             .then(response => response.data)
     },
-    getProfileData(userId) {
-        return instance.get(`profile/${userId}`)
-            .then(response => response.data)
-    },
     follow(userId) {
         return instance.post(`follow/${userId}`)
             .then(response => response.data)
@@ -25,11 +21,27 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`)
             .then(response => response.data)
     },
+    getProfileData(userId) {
+        return profileAPI.getProfile(userId)  // Заглушка
+    },
+    getProfileStatus(userId) {
+        return profileAPI.getProfileStatus(userId)  // Заглушка
+    },
+    putMyStatus(status) {
+        return profileAPI.updateProfileStatus(status)  // Заглушка
+    }
+}
+
+export const profileAPI = {
+    getProfile(userId) {
+        return instance.get(`profile/${userId}`)
+            .then(response => response.data)
+    },
     getProfileStatus(userId) {
         return instance.get(`profile/status/${userId}`)
             .then(response => response.data)
     },
-    putMyStatus(status) {
+    updateProfileStatus(status) {
         return instance.put(`profile/status`, {status})
     }
 }

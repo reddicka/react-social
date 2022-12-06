@@ -55,9 +55,9 @@ function ProfileInfo(props) {
 
                     <ProfileStatus
                         userId={props.userId}
-                        status={props.profileStatus}
-                        putProfileStatus={props.putProfileStatus}
+                        profileStatus={props.profileStatus}
                         getProfileStatus={props.getProfileStatus}
+                        updateProfileStatus={props.updateProfileStatus}
                     />
 
                     <p>{props.aboutMe}</p>
