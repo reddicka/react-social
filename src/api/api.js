@@ -20,15 +20,6 @@ export const usersAPI = {
     unfollow(userId) {
         return instance.delete(`follow/${userId}`)
             .then(response => response.data)
-    },
-    getProfileData(userId) {
-        return profileAPI.getProfile(userId)  // Заглушка
-    },
-    getProfileStatus(userId) {
-        return profileAPI.getProfileStatus(userId)  // Заглушка
-    },
-    putMyStatus(status) {
-        return profileAPI.updateProfileStatus(status)  // Заглушка
     }
 }
 

@@ -1,7 +1,7 @@
 import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
-import {Link, Navigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import ProfileStatus from "./ProfileStatus";
 
 function ProfileInfo(props) {

@@ -1,4 +1,4 @@
-import {authAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI, usersAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_IS_LOADING = 'SET_IS_LOADING'
@@ -55,7 +55,7 @@ export const getAuthUserData = (isAuth) => {
                         let {id, login, email} = data.data
                         dispatch(setAuthUserData(id, login, email))
 
-                        usersAPI.getProfileData(id)
+                        profileAPI.getProfile(id)
                             .then(data => {
                                 dispatch(setAvatarUrl(data.photos.small))
                                 dispatch(setIsLoading(false))

@@ -84,8 +84,7 @@ export const getUserProfile = (userId = 2) => {
 
         authAPI.me()
             .then(data => {
-                (data.resultCode === 0) &&
-                (userId = data.data)
+                (data.resultCode === 0) && (userId = data.data)
             })
 
         profileAPI.getProfile(userId)
