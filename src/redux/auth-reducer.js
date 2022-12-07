@@ -41,7 +41,7 @@ export default authReducer
 // actions
 export const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, userData: {userId, login, email}})
 export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
-export const setAvatarUrl = (avatarUrl) => ({type: SET_IS_LOADING, avatarUrl})
+export const setAvatarUrl = (avatarUrl) => ({type: SET_AVATAR_URL, avatarUrl})
 
 // thunk-creators
 export const getAuthUserData = (isAuth) => {
@@ -63,5 +63,14 @@ export const getAuthUserData = (isAuth) => {
                     }
                 })
         }
+    }
+}
+
+export const getLogin = () => {
+    return (dispatch) => {
+        authAPI.login()
+            .then(response =>
+                console.log(response.data)
+            )
     }
 }

@@ -1,5 +1,4 @@
 const SEND_MESSAGE = 'SEND_MESSAGE'
-const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE_NEW_MESSAGE_TEXT'
 
 let initialState = {
     dialogs: [
@@ -41,50 +40,33 @@ let initialState = {
             message: 'Привет писька',
             type: 'outbox'
         }
-    ],
-    newMessageText: ''
+    ]
 }
 
 const dialogsReducer = (state = initialState, action) => {
-    let sendMessage = () => {
-        const newMessageText = state.newMessageText
-
-        if (newMessageText !== '') {
-            return {
-                ...state,
-                messages: [
-                    ...state.messages,
-                    {
-                        id: state.messages.length + 1,
-                        message: newMessageText,
-                        type: 'outbox'
-                    }
-                ],
-                newMessageText: ''
-            }
-        }
-    }
-
-    let updateNewMessageText = (newText) => {
-        return {
-            ...state,
-            newMessageText: newText
-        }
-    }
-
     switch (action.type) {
-        case SEND_MESSAGE:
-            return sendMessage()
-        case UPDATE_NEW_MESSAGE_TEXT:
-            return updateNewMessageText(action.newText)
-        default:
+        case SEND_MESSAGE: {
+            const newMessageText = action.newMessageText
+
+            if (newMessageText) {
+                return {
+                    ...state,
+                    messages: [
+                        ...state.messages,
+                        {
+                            id: state.messages.length + 1,
+                            message: newMessageText,
+                            type: 'outbox'
+                        }
+                    ]
+                }
+            }
             return state
+        }
+        default: return state
     }
 }
 
-export const sendMessage = () => ({ type: SEND_MESSAGE })
-export const updateNewMessageText = (newText) => (
-    { type: UPDATE_NEW_MESSAGE_TEXT, newText: newText }
-)
+export const sendMessage = (newMessageText) => ({type: SEND_MESSAGE, newMessageText})
 
 export default dialogsReducer

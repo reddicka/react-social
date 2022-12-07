@@ -2,6 +2,7 @@ import React from "react";
 import styles from './DialogsPage.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
+import AddMessage from "./NewMessage";
 
 function DialogsPage(props) {
     let state = props.dialogsPageData
@@ -14,14 +15,6 @@ function DialogsPage(props) {
         <MessageItem message={message.message} type={message.type} key={message.id} />
     )
 
-    let onSendMessageClick = () => {
-        props.sendMessage()
-    }
-
-    let onMessageChange = (e) => {
-        let newText = e.target.value
-        props.updateNewMessageText(newText)
-    }
 
     return (
         <div className={styles.dialog_page}>
@@ -35,12 +28,7 @@ function DialogsPage(props) {
                 { messagesList }
             </div>
 
-            <textarea
-                // ref={ newMessageElement }
-                onChange={ onMessageChange }
-                value={ state.newMessageText }
-            />
-            <button onClick={ onSendMessageClick }>Отправить</button>
+            <AddMessage sendMessage={props.sendMessage} />
         </div>
     );
 }

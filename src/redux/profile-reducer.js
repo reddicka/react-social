@@ -1,7 +1,6 @@
-import {authAPI, profileAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 
 const ADD_POST = 'ADD_POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE_NEW_POST_TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
 
@@ -19,37 +18,30 @@ let initialState = {
             likes: 12
         },
     ],
-    newPostText: '',
-
     profileStatus: ''
 }
 
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_POST:
-            const newPostText = state.newPostText
+        case ADD_POST: {
+            const newPostText = action.newPostText
 
-            if (newPostText !== '') {
+            if (newPostText) {
                 return {
                     ...state,
                     posts: [
                         {
                             id: state.posts.length + 1,
-                            text: newPostText,
+                            text: action.newPostText,
                             likes: 0
                         },
                         ...state.posts,
-                    ],
-                    newPostText: ''
+                    ]
                 }
             }
-            break
-        case UPDATE_NEW_POST_TEXT:
-            return {
-                ...state,
-                newPostText: action.newText
-            }
+        }
+            return state
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -68,8 +60,7 @@ const profileReducer = (state = initialState, action) => {
 export default profileReducer
 
 // actions
-export const addPost = () => ({type: ADD_POST})
-export const updateNewPostText = (newText) => ({type: UPDATE_NEW_POST_TEXT, newText})
+export const addPost = (newPostText) => ({type: ADD_POST, newPostText})
 export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
 export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
 
