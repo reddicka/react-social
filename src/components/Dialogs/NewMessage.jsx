@@ -1,5 +1,9 @@
 import React from "react";
 import {Field, reduxForm} from "redux-form";
+import {FormControl} from "../common/FormsControls/FormsControls";
+import {maxLength, required} from "../../utils/validators/validators";
+
+const maxLengthNum =  maxLength(10)
 
 const AddMessageForm = (props) => {
     return (
@@ -7,10 +11,13 @@ const AddMessageForm = (props) => {
             <div>
                 <label htmlFor="messageBody"></label>
                 <Field
-                    component="textarea"
+                    component={FormControl}
+                    formElement='textarea'
+
                     name="messageBody"
                     id="messageBody"
                     placeholder="Введите сообщение..."
+                    validate={[required, maxLengthNum]}
                 />
                 <button>Отправить</button>
             </div>

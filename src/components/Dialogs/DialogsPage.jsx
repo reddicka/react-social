@@ -15,7 +15,6 @@ function DialogsPage(props) {
         <MessageItem message={message.message} type={message.type} key={message.id} />
     )
 
-
     return (
         <div className={styles.dialog_page}>
             <div className={styles.dialogs_list}>
@@ -24,11 +23,13 @@ function DialogsPage(props) {
                 </ul>
             </div>
 
-            <div className={styles.messages_list}>
-                { messagesList }
-            </div>
+            <div>
+                <div className={styles.messages_list}>
+                    { messagesList }
+                </div>
 
-            <AddMessage sendMessage={props.sendMessage} />
+                <AddMessage sendMessage={props.sendMessage} />
+            </div>
         </div>
     );
 }

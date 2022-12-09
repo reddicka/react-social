@@ -1,5 +1,9 @@
 import {Field, reduxForm} from "redux-form";
 import {authAPI} from "../../api/api";
+import {FormControl} from "../common/FormsControls/FormsControls";
+import {maxLength, required} from "../../utils/validators/validators";
+
+let maxLengthNum = maxLength(10)
 
 const LoginForm = (props) => {
     return (
@@ -7,34 +11,43 @@ const LoginForm = (props) => {
             <div>
                 <label htmlFor='email'>Email</label><br/>
                 <Field
+                    component={FormControl}
+                    formElement='input'
+
                     name='email'
                     id='email'
                     placeholder='Email'
-                    component='input'
                     type='email'
-                    autoComplete="email"
+                    autoComplete='email'
+                    validate={[required, maxLengthNum]}
                 />
             </div>
 
             <div>
                 <label htmlFor='password'>Пароль</label><br/>
                 <Field
+                    component={FormControl}
+                    formElement='input'
+
                     name='password'
                     id='password'
                     placeholder='Пароль'
-                    component='input'
                     type='password'
-                    autoComplete="password"
+                    autoComplete='password'
+                    validate={[required, maxLengthNum]}
                 />
             </div>
 
             <div>
                 <label htmlFor='rememberMe'>Запомнить</label>
                 <Field
+                    component={FormControl}
+                    formElement='checkbox'
+
                     name='rememberMe'
                     id='rememberMe'
-                    component='input'
                     type='checkbox'
+                    validate={[required]}
                 />
             </div>
 
