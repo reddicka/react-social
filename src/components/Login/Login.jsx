@@ -42,7 +42,7 @@ const LoginForm = (props) => {
                 <label htmlFor='rememberMe'>Запомнить</label>
                 <Field
                     component={FormControl}
-                    formElement='checkbox'
+                    formElement='input'
 
                     name='rememberMe'
                     id='rememberMe'
