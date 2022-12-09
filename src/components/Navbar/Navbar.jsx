@@ -51,15 +51,6 @@ function Navbar() {
                         Найти
                     </NavLink>
                 </li>
-
-
-                <li className={styles.item}>
-                    <NavLink to="/login"
-                        className={isActiveLink()}
-                    >
-                        ЛОГИН
-                    </NavLink>
-                </li>
             </ul>
         </nav>
     );

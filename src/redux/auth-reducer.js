@@ -1,10 +1,11 @@
-import {authAPI, profileAPI, usersAPI} from "../api/api";
+import {authAPI, profileAPI} from "../api/api";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_IS_LOADING = 'SET_IS_LOADING'
 const SET_AVATAR_URL = 'SET_AVATAR_URL'
 
 const SET_IS_AUTH = 'SET_IS_AUTH'
+const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
 
 const initialState = {
     userId: null,
@@ -12,7 +13,9 @@ const initialState = {
     email: null,
     isAuth: false,
     isLoading: false,
-    avatarUrl: null
+    avatarUrl: null,
+
+    captchaUrl: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -20,7 +23,8 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.payload
+                ...action.payload,
+                captchaUrl: null
             }
         case SET_IS_LOADING:
             return {
@@ -36,6 +40,11 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAuth: action.isAuth
+            }
+        case SET_CAPTCHA_URL:
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
             }
         default:
             return state
@@ -53,6 +62,7 @@ export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 export const setAvatarUrl = (avatarUrl) => ({type: SET_AVATAR_URL, avatarUrl})
 
 export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth})
+export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl})
 
 // thunk-creators
 export const getAuthUserData = () => dispatch => {
@@ -78,12 +88,15 @@ export const getAuthUserData = () => dispatch => {
 
 }
 
-export const login = (email, password, rememberMe) => dispatch => {
-    authAPI.login(email, password, rememberMe)
+export const login = (email, password, rememberMe, captcha) => dispatch => {
+    authAPI.login(email, password, rememberMe, captcha)
         .then(response => {
             if (response.data.resultCode === 0) {
-                console.log(response.data)
                 dispatch(getAuthUserData())
+            }
+
+            if (response.data.resultCode === 10) {
+                dispatch(getCaptchaUrl())
             }
         })
 
@@ -93,9 +106,15 @@ export const logout = () => dispatch => {
     authAPI.logout()
         .then(response => {
             if (response.data.resultCode === 0) {
-                console.log(response.data)
                 dispatch(setAuthUserData(null, null, null, false))
             }
         })
 
+}
+
+export const getCaptchaUrl = () => (dispatch) => {
+    authAPI.getCaptchaUrl()
+        .then(response => {
+            dispatch(setCaptchaUrl(response.data.url))
+        })
 }
