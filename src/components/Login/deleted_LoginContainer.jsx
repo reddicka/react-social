@@ -5,7 +5,7 @@ import {compose} from "redux";
 import {connect} from "react-redux";
 import {mapDispatchToPropsFactory} from "react-redux/es/connect/mapDispatchToProps";
 import {mapStateToPropsFactory} from "react-redux/es/connect/mapStateToProps";
-import {getLogin} from "../../redux/auth-reducer";
+import {login} from "../../redux/auth-reducer";
 
 // const LoginForm = (props) => {
 //     return (
@@ -74,10 +74,7 @@ export class LoginContainer extends React.Component {
 //     </>
 // }
 
-const mapStateToProps = ({
-
-})
 
 export default compose(
-    connect(mapStateToProps, { getLogin })()
+    connect(null, { login })()
 )()

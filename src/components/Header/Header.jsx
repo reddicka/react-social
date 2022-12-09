@@ -1,9 +1,14 @@
 import React from 'react';
 import styles from './Header.module.css';
-import {NavLink} from "react-router-dom";
+import {Navigate, NavLink} from "react-router-dom";
 import avatar from '../../assets/img/user.png'
 
 const Header = (props) => {
+    const onLogout = () => {
+        props.logout()
+        return <Navigate to={'/login'} />
+    }
+
     return (
         <header>
             <div className={styles.container}>
@@ -14,7 +19,7 @@ const Header = (props) => {
                     <div>
                         {
                             props.isAuth
-                            ? <button>Выйти из {props.login}</button>
+                            ? <button onClick={onLogout}>Выйти из {props.login}</button>
                             : <NavLink to={'/login'}>Войти</NavLink>
                         }
                     </div>

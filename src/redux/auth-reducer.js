@@ -4,6 +4,8 @@ const SET_USER_DATA = 'SET_USER_DATA'
 const SET_IS_LOADING = 'SET_IS_LOADING'
 const SET_AVATAR_URL = 'SET_AVATAR_URL'
 
+const SET_IS_AUTH = 'SET_IS_AUTH'
+
 const initialState = {
     userId: null,
     login: null,
@@ -18,8 +20,7 @@ const authReducer = (state = initialState, action) => {
         case SET_USER_DATA:
             return {
                 ...state,
-                ...action.userData,
-                isAuth: true
+                ...action.payload
             }
         case SET_IS_LOADING:
             return {
@@ -31,6 +32,11 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 avatarUrl: action.avatarUrl
             }
+        case SET_IS_AUTH:
+            return {
+                ...state,
+                isAuth: action.isAuth
+            }
         default:
             return state
     }
@@ -39,38 +45,57 @@ const authReducer = (state = initialState, action) => {
 export default authReducer
 
 // actions
-export const setAuthUserData = (userId, login, email) => ({type: SET_USER_DATA, userData: {userId, login, email}})
+export const setAuthUserData = (userId, login, email, isAuth) => ({
+    type: SET_USER_DATA,
+    payload: {userId, login, email, isAuth}
+})
 export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 export const setAvatarUrl = (avatarUrl) => ({type: SET_AVATAR_URL, avatarUrl})
 
+export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth})
+
 // thunk-creators
-export const getAuthUserData = (isAuth) => {
-    return (dispatch) => {
-        if (!isAuth) {
-            dispatch(setIsLoading(true))
+export const getAuthUserData = () => dispatch => {
+    // if (!isAuth) {
+    dispatch(setIsLoading(true))
 
-            authAPI.me()
-                .then(data => {
-                    if (data.resultCode === 0) {
-                        let {id, login, email} = data.data
-                        dispatch(setAuthUserData(id, login, email))
+    authAPI.me()
+        .then(data => {
+            if (data.resultCode === 0) {
+                let {id, login, email} = data.data
+                dispatch(setAuthUserData(id, login, email, true))
 
-                        profileAPI.getProfile(id)
-                            .then(data => {
-                                dispatch(setAvatarUrl(data.photos.small))
-                                dispatch(setIsLoading(false))
-                            })
-                    }
-                })
-        }
-    }
+                // мое говно
+                dispatch(setIsLoading(true))
+                profileAPI.getProfile(id)
+                    .then(data => {
+                        dispatch(setAvatarUrl(data.photos.small))
+                        dispatch(setIsLoading(false))
+                    })
+            }
+        })
+    // }
+
 }
 
-export const getLogin = () => {
-    return (dispatch) => {
-        authAPI.login()
-            .then(response =>
+export const login = (email, password, rememberMe) => dispatch => {
+    authAPI.login(email, password, rememberMe)
+        .then(response => {
+            if (response.data.resultCode === 0) {
                 console.log(response.data)
-            )
-    }
+                dispatch(getAuthUserData())
+            }
+        })
+
+}
+
+export const logout = () => dispatch => {
+    authAPI.logout()
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                console.log(response.data)
+                dispatch(setAuthUserData(null, null, null, false))
+            }
+        })
+
 }

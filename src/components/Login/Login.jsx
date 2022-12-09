@@ -1,9 +1,12 @@
 import {Field, reduxForm} from "redux-form";
-import {authAPI} from "../../api/api";
 import {FormControl} from "../common/FormsControls/FormsControls";
 import {maxLength, required} from "../../utils/validators/validators";
+import {login} from "../../redux/auth-reducer";
+import {connect} from "react-redux";
+import {Navigate} from "react-router-dom";
+import React from "react";
 
-let maxLengthNum = maxLength(10)
+let maxLengthNum = maxLength(30)
 
 const LoginForm = (props) => {
     return (
@@ -47,7 +50,6 @@ const LoginForm = (props) => {
                     name='rememberMe'
                     id='rememberMe'
                     type='checkbox'
-                    validate={[required]}
                 />
             </div>
 
@@ -62,13 +64,10 @@ let LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
 
 const Login = (props) => {
     const onSubmit = (formData) => {
-        console.log(formData)
-
-        authAPI.login(formData.email, formData.password, formData.rememberMe)
-            .then(res =>
-                console.log(res)
-            )
+        props.login(formData.email, formData.password, formData.rememberMe)
     }
+
+    if (props.isAuth) return <Navigate to={'/profile'} />
 
     return <>
         <h1>LOGIN</h1>
@@ -76,4 +75,8 @@ const Login = (props) => {
     </>
 }
 
-export default Login
+const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {login})(Login)
