@@ -1,4 +1,5 @@
 import {authAPI, profileAPI} from "../api/api";
+import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const SET_IS_LOADING = 'SET_IS_LOADING'
@@ -53,7 +54,7 @@ const authReducer = (state = initialState, action) => {
 
 export default authReducer
 
-// actions
+// action-creators
 export const setAuthUserData = (userId, login, email, isAuth) => ({
     type: SET_USER_DATA,
     payload: {userId, login, email, isAuth}
@@ -93,13 +94,12 @@ export const login = (email, password, rememberMe, captcha) => dispatch => {
         .then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(getAuthUserData())
-            }
-
-            if (response.data.resultCode === 10) {
+            } else if (response.data.resultCode === 1) {
+                dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
+            } else if (response.data.resultCode === 10) {
                 dispatch(getCaptchaUrl())
             }
         })
-
 }
 
 export const logout = () => dispatch => {

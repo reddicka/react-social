@@ -4,7 +4,8 @@ import {maxLength, required} from "../../utils/validators/validators";
 import {getCaptchaUrl, login} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 import {Navigate} from "react-router-dom";
-import React, {useState} from "react";
+import React from "react";
+import styles from "../common/FormsControls/FormsControls.module.css"
 
 let maxLengthNum = maxLength(30)
 
@@ -73,6 +74,10 @@ const LoginForm = (props) => {
             <div>
                 <button type='submit' >Войти</button>
             </div>
+
+            {
+                props.error && <div className={styles.formSummaryError}>{props.error}</div>
+            }
         </form>
     )
 }
