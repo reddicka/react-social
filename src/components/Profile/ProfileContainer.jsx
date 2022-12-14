@@ -14,7 +14,11 @@ class ProfileContainer extends React.Component {
     componentDidMount() {
         let userId = this.props.router.params.userId
         if (!userId) {
-            userId = 26946
+            userId = this.props.authorizedUserId
+            if (!userId) {
+                // debugger
+                // this.props.router.location({pathname :'/login'})
+            }
         }
 
         this.props.getUserProfile(userId)

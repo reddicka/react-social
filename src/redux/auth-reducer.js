@@ -70,7 +70,7 @@ export const getAuthUserData = () => dispatch => {
     // if (!isAuth) {
     dispatch(setIsLoading(true))
 
-    authAPI.me()
+    return authAPI.me()
         .then(data => {
             if (data.resultCode === 0) {
                 let {id, login, email} = data.data

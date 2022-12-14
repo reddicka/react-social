@@ -37,5 +37,5 @@ export default compose(
         follow,
         unfollow
     }),
-    WithAuthRedirect
+    // WithAuthRedirect
 )(FindUserPageContainer)
