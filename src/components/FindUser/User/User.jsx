@@ -12,7 +12,6 @@ const User = (props) => {
         props.unfollow(props.id)
     }
 
-
     return (
         <li className={style.user_item}>
             <div className={style.user_avatar}>

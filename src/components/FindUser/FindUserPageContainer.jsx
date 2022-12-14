@@ -1,17 +1,24 @@
 import {connect} from "react-redux";
 import FindUserPage from "./FindUserPage";
-import {follow,getUsers,unfollow} from "../../redux/find_users-reducer";
+import {follow, requestUsers, unfollow} from "../../redux/find_users-reducer";
 import React from "react";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {
+    getUsers,
+    setCurrentPageNumber,
+    setIsLoading,
+    setIsLockedButtons, setPageSize,
+    setTotalUsersCount
+} from "../../redux/users-selectors";
 
 class FindUserPageContainer extends React.Component {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPageNumber, this.props.pageSize)
+        this.props.requestUsers(this.props.currentPageNumber, this.props.pageSize)
     }
 
     onSetPageClick = (pageNumber) => {
-        this.props.getUsers(pageNumber, this.props.pageSize)
+        this.props.requestUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -22,18 +29,18 @@ class FindUserPageContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    users: state.findUserPage.users,
-    currentPageNumber: state.findUserPage.currentPageNumber,
-    totalUsersCount: state.findUserPage.totalUsersCount,
-    pageSize: state.findUserPage.pageSize,
-    isLoading: state.findUserPage.isLoading,
-    isLockedButtons: state.findUserPage.isLockedButtons
+    users: getUsers(state),
+    currentPageNumber: setCurrentPageNumber(state),
+    totalUsersCount: setTotalUsersCount(state),
+    pageSize: setPageSize(state),
+    isLoading: setIsLoading(state),
+    isLockedButtons: setIsLockedButtons(state)
 })
 
 
 export default compose(
     connect(mapStateToProps, {
-        getUsers,
+        requestUsers,
         follow,
         unfollow
     }),

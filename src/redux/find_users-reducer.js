@@ -74,7 +74,7 @@ const findUserReducer = (state = initialState, action) => {
 
 export default findUserReducer
 
-// actions
+// --- actions ---
 export const followAccept = (userId) => ({type: FOLLOW, userId})
 export const unfollowAccept = (userId) => ({type: UNFOLLOW, userId})
 export const setUsers = (users) => ({type: SET_USERS, users})
@@ -83,8 +83,9 @@ export const setTotalUsersCount = (totalUsersCount) => ({type: SET_TOTAL_USERS_C
 export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 export const setIsFollowingProgress = (isFetching, userId) => ({type: SET_IS_FOLLOWING_PROGRESS, isFetching, userId})
 
-// thunk-creators
-export const getUsers = (currentPageNumber, pageSize) => {
+// --- thunk-creators ---
+// запросить список пользователей
+export const requestUsers = (currentPageNumber, pageSize) => {
     return (dispatch) => {
         dispatch(setIsLoading(true))
         dispatch(setCurrentPageNumber(currentPageNumber))
@@ -96,6 +97,8 @@ export const getUsers = (currentPageNumber, pageSize) => {
             })
     }
 }
+
+// кнопка follow
 export const follow = (userId) => {
     return (dispatch) => {
         dispatch(setIsFollowingProgress(true, userId))
@@ -107,6 +110,8 @@ export const follow = (userId) => {
             })
     }
 }
+
+// кнопка unfollow
 export const unfollow = (userId) => {
     return (dispatch) => {
         dispatch(setIsFollowingProgress(true, userId))
