@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 
 const ProfileStatus = (props) => {
     let [editMode, setEditMode] = useState(false)
@@ -16,6 +16,10 @@ const ProfileStatus = (props) => {
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value)
     }
+
+    useEffect(() => {
+        setStatus(props.profileStatus)
+    }, [props.profileStatus])
 
     return (
         <>
