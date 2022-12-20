@@ -1,24 +1,27 @@
-import React from "react";
+import React, {memo} from "react";
 import styles from './MyPosts.module.css';
 import Post from './Post/Post';
 import NewPost from "./NewPost";
 
-function MyPosts(props) {
-    let postsElements = props.posts.map(item =>
-        <Post text={item.text} likes={item.likes} key={item.id} />
-    )
+const MyPosts = memo(props => {
+
+    let postsElements = [...props.posts]
+        .reverse()
+        .map(item =>
+            <Post text={item.text} likes={item.likes} key={item.id}/>
+        )
 
     return (
         <div>
-            My posts
+            <hr/>
+            <NewPost addPost={props.addPost}/>
 
-            <NewPost addPost={props.addPost} />
-
+            <hr/>
             <div className={styles.posts}>
-                { postsElements }
+                {postsElements}
             </div>
         </div>
     );
-}
+})
 
 export default MyPosts;

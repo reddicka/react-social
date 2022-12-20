@@ -51,7 +51,7 @@ function ProfileInfo(props) {
                 <div className={styles.profile__about_description}>
                     <p style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.fullName}</p>
 
-                    <p>статус из запроса ---- {props.profileStatus}</p>
+                    <p>статус из стейта ---- {props.profileStatus}</p>
 
                     <ProfileStatus
                         userId={props.userId}

@@ -9,8 +9,8 @@ const ProfileStatus = (props) => {
     }
 
     const onUpdateStatus = () => {
-        // props.getProfileStatus(props.userId) // НЕ РАБОТАЕТ ЕСЛИ В АДРЕСНОЙ СТРОКЕ НИЧЕГО
         props.updateProfileStatus(status)
+        // props.getProfileStatus(props.userId) // НЕ РАБОТАЕТ ЕСЛИ В АДРЕСНОЙ СТРОКЕ НИЧЕГО // кажись уже и не надо
     }
 
     const onStatusChange = (e) => {
