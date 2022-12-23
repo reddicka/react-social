@@ -1,5 +1,5 @@
 import {connect} from "react-redux";
-import FindUserPage from "./FindUserPage";
+import FindUsersPage from "./FindUsersPage";
 import {follow, requestUsers, unfollow} from "../../redux/find_users-reducer";
 import React from "react";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
@@ -12,7 +12,7 @@ import {
     setTotalUsersCount
 } from "../../redux/users-selectors";
 
-class FindUserPageContainer extends React.Component {
+class FindUsersPageContainer extends React.Component {
     componentDidMount() {
         this.props.requestUsers(this.props.currentPageNumber, this.props.pageSize)
     }
@@ -23,7 +23,7 @@ class FindUserPageContainer extends React.Component {
 
     render() {
         return (
-            <FindUserPage {...this.props} onSetPageClick={this.onSetPageClick}/>
+            <FindUsersPage {...this.props} onSetPageClick={this.onSetPageClick}/>
         )
     }
 }
@@ -44,5 +44,5 @@ export default compose(
         follow,
         unfollow
     }),
-    // WithAuthRedirect
-)(FindUserPageContainer)
+    WithAuthRedirect
+)(FindUsersPageContainer)

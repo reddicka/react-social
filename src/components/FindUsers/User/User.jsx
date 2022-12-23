@@ -16,13 +16,11 @@ const User = (props) => {
         <li className={style.user_item}>
             <div className={style.user_avatar}>
                 <NavLink to={`/profile/${props.id}`}>
-                    <img src={props.photos.small || avatar } alt={props.name} title={props.name} />
+                    <img src={props.photos.small || avatar} alt={props.name} title={props.name}/>
                 </NavLink>
             </div>
             <div className={style.user_info}>
-                <p className={style.user_name}>
-                    {props.name}
-                </p>
+                <NavLink to={`/profile/${props.id}`}>{props.name}</NavLink>
                 <p className={style.user_status}>
                     {props.status}
                 </p>
@@ -30,16 +28,16 @@ const User = (props) => {
             <div className={style.user_buttons}>
                 {
                     props.followed
-                    ? <button
+                        ? <button
                             disabled={props.isLockedButtons.includes(props.id)}
-                            onClick={ unfollow }>
+                            onClick={unfollow}>
                             unfollow
-                    </button>
-                    : <button
+                        </button>
+                        : <button
                             disabled={props.isLockedButtons.includes(props.id)}
-                            onClick={ follow } >
+                            onClick={follow}>
                             follow
-                    </button>
+                        </button>
                 }
             </div>
         </li>

@@ -5,7 +5,7 @@ import Friends from "./components/Friends/Friends";
 import Music from "./components/Music/Music";
 import Video from "./components/Video/Video";
 import DialogsPageContainer from "./components/Dialogs/DialogsPageContainer";
-import FindUserPageContainer from "./components/FindUser/FindUserPageContainer";
+import FindUsersPageContainer from "./components/FindUsers/FindUsersPageContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import Login from "./components/Login/Login";
@@ -55,7 +55,7 @@ class App extends Component {
                         />
 
                         <Route path='/search' element={
-                            <FindUserPageContainer/>}
+                            <FindUsersPageContainer/>}
                         />
 
                         <Route path='/login' element={

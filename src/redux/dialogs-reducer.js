@@ -1,4 +1,4 @@
-const SEND_MESSAGE = 'SEND_MESSAGE'
+const SEND_MESSAGE = 'dialogs/SEND_MESSAGE'
 
 let initialState = {
     dialogs: [
@@ -46,16 +46,14 @@ let initialState = {
 const dialogsReducer = (state = initialState, action) => {
     switch (action.type) {
         case SEND_MESSAGE: {
-            const newMessageText = action.newMessageText
-
-            if (newMessageText) {
+            if (action.newMessageText) {
                 return {
                     ...state,
                     messages: [
                         ...state.messages,
                         {
                             id: state.messages.length + 1,
-                            message: newMessageText,
+                            message: action.newMessageText,
                             type: 'outbox'
                         }
                     ]
@@ -67,6 +65,10 @@ const dialogsReducer = (state = initialState, action) => {
     }
 }
 
-export const sendMessage = (newMessageText) => ({type: SEND_MESSAGE, newMessageText})
+// --- actions ---
+export const setNewMessage = (newMessageText) => ({type: SEND_MESSAGE, newMessageText})
+
+// --- thunk-creators ---
+// -
 
 export default dialogsReducer

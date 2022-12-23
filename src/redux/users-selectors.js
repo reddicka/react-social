@@ -1,7 +1,7 @@
 import {createSelector} from "reselect";
 
 const getUsersSelector = (state) => {
-    return state.findUserPage.users
+    return state.findUsersPage.users
 }
 
 export const getUsers = createSelector(getUsersSelector, (users) => {
@@ -9,21 +9,21 @@ export const getUsers = createSelector(getUsersSelector, (users) => {
 })
 
 export const setCurrentPageNumber = (state) => {
-    return state.findUserPage.currentPageNumber
+    return state.findUsersPage.currentPageNumber
 }
 
 export const setTotalUsersCount = (state) => {
-    return state.findUserPage.totalUsersCount
+    return state.findUsersPage.totalUsersCount
 }
 
 export const setPageSize = (state) => {
-    return state.findUserPage.pageSize
+    return state.findUsersPage.pageSize
 }
 
 export const setIsLoading = (state) => {
-    return state.findUserPage.isLoading
+    return state.findUsersPage.isLoading
 }
 
 export const setIsLockedButtons = (state) => {
-    return state.findUserPage.isLockedButtons
+    return state.findUsersPage.isLockedButtons
 }

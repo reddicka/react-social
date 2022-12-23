@@ -10,46 +10,22 @@ function Navbar() {
         <nav className={styles.nav}>
             <ul>
                 <li className={styles.item}>
-                    <NavLink to="/profile"
-                        className={isActiveLink()}
-                    >
-                        Профиль
-                    </NavLink>
+                    <NavLink to="/profile" className={isActiveLink()}>Профиль</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/dialogs"
-                        className={isActiveLink()}
-                    >
-                        Диалоги
-                    </NavLink>
+                    <NavLink to="/dialogs" className={isActiveLink()}>Диалоги</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/friends"
-                        className={isActiveLink()}
-                    >
-                        Моя друзя
-                    </NavLink>
+                    <NavLink to="/friends" className={isActiveLink()}>Моя друзя</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/music"
-                        className={isActiveLink()}
-                    >
-                        Моя музыка
-                    </NavLink>
+                    <NavLink to="/music" className={isActiveLink()}>Моя музыка</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/video"
-                        className={isActiveLink()}
-                    >
-                        Моя видео
-                    </NavLink>
+                    <NavLink to="/video" className={isActiveLink()}>Моя видео</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/search"
-                        className={isActiveLink()}
-                    >
-                        Найти
-                    </NavLink>
+                    <NavLink to="/search" className={isActiveLink()}>Найти</NavLink>
                 </li>
             </ul>
         </nav>

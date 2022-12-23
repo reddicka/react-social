@@ -4,11 +4,15 @@
 }
 
 header {
-    background-color: rgb(255, 169, 57);
+    background-color: rgb(46, 49, 88);
     grid-column: 1 / -1;
+    position: fixed;
+    width: 100%;
+    overflow: hidden;
 }
 
 .header_row {
+    /*max-width: 1000px;*/
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -1,23 +1,12 @@
-.users_list {
-    display: flex;
-    flex-direction: column;
-    width: 600px;
+.pagination {
+    /*display: inline-block;*/
+    /*width: 600px;*/
+    text-align: center;
     padding: 5px;
 }
 
 .paginationButtonActive {
     background-color: #787fff;
-}
-
-/*.button {*/
-/*    background-color: antiquewhite;*/
-/*}*/
-
-.pagination {
-    /*display: inline-block;*/
-    width: 600px;
-    text-align: center;
-    padding: 5px;
 }
 
 .pagination button {

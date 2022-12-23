@@ -1,9 +1,9 @@
 import {authAPI, profileAPI} from "../api/api";
 
-const ADD_POST = 'ADD_POST'
-const SET_USER_PROFILE = 'SET_USER_PROFILE'
-const SET_PROFILE_STATUS = 'SET_PROFILE_STATUS'
-const DELETE_POST = 'DELETE_POST'
+const ADD_POST = 'profile/ADD_POST'
+const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
+const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
+const DELETE_POST = 'profile/DELETE_POST'
 
 let initialState = {
     profileInfo: null,
@@ -72,54 +72,44 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer
 
-// actions
-export const addPost = (newPostText) => ({type: ADD_POST, newPostText})
-export const deletePost = (postId) => ({type: DELETE_POST, postId})
+// --- action-creators ---
 export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
 export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
+export const addPost = (newPostText) => ({type: ADD_POST, newPostText})
+export const deletePost = (postId) => ({type: DELETE_POST, postId})
 
-// thunk-creators
-export const getUserProfile = (userId = 2) => {
-    return (dispatch) => {
-        // ПО ХОРОШЕМУ СДЕЛАТЬ ФЛАГ ЗАГРУЗКИ И СЕТАТЬ ЕГО ДО/ПОСЛЕ
+// --- thunk-creators ---
+// получить данные для страницы профиля пользователя
+export const getUserProfile = (userId) => async (dispatch) => {
+    // ИСПРАВИТЬ
 
-        // let userId = id
-        // if (!userId) {userId = 2}
-        // if (this.props.currentUserId) {
+    // поидее здесь должен быть просто запрос, а какаой ID бырать - решается в месте вызова
+    // так же и со статусом
+    // если id в адресе есть, то запрос с ID, если нет, то взять ID в стейте и сделать запрос
 
-        authAPI.me()
-            .then(data => {
-                (data.resultCode === 0) && (userId = data.data)
-            })
-
-        profileAPI.getProfile(userId)
-            .then(data => {
-                dispatch(setUserProfile(data))
-                // this.props.setUserProfile(response.data.userId)
-                // console.log(response.data.userId)
-            })
-        // }
+    let responseMe = await authAPI.me()
+    if (!userId) {
+        userId = responseMe.data.data.id
     }
+
+    let responseProfile = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(responseProfile.data))
+
+    // тестовая
+    // let responseTest = await profileAPI.getProfileStatus(userId)
+    // dispatch(setProfileStatus(responseTest.data))
 }
 
 // Получить статус какого-то пользователя
-export const getProfileStatus = (userId) => {
-    return (dispatch) => {
-        profileAPI.getProfileStatus(userId)
-            .then(status => {
-                dispatch(setProfileStatus(status))
-            })
-    }
+export const getProfileStatus = (userId) => async (dispatch) => {
+    let response = await profileAPI.getProfileStatus(userId)
+    dispatch(setProfileStatus(response.data))
 }
 
 // Отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
-export const updateProfileStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateProfileStatus(status)
-            .then(data => {
-                if (data.resultCode === 0) {
-                    dispatch(setProfileStatus(status))
-                }
-            })
+export const updateProfileStatus = (status) => async (dispatch) => {
+    let response = await profileAPI.updateProfileStatus(status)
+    if (response.data.resultCode === 0) {
+        dispatch(setProfileStatus(status))
     }
 }

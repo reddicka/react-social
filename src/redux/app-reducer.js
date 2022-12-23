@@ -1,6 +1,6 @@
 import {getAuthUserData} from "./auth-reducer";
 
-const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
+const INITIALIZED_SUCCESS = 'app/INITIALIZED_SUCCESS'
 
 const initialState = {
     initialized: false
@@ -21,11 +21,11 @@ const appReducer = (state = initialState, action) => {
 
 export default appReducer
 
-// action-creators
+// --- action-creators ---
 export const setInitializedSuccess = () => ({type: INITIALIZED_SUCCESS})
 
-// thunk-creators
-export const initializeApp = () => dispatch => {
+// --- thunk-creators ---
+export const initializeApp = () => (dispatch) => {
     let promise = dispatch(getAuthUserData())
     Promise.all([promise])
         .then( () => {

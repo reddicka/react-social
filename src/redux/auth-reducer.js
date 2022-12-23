@@ -1,12 +1,12 @@
 import {authAPI, profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
-const SET_USER_DATA = 'SET_USER_DATA'
-const SET_IS_LOADING = 'SET_IS_LOADING'
-const SET_AVATAR_URL = 'SET_AVATAR_URL'
+const SET_USER_DATA = 'auth/SET_USER_DATA'
+const SET_IS_LOADING = 'auth/SET_IS_LOADING'
+const SET_AVATAR_URL = 'auth/SET_AVATAR_URL'
 
-const SET_IS_AUTH = 'SET_IS_AUTH'
-const SET_CAPTCHA_URL = 'SET_CAPTCHA_URL'
+const SET_IS_AUTH = 'auth/SET_IS_AUTH'
+const SET_CAPTCHA_URL = 'auth/SET_CAPTCHA_URL'
 
 const initialState = {
     userId: null,
@@ -15,7 +15,6 @@ const initialState = {
     isAuth: false,
     isLoading: false,
     avatarUrl: null,
-
     captchaUrl: null,
 }
 
@@ -54,67 +53,58 @@ const authReducer = (state = initialState, action) => {
 
 export default authReducer
 
-// action-creators
+// --- action-creators ---
 export const setAuthUserData = (userId, login, email, isAuth) => ({
     type: SET_USER_DATA,
     payload: {userId, login, email, isAuth}
 })
-export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 export const setAvatarUrl = (avatarUrl) => ({type: SET_AVATAR_URL, avatarUrl})
-
-export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth})
 export const setCaptchaUrl = (captchaUrl) => ({type: SET_CAPTCHA_URL, captchaUrl})
+export const setIsAuth = (isAuth) => ({type: SET_IS_AUTH, isAuth})
+/* вынести в локальный стейт */
+export const setIsLoading = (isLoading) => ({type: SET_IS_LOADING, isLoading})
 
-// thunk-creators
-export const getAuthUserData = () => dispatch => {
+// --- thunk-creators ---
+// получить данные об авторизованном пользователе
+export const getAuthUserData = () => async (dispatch) => {
     // if (!isAuth) {
     dispatch(setIsLoading(true))
 
-    return authAPI.me()
-        .then(data => {
-            if (data.resultCode === 0) {
-                let {id, login, email} = data.data
-                dispatch(setAuthUserData(id, login, email, true))
+    let response = await authAPI.me()
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data
+        dispatch(setAuthUserData(id, login, email, true))
 
-                // мое говно
-                dispatch(setIsLoading(true))
-                profileAPI.getProfile(id)
-                    .then(data => {
-                        dispatch(setAvatarUrl(data.photos.small))
-                        dispatch(setIsLoading(false))
-                    })
-            }
-        })
-    // }
+        // костыль, получающий аватарку для шапки
+        let responseProfile = await profileAPI.getProfile(id)
+        dispatch(setAvatarUrl(responseProfile.data.photos.small))
 
+        dispatch(setIsLoading(false))
+    }
 }
 
-export const login = (email, password, rememberMe, captcha) => dispatch => {
-    authAPI.login(email, password, rememberMe, captcha)
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(getAuthUserData())
-            } else if (response.data.resultCode === 1) {
-                dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
-            } else if (response.data.resultCode === 10) {
-                dispatch(getCaptchaUrl())
-            }
-        })
+// отправить форму для входа в аккаунт
+export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
+    let response = await authAPI.login(email, password, rememberMe, captcha)
+    if (response.data.resultCode === 0) {
+        dispatch(getAuthUserData())
+    } else if (response.data.resultCode === 1) {
+        dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
+    } else if (response.data.resultCode === 10) {
+        dispatch(getCaptchaUrl())
+    }
 }
 
-export const logout = () => dispatch => {
-    authAPI.logout()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(setAuthUserData(null, null, null, false))
-            }
-        })
-
+// выйти из аккаунта
+export const logout = () => async (dispatch) => {
+    let response = await authAPI.logout()
+    if (response.data.resultCode === 0) {
+        dispatch(setAuthUserData(null, null, null, false))
+    }
 }
 
-export const getCaptchaUrl = () => (dispatch) => {
-    authAPI.getCaptchaUrl()
-        .then(response => {
-            dispatch(setCaptchaUrl(response.data.url))
-        })
+// получить ссылку для капчи
+export const getCaptchaUrl = () => async (dispatch) => {
+    let response = await authAPI.getCaptchaUrl()
+    dispatch(setCaptchaUrl(response.data.url))
 }

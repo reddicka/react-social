@@ -2,17 +2,23 @@
     padding: 0;
     margin: 0;
 
-    font-family: sans-serif;
     color: rgb(27, 27, 27);
 }
 
 .App {
     display: grid;
-    grid-template-columns: 1fr 250px 950px 1fr;
+    grid-template-columns: 1fr 150px minmax(150px, 850px) 1fr;
+
+    /*font-family: sans-serif;*/
+    font-weight: 600;
+    font-size: 18px;
 }
 
 .content {
     grid-column: 3 / 4;
+    max-width: 850px;
+    background-color: #dedede;
+    padding-top: 60px;
 }
 
 a {

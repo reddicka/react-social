@@ -1,0 +1,7 @@
+.users_list {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
