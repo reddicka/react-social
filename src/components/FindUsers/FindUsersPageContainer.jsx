@@ -17,13 +17,13 @@ class FindUsersPageContainer extends React.Component {
         this.props.requestUsers(this.props.currentPageNumber, this.props.pageSize)
     }
 
-    onSetPageClick = (pageNumber) => {
+    onPageChanged = (pageNumber) => {
         this.props.requestUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
         return (
-            <FindUsersPage {...this.props} onSetPageClick={this.onSetPageClick}/>
+            <FindUsersPage {...this.props} onPageChanged={this.onPageChanged}/>
         )
     }
 }

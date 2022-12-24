@@ -13,6 +13,7 @@ import {compose} from "redux";
 class ProfileContainer extends React.Component {
     componentDidMount() {
         let userId = this.props.router.params.userId
+
         if (!userId) {
             userId = this.props.authorizedUserId
             if (!userId) {

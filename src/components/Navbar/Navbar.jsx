@@ -16,13 +16,13 @@ function Navbar() {
                     <NavLink to="/dialogs" className={isActiveLink()}>Диалоги</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/friends" className={isActiveLink()}>Моя друзя</NavLink>
+                    <NavLink to="/friends" className={isActiveLink()}>Друзья</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/music" className={isActiveLink()}>Моя музыка</NavLink>
+                    <NavLink to="/music" className={isActiveLink()}>Музыка</NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/video" className={isActiveLink()}>Моя видео</NavLink>
+                    <NavLink to="/video" className={isActiveLink()}>Видео</NavLink>
                 </li>
                 <li className={styles.item}>
                     <NavLink to="/search" className={isActiveLink()}>Найти</NavLink>

@@ -1,9 +1,10 @@
 import styles from './Paginator.module.css'
 import React from "react";
 
-const Paginator = ({currentPageNumber, pagesCount, onSetPageClick}) => {
+const Paginator = ({currentPageNumber, totalUsersCount, pageSize, onPageChanged}) => {
 
     let pages = []
+    let pagesCount = Math.ceil(totalUsersCount / pageSize)
 
     switch (currentPageNumber) {
         case 1:
@@ -36,7 +37,7 @@ const Paginator = ({currentPageNumber, pagesCount, onSetPageClick}) => {
                     : <button
                         key={index}
                         onClick={() => {
-                            onSetPageClick(page)
+                            onPageChanged(page)
                         }}
                         className={page === currentPageNumber
                             ? styles.paginationButtonActive

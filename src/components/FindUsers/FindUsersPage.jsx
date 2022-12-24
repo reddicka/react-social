@@ -10,16 +10,15 @@ const FindUsersPage = (props) => {
     //     setIsLoading(false)
     // }, [props.users])
 
-    let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-
     return (
         <div>
             {props.isLoading
                 ? <Preloader/>
                 : <>
                     <Paginator currentPageNumber={props.currentPageNumber}
-                               pagesCount={pagesCount}
-                               onSetPageClick={props.onSetPageClick}
+                               totalUsersCount={props.totalUsersCount}
+                               pageSize={props.pageSize}
+                               onPageChanged={props.onPageChanged}
                     />
 
                     <ul className={styles.users_list}>
@@ -30,7 +29,6 @@ const FindUsersPage = (props) => {
                                 name={user.name}
                                 followed={user.followed}
                                 photos={user.photos}
-                                location={user.location}
                                 status={user.status}
                                 follow={props.follow}
                                 unfollow={props.unfollow}
@@ -42,7 +40,6 @@ const FindUsersPage = (props) => {
                     </ul>
                 </>
             }
-
         </div>
     )
 }

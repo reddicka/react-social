@@ -1,19 +1,13 @@
-.profile__background_image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
-
-.profile__about {
+.about {
     display: flex;
     flex-direction: row;
 }
-.profile__avatar {
+.avatar {
     display: flex;
     flex-direction: row;
 }
 
-.profile__avatar_image {
+.avatar_image {
     width: 150px;
     height: 250px;
     border-radius: 15px;
@@ -21,7 +15,7 @@
     object-fit: cover;
 }
 
-.profile__about_description {
+.description {
     padding: 10px;
 }
 

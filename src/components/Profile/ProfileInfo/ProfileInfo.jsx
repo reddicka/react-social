@@ -6,7 +6,7 @@ import ProfileStatus from "./ProfileStatus";
 
 function ProfileInfo(props) {
     if (!props.userId) {
-        return <Preloader />
+        return <Preloader/>
     }
 
     let notEmptyContacts = () => {
@@ -30,51 +30,36 @@ function ProfileInfo(props) {
         }
         return arr
     }
-
     return (
-        <div>
-            <img
-                className={styles.profile__background_image}
-                src="https://i.pinimg.com/originals/c9/ea/65/c9ea654eb3a7398b1f702c758c1c4206.jpg"
-                alt="Задний фон"
-            />
+        <div className={styles.about}>
+            <div className={styles.avatar}>
+                <img
+                    className={styles.avatar_image}
+                    src={props.photos?.large || avatar}
+                    alt="Аватар"
+                />
+            </div>
 
-            <div className={styles.profile__about}>
-                <div className={styles.profile__avatar}>
-                    <img
-                        className={styles.profile__avatar_image}
-                        src={props.photos?.large || avatar}
-                        alt="Аватар"
-                    />
-                </div>
+            <div className={styles.description}>
+                <h2>{props.fullName}</h2>
 
-                <div className={styles.profile__about_description}>
-                    <p style={{ fontSize: '18px', fontWeight: 'bold' }}>{props.fullName}</p>
+                <ProfileStatus
+                    userId={props.userId}
+                    profileStatus={props.profileStatus}
+                    getProfileStatus={props.getProfileStatus}
+                    updateProfileStatus={props.updateProfileStatus}
+                />
 
-                    <p>статус из стейта ---- {props.profileStatus}</p>
+                {props.aboutMe && <p>{props.aboutMe}</p>}
 
-                    <ProfileStatus
-                        userId={props.userId}
-                        profileStatus={props.profileStatus}
-                        getProfileStatus={props.getProfileStatus}
-                        updateProfileStatus={props.updateProfileStatus}
-                    />
+                {
+                    props.lookingForAJob && <p>Ищу работу: {props.lookingForAJobDescription}</p>
+                }
 
-                    <p>{props.aboutMe}</p>
-                    <p>{
-                        props.lookingForAJob
-                            ? 'В поиске работы'
-                            : 'Работу не ищу'
-                    }</p>
-                    {props.lookingForAJob && <p>Описание работы: {props.lookingForAJobDescription}</p>}
-                    {/*<p>писька сантиметр</p>*/}
+                {
+                    Object.keys(props.contacts).length && <div>{notEmptyContacts()}</div>
+                }
 
-                    <div>
-                        {notEmptyContacts()}
-                    </div>
-
-
-                </div>
             </div>
         </div>
     )
