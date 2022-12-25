@@ -2,7 +2,7 @@ import styles from "./ProfileInfo.module.css";
 import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
 import {Link} from "react-router-dom";
-import ProfileStatus from "./ProfileStatus";
+import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 function ProfileInfo(props) {
     if (!props.userId) {
