@@ -1,0 +1,1 @@
+{"version":3,"file":"static/js/784.22540d59.chunk.js","mappings":"mIAQA,UANA,WACI,OACI,oCAER,C","sources":["components/Friends/Friends.jsx"],"sourcesContent":["// import styles from './Friends.module.css'\r\n\r\nfunction Friends() {\r\n    return (\r\n        <div>Friends</div>\r\n    )\r\n}\r\n\r\nexport default Friends"],"names":[],"sourceRoot":""}

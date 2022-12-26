@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_piska=self.webpackChunkreact_piska||[]).push([[784],{6784:function(e,n,r){r.r(n);var s=r(184);n.default=function(){return(0,s.jsx)("div",{children:"Friends"})}}}]);
+//# sourceMappingURL=784.22540d59.chunk.js.map

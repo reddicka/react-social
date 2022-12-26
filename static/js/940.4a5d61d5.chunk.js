@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkreact_piska=self.webpackChunkreact_piska||[]).push([[940],{8940:function(e,c,s){s.r(c);var u=s(184);c.default=function(){return(0,u.jsx)("div",{children:"Music"})}}}]);
+//# sourceMappingURL=940.4a5d61d5.chunk.js.map
