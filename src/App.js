@@ -33,39 +33,39 @@ class App extends Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className="content">
-                        <Suspense fallback={<Preloader/>}>
-                            <Routes>
-                                <Route path='/profile' element={<ProfileContainer/>}>
-                                    <Route path=':userId' element={<ProfileContainer/>}/>
-                                </Route>
+                    <Suspense fallback={<Preloader/>}>
+                        <Routes>
+                            <Route path='/profile' element={<ProfileContainer/>}>
+                                <Route path=':userId' element={<ProfileContainer/>}/>
+                            </Route>
 
-                                <Route path='/dialogs/*' element={
-                                    <DialogsPageContainer/>}
-                                />
+                            <Route path='/dialogs/*' element={
+                                <DialogsPageContainer/>}
+                            />
 
-                                <Route path='/friends' element={
-                                    <Friends/>}
-                                />
+                            <Route path='/friends' element={
+                                <Friends/>}
+                            />
 
-                                <Route path='/music' element={
-                                    <Music/>}
-                                />
+                            <Route path='/music' element={
+                                <Music/>}
+                            />
 
-                                <Route path='/video' element={
-                                    <Video/>}
-                                />
+                            <Route path='/video' element={
+                                <Video/>}
+                            />
 
-                                <Route path='/search' element={
-                                    <FindUsersPageContainer/>}
-                                />
+                            <Route path='/search' element={
+                                <FindUsersPageContainer/>}
+                            />
 
-                                <Route path='/login' element={
-                                    <Login/>}
-                                />
+                            <Route path='/login' element={
+                                <Login/>}
+                            />
 
-                                {/*<Route path='*' element={<NotFound />} />*/}
-                            </Routes>
-                        </Suspense>
+                            {/*<Route path='*' element={<NotFound />} />*/}
+                        </Routes>
+                    </Suspense>
                 </div>
             </div>
         );
