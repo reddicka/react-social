@@ -8,9 +8,11 @@ const Profile = (props) => {
         <div className={styles.profile}>
             <ProfileInfo
                 {...props.profileInfo}
+                isOwner={props.isOwner}
                 profileStatus={props.profileStatus}
                 getProfileStatus={props.getProfileStatus}
                 updateProfileStatus={props.updateProfileStatus}
+                updateProfileAvatar={props.updateProfileAvatar}
             />
 
             <MyPosts

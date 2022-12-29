@@ -3,10 +3,10 @@ import {connect} from "react-redux";
 import {
     addPost,
     getUserProfile,
-    getProfileStatus, updateProfileStatus,
+    getProfileStatus, updateProfileStatus, updateProfileAvatar,
 } from "../../redux/profile-reducer";
 import Profile from "./Profile";
-import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
@@ -18,6 +18,7 @@ class ProfileContainer extends React.Component {
             userId = this.props.authorizedUserId
             if (!userId) {
                 // debugger
+                return <Navigate to={'/login'} />
                 // this.props.router.location({pathname :'/login'})
             }
         }
@@ -38,7 +39,9 @@ class ProfileContainer extends React.Component {
 
     render() {
         return (
-            <Profile {...this.props}/>
+            <Profile {...this.props}
+                     isOwner={!this.props.router.params.userId
+                         || (this.props.router.params.userId === this.props.authorizedUserId)}/>
         )
     }
 }
@@ -76,7 +79,8 @@ export default compose(
         getUserProfile,
 
         getProfileStatus,
-        updateProfileStatus
+        updateProfileStatus,
+        updateProfileAvatar
     }),
     // WithAuthRedirect,
     withRouter

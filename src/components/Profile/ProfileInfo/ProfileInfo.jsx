@@ -30,6 +30,11 @@ function ProfileInfo(props) {
         }
         return arr
     }
+
+    const onNewAvatarSelected = (e) => {
+        props.updateProfileAvatar(e.target.files[0])
+    }
+
     return (
         <div className={styles.about}>
             <div className={styles.avatar}>
@@ -38,6 +43,14 @@ function ProfileInfo(props) {
                     src={props.photos?.large || avatar}
                     alt="Аватар"
                 />
+
+                {
+                    props.isOwner &&
+                        <div className={styles.btn_uploadAvatar}>
+                            <input type='file' onChange={onNewAvatarSelected}/>
+                            <span>Загрузить</span>
+                        </div>
+                }
             </div>
 
             <div className={styles.description}>

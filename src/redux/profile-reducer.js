@@ -4,6 +4,7 @@ const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
 const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
 const DELETE_POST = 'profile/DELETE_POST'
+const SET_PROFILE_AVATAR = 'profile/SET_PROFILE_AVATAR'
 
 let initialState = {
     profileInfo: null,
@@ -65,6 +66,14 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileStatus: action.profileStatus
             }
+        case SET_PROFILE_AVATAR:
+            return {
+                ...state,
+                profileInfo: {
+                    ...state.profileInfo,
+                    photos: {...action.photos}
+                },
+            }
         default:
             return state
     }
@@ -73,10 +82,15 @@ const profileReducer = (state = initialState, action) => {
 export default profileReducer
 
 // --- action-creators ---
+// получение информации о пользователе
 export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
+// установка статуса пользователя
 export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
+// добавление/удаление поста
 export const addPost = (newPostText) => ({type: ADD_POST, newPostText})
 export const deletePost = (postId) => ({type: DELETE_POST, postId})
+// установка нового аватара
+export const setProfileAvatar = (photos) => ({type: SET_PROFILE_AVATAR, photos})
 
 // --- thunk-creators ---
 // получить данные для страницы профиля пользователя
@@ -111,5 +125,13 @@ export const updateProfileStatus = (status) => async (dispatch) => {
     let response = await profileAPI.updateProfileStatus(status)
     if (response.data.resultCode === 0) {
         dispatch(setProfileStatus(status))
+    }
+}
+
+// Отправить новый аватар на сервер и задиспатчить в стейт
+export const updateProfileAvatar = (file) => async (dispatch) => {
+    let response = await profileAPI.updateProfileAvatar(file)
+    if (response.data.resultCode === 0) {
+        dispatch(setProfileAvatar(response.data.data.photos))
     }
 }
