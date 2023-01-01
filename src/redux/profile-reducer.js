@@ -1,4 +1,4 @@
-import {authAPI, profileAPI} from "../api/api";
+import {profileAPI} from "../api/api";
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
@@ -94,17 +94,19 @@ export const setProfileAvatar = (photos) => ({type: SET_PROFILE_AVATAR, photos})
 
 // --- thunk-creators ---
 // получить данные для страницы профиля пользователя
-export const getUserProfile = (userId) => async (dispatch) => {
+export const getUserProfile = (userId) => async (dispatch, getStore) => {
     // ИСПРАВИТЬ
 
     // поидее здесь должен быть просто запрос, а какой ID брать - решается в месте вызова
     // так же и со статусом
     // если id в адресе есть, то запрос с ID, если нет, то взять ID в стейте и сделать запрос
 
-    let responseMe = await authAPI.me()
-    if (!userId) {
-        userId = responseMe.data.data.id
-    }
+    // const meId = getStore().userId
+
+    // let responseMe = await authAPI.me()
+    // if (!userId) {
+    //     userId = responseMe.data.data.id
+    // }
 
     let responseProfile = await profileAPI.getProfile(userId)
     dispatch(setUserProfile(responseProfile.data))
@@ -133,5 +135,15 @@ export const updateProfileAvatar = (file) => async (dispatch) => {
     let response = await profileAPI.updateProfileAvatar(file)
     if (response.data.resultCode === 0) {
         dispatch(setProfileAvatar(response.data.data.photos))
+    }
+}
+
+// Обновить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
+// и запросить новые данные
+export const updateProfileData = (userData) => async (dispatch, getStore) => {
+    let response = await profileAPI.updateProfileData(userData)
+    if (response.data.resultCode === 0) {
+        const userId = getStore().auth.userId
+        dispatch(getUserProfile(userId))
     }
 }

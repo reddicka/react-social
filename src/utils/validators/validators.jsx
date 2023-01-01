@@ -6,7 +6,7 @@ export const required = (value) => {
 }
 
 export const maxLength = (maxLength) => (value) => {
-    if (value.length > maxLength) {
+    if (value && value.length > maxLength) {
         return `Длина свыше ${maxLength} символов!`
     }
     return undefined

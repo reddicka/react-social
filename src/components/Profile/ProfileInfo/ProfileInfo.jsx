@@ -3,36 +3,28 @@ import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
 import {Link} from "react-router-dom";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
+import {useState} from "react";
+import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
+import {updateProfileData} from "../../../redux/profile-reducer";
 
-function ProfileInfo(props) {
-    if (!props.userId) {
+const ProfileInfo = ({profileInfo, ...props}) => {
+    const [editMode, setEditMode] = useState(true)
+
+    if (!profileInfo) {
         return <Preloader/>
-    }
-
-    let notEmptyContacts = () => {
-        let arr = []
-
-        for (let contact in props.contacts) {
-            props.contacts[contact] && arr.push(
-                <Link
-                    to={props.contacts[contact]}
-                    // replace
-                    // reloadDocument
-                    target='_blank'
-                    rel='noreferrer'
-                    key={contact}
-                    style={{marginRight: '10px'}}
-                    className={styles[contact]}
-                >
-                    {contact}
-                </Link>
-            )
-        }
-        return arr
     }
 
     const onNewAvatarSelected = (e) => {
         props.updateProfileAvatar(e.target.files[0])
+    }
+
+    const toggleEditMode = () => {
+        setEditMode(!editMode)
+    }
+
+    const onSubmit = (formData) => {
+        console.log(formData)
+        props.updateProfileData(formData)
     }
 
     return (
@@ -40,41 +32,85 @@ function ProfileInfo(props) {
             <div className={styles.avatar}>
                 <img
                     className={styles.avatar_image}
-                    src={props.photos?.large || avatar}
+                    src={profileInfo.photos?.large || avatar}
                     alt="Аватар"
                 />
 
                 {
                     props.isOwner &&
-                        <div className={styles.btn_uploadAvatar}>
-                            <input type='file' onChange={onNewAvatarSelected}/>
-                            <span>Загрузить</span>
-                        </div>
+                    <div className={styles.btn_uploadAvatar}>
+                        <input type='file' onChange={onNewAvatarSelected}/>
+                        <span>Загрузить</span>
+                    </div>
                 }
             </div>
 
             <div className={styles.description}>
-                <h2>{props.fullName}</h2>
+                <h2>{profileInfo.fullName}</h2>
 
                 <ProfileStatus
-                    userId={props.userId}
+                    isOwner={props.isOwner}
+                    userId={profileInfo.userId}
                     profileStatus={props.profileStatus}
                     getProfileStatus={props.getProfileStatus}
                     updateProfileStatus={props.updateProfileStatus}
                 />
 
-                {props.aboutMe && <p>{props.aboutMe}</p>}
-
                 {
-                    props.lookingForAJob && <p>Ищу работу: {props.lookingForAJobDescription}</p>
+                    editMode
+                        ? <ProfileDataForm profileInfo={profileInfo} onSubmit={onSubmit} />
+                        : <ProfileData profileInfo={profileInfo}/>
                 }
 
-                {
-                    Object.keys(props.contacts).length && <div>{notEmptyContacts()}</div>
-                }
+                {props.isOwner && <button onClick={toggleEditMode}>Редактировать</button>}
 
             </div>
         </div>
+    )
+}
+
+// данные о пользователе (ищет ли работу, о его работе, "обо мне", список контактов)
+const ProfileData = ({profileInfo}) => {
+    if (!profileInfo) {
+        return <Preloader/>
+    }
+
+    return (
+        <>
+            <p>Ищу работу: {profileInfo.lookingForAJob ? 'Да' : 'Нет'}</p>
+            {profileInfo.lookingForAJobDescription && <p>О моей работе: {profileInfo.lookingForAJobDescription}</p>}
+            {profileInfo.aboutMe && <p>Обо мне: {profileInfo.aboutMe}</p>}
+
+            <ul>
+                {
+                    Object.keys(profileInfo.contacts).map(contact => {
+                        if (profileInfo.contacts[contact]) {
+                            return <Contact key={contact} contacts={profileInfo.contacts} contact={contact} />
+                        }
+                    })
+                }
+            </ul>
+
+        </>
+    )
+}
+
+// компонент контакта
+const Contact = ({contacts, contact}) => {
+    return(
+        <li>
+            <Link
+                to={contacts[contact]}
+                // replace
+                // reloadDocument
+                target='_blank'
+                rel='noreferrer'
+                style={{marginRight: '10px'}}
+                className={styles[contact]}
+            >
+                {contact}
+            </Link>
+        </li>
     )
 }
 

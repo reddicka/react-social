@@ -17,11 +17,11 @@ const LoginForm = (props) => {
                 <Field
                     component={FormControl}
                     formElement='input'
+                    type='email'
 
                     name='email'
                     id='email'
                     placeholder='Email'
-                    type='email'
                     autoComplete='email'
                     validate={[required, maxLengthNum]}
                 />
@@ -32,11 +32,11 @@ const LoginForm = (props) => {
                 <Field
                     component={FormControl}
                     formElement='input'
+                    type='password'
 
                     name='password'
                     id='password'
                     placeholder='Пароль'
-                    type='password'
                     autoComplete='password'
                     validate={[required, maxLengthNum]}
                 />
@@ -47,10 +47,10 @@ const LoginForm = (props) => {
                 <Field
                     component={FormControl}
                     formElement='input'
+                    type='checkbox'
 
                     name='rememberMe'
                     id='rememberMe'
-                    type='checkbox'
                 />
             </div>
             {

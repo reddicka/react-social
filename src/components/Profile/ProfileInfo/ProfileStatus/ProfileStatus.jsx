@@ -6,7 +6,7 @@ const ProfileStatus = (props) => {
     let [status, setStatus] = useState(props.profileStatus)
 
     const toggleEditMode = () => {
-        setEditMode(!editMode)
+        props.isOwner && setEditMode(!editMode)
     }
 
     const onUpdateStatus = () => {

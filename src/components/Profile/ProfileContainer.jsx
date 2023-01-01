@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {
     addPost,
     getUserProfile,
-    getProfileStatus, updateProfileStatus, updateProfileAvatar,
+    getProfileStatus, updateProfileStatus, updateProfileAvatar, updateProfileData,
 } from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
@@ -12,10 +12,12 @@ import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     refreshProfile() {
-        let userId = this.props.router.params.userId
+        let userId = this.props.router.params.userId // из адресной строки
 
+        // если в адресной строке пусто, то берем свой id
         if (!userId) {
             userId = this.props.authorizedUserId
+            // если пусто и нет своего id, значит не залогинены
             if (!userId) {
                 // debugger
                 return <Navigate to={'/login'} />
@@ -75,12 +77,14 @@ function withRouter(Component) {
 
 export default compose(
     connect(mapStateToProps, {
-        addPost,
         getUserProfile,
-
+        updateProfileData,
         getProfileStatus,
+
         updateProfileStatus,
-        updateProfileAvatar
+        updateProfileAvatar,
+
+        addPost
     }),
     // WithAuthRedirect,
     withRouter
