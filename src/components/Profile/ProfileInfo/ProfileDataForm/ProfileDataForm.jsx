@@ -2,6 +2,7 @@ import {Field, reduxForm} from "redux-form";
 import {FormControl} from "../../../common/FormsControls/FormsControls";
 import {maxLength, required} from "../../../../utils/validators/validators";
 import React from "react";
+import styles from '../../../common/FormsControls/FormsControls.module.css'
 
 let maxLengthNum = maxLength(15)
 
@@ -9,6 +10,10 @@ const ProfileDataForm = (props) => {
     // debugger
     return (
         <form onSubmit={props.handleSubmit}>
+            {
+                props.error && <div className={styles.formSummaryError}>{props.error}</div>
+            }
+
             <div>
                 <label htmlFor='fullName'>Имя, Фамилия:</label><br/>
                 <Field
@@ -93,6 +98,6 @@ const ProfileDataForm = (props) => {
     )
 }
 
-let ProfileDataReduxForm = reduxForm({ form: 'editProfile'})(ProfileDataForm)
+let ProfileDataReduxForm = reduxForm({ form: 'editProfile', enableReinitialize: true, destroyOnUnmount: false })(ProfileDataForm)
 
 export default ProfileDataReduxForm

@@ -8,7 +8,7 @@ import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
 import {updateProfileData} from "../../../redux/profile-reducer";
 
 const ProfileInfo = ({profileInfo, ...props}) => {
-    const [editMode, setEditMode] = useState(true)
+    const [editMode, setEditMode] = useState(false)
 
     if (!profileInfo) {
         return <Preloader/>
@@ -25,6 +25,13 @@ const ProfileInfo = ({profileInfo, ...props}) => {
     const onSubmit = (formData) => {
         console.log(formData)
         props.updateProfileData(formData)
+            .then(
+                () => {
+                    // не самое лучшее решение с точки зрения "задиспатчил-забыл"
+                    // лучше сделать глобальный флаг статуса загрузки (none, success, error)
+                    setEditMode(false)
+                }
+            )
     }
 
     return (
@@ -58,7 +65,7 @@ const ProfileInfo = ({profileInfo, ...props}) => {
 
                 {
                     editMode
-                        ? <ProfileDataForm profileInfo={profileInfo} onSubmit={onSubmit} />
+                        ? <ProfileDataForm profileInfo={profileInfo} onSubmit={onSubmit} initialValues={profileInfo} />
                         : <ProfileData profileInfo={profileInfo}/>
                 }
 
