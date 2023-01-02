@@ -53,6 +53,7 @@ const LoginForm = (props) => {
                     id='rememberMe'
                 />
             </div>
+
             {
                 props.captchaUrl &&
                 <div>
@@ -69,7 +70,6 @@ const LoginForm = (props) => {
                     <img src={props.captchaUrl} alt='captcha' />
                 </div>
             }
-
 
             <div>
                 <button type='submit' >Войти</button>

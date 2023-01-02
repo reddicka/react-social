@@ -1,4 +1,4 @@
-import {authAPI, profileAPI} from "../api/api";
+import {authAPI, profileAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA'
@@ -51,6 +51,19 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
+/*
+    можно использовать payload
+    action - ({type: SET_AVATAR_URL, payload: avatarUrl})
+    action - ({type: SET_AVATAR_URL, payload: captchaUrl})
+
+    case SET_AVATAR_URL:
+    case SET_CAPTCHA_URL:
+            return {
+                ...state,
+                ...action.payload
+            }
+ */
+
 export default authReducer
 
 // --- action-creators ---
@@ -87,10 +100,13 @@ export const getAuthUserData = () => async (dispatch) => {
 export const login = (email, password, rememberMe, captcha) => async (dispatch) => {
     let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
+        // успех
         dispatch(getAuthUserData())
     } else if (response.data.resultCode === 1) {
+        // неверный логин/пароль
         dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
     } else if (response.data.resultCode === 10) {
+        // превышен лимит попыток
         dispatch(getCaptchaUrl())
     }
 }
@@ -105,6 +121,6 @@ export const logout = () => async (dispatch) => {
 
 // получить ссылку для капчи
 export const getCaptchaUrl = () => async (dispatch) => {
-    let response = await authAPI.getCaptchaUrl()
+    let response = await securityAPI.getCaptchaUrl()
     dispatch(setCaptchaUrl(response.data.url))
 }
