@@ -125,9 +125,15 @@ export const getProfileStatus = (userId) => async (dispatch) => {
 
 // Отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
 export const updateProfileStatus = (status) => async (dispatch) => {
-    let response = await profileAPI.updateProfileStatus(status)
-    if (response.data.resultCode === 0) {
-        dispatch(setProfileStatus(status))
+    try {
+        let response = await profileAPI.updateProfileStatus(status)
+        if (response.data.resultCode === 0) {
+            dispatch(setProfileStatus(status))
+        }
+    } catch (error) {
+        // если поймается ошибка, то она обработается тут и не попадет в глобальную
+        console.log('Шота не так')
+        console.log(error)
     }
 }
 

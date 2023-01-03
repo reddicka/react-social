@@ -2,7 +2,7 @@ import React, {Component, Suspense} from "react";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {connect} from "react-redux";
 import {compose} from "redux";
-import {initializeApp, setGlobalError} from "./redux/app-reducer";
+import {globalErrorHandler, initializeApp} from "./redux/app-reducer";
 import './App.css';
 
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -22,8 +22,8 @@ const Login = React.lazy(() => import("./components/Login/Login"));
 class App extends Component {
     // отловить все не отловленные ошибки
     catchAllUnhandledErrors = (promiseRejectionEvent) => {
-        this.props.setGlobalError(promiseRejectionEvent.reason.message)
-        console.log(promiseRejectionEvent.reason.message)
+        // перекинуть ошибку в thunk и обработать
+        this.props.globalErrorHandler(promiseRejectionEvent)
     }
 
     componentDidMount() {
@@ -102,6 +102,6 @@ const mapStateToProps = (state) => ({
 export default compose(
     connect(mapStateToProps, {
         initializeApp,
-        setGlobalError
+        globalErrorHandler
     })
 )(App);

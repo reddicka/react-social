@@ -31,7 +31,7 @@ export default appReducer
 // инициализация произошла
 export const setInitializedSuccess = () => ({type: INITIALIZED_SUCCESS})
 // установка флага глобальной ошибки
-export const setGlobalError = (message) => ({type: SET_GLOBAL_ERROR, error: message})
+export const setGlobalError = (error) => ({type: SET_GLOBAL_ERROR, error})
 
 // --- thunk-creators ---
 // начальная инициализация приложения
@@ -41,4 +41,14 @@ export const initializeApp = () => (dispatch) => {
         .then( () => {
             dispatch(setInitializedSuccess())
         })
+}
+
+// запуск таймера для очистки поля глобальной ошибки
+export const globalErrorHandler = (error) => (dispatch) => {
+    // установка поля ошибки
+    dispatch(setGlobalError(error.reason.message))
+    // очистка поля ошибки
+    // setTimeout(() => {
+    //     dispatch(setGlobalErrorSuccess(null))
+    // }, 500)
 }
