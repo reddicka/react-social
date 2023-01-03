@@ -1,5 +1,6 @@
 import styles from './Paginator.module.css'
 import React from "react";
+import cn from 'classnames'
 
 const Paginator = ({currentPageNumber, totalUsersCount, pageSize, onPageChanged}) => {
 
@@ -39,9 +40,10 @@ const Paginator = ({currentPageNumber, totalUsersCount, pageSize, onPageChanged}
                         onClick={() => {
                             onPageChanged(page)
                         }}
-                        className={page === currentPageNumber
-                            ? styles.paginationButtonActive
-                            : undefined}>
+                        className={
+                            cn({[styles.paginationButtonActive]: currentPageNumber === page})
+                        }
+                    >
                         {page}
                     </button>
             )}

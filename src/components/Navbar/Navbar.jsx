@@ -1,8 +1,8 @@
 import styles from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
 
-function Navbar() {
-    function isActiveLink() {
+const Navbar = () => {
+    const isActiveLink = () => {
         return ({isActive}) => isActive ? styles.active : undefined
     }
 
