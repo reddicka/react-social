@@ -1,0 +1,27 @@
+.newPost {
+    /*background-color: #C21F39;*/
+    margin-bottom: 25px;
+}
+.form {
+    /*width: 100%;*/
+    /*display: inline-block;*/
+}
+
+.newPost textarea {
+    box-sizing: border-box;
+    min-height: 50px;
+    border: 1px solid #888;
+    border-radius: 5px;
+    outline: none;
+    resize: vertical;
+    margin-bottom: 5px;
+    width: 100%;
+    padding: 5px;
+    font-size: 16px;
+    color: black;
+    font-weight: 500;
+}
+
+.title {
+    margin-bottom: 10px;
+}

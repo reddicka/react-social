@@ -25,21 +25,25 @@ const User = (props) => {
                     {props.status}
                 </p>
             </div>
-            <div className={style.user_buttons}>
-                {
-                    props.followed
-                        ? <button
-                            disabled={props.isLockedButtons.includes(props.id)}
-                            onClick={unfollow}>
-                            unfollow
-                        </button>
-                        : <button
-                            disabled={props.isLockedButtons.includes(props.id)}
-                            onClick={follow}>
-                            follow
-                        </button>
-                }
-            </div>
+
+            {
+                props.authorizedUserId &&
+                <div className={style.user_buttons}>
+                    {
+                        props.followed
+                            ? <button
+                                disabled={props.isLockedButtons.includes(props.id)}
+                                onClick={unfollow}>
+                                unfollow
+                            </button>
+                            : <button
+                                disabled={props.isLockedButtons.includes(props.id)}
+                                onClick={follow}>
+                                follow
+                            </button>
+                    }
+                </div>
+            }
         </li>
     )
 }

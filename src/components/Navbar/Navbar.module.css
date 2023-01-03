@@ -1,8 +1,11 @@
 .nav {
-    background-color: cadetblue;
     grid-column: 2 / 3;
-    margin-top: 60px;
+    grid-row: 2 / -2;
     padding: 5px;
+    margin-left: 10px;
+    background-color: var(--bg_color_primary);
+    border-left: 1px solid var(--border_color);
+    border-right: 1px solid var(--border_color);
 }
 
 .nav ul {
@@ -14,7 +17,7 @@
 .nav li a {
     display: inline-block;
     padding: 5px 10px;
-    /*background-color: brown;*/
+    color: #777777;
 }
 
 

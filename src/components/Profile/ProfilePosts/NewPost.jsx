@@ -2,8 +2,9 @@ import {Field, reduxForm} from "redux-form";
 import React from "react";
 import {maxLength, required} from "../../../utils/validators/validators";
 import {FormControl} from "../../common/FormsControls/FormsControls";
+import styles from './NewPost.module.css'
 
-const maxLengthNum = maxLength(10)
+const maxLengthNum300 = maxLength(300)
 
 const AddNewPostForm = (props) => {
     return (
@@ -16,11 +17,11 @@ const AddNewPostForm = (props) => {
                     name='newPostText'
                     type='textarea'
                     placeholder='Введите текст...'
-                    validate={[required, maxLengthNum]}
+                    validate={[required, maxLengthNum300]}
                 />
             </div>
             <div>
-                <button>Опубликовать</button>
+                <button>Отправить</button>
             </div>
         </form>
     )
@@ -36,8 +37,8 @@ const NewPost = (props) => {
     }
 
     return (
-        <div>
-            <p>Новый пост</p>
+        <div className={styles.newPost}>
+            <p className={styles.title}>Написать</p>
             <AddNewPostFormRedux onSubmit={addNewPost} />
         </div>
     )

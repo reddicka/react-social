@@ -89,7 +89,9 @@ const Login = (props) => {
         props.login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
-    if (props.isAuth) return <Navigate to={'/profile'} />
+    if (props.isAuth) {
+        return <Navigate to={'/profile'} />
+    }
 
     return (
         <>

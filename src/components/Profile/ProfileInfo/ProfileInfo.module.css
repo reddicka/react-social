@@ -1,44 +1,54 @@
 .about {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid var(--border_color);
 }
+
 .avatar {
+    box-sizing: border-box;
     /*display: flex;*/
     /*flex-direction: row;*/
+    position: relative;
+    margin-right: 20px;
 }
 
 .avatar_image {
-    width: 150px;
-    height: 250px;
-    border-radius: 15px;
-
+    box-sizing: border-box;
+    width: 250px;
+    height: 350px;
+    border-radius: 5px;
     object-fit: cover;
+    border: 1px solid var(--border_color);
 }
 
-.btn_uploadAvatar {
-    position: relative;
-    display: inline-block;
-}
-
-.btn_uploadAvatar span {
-    position: relative;
-    display: inline-block;
+.btn_uploadAvatar label {
+    position: absolute;
     cursor: pointer;
-    outline: none;
-    text-decoration: none;
     font-size: 14px;
     vertical-align: middle;
     text-align: center;
     color: white;
-    border-radius: 4px;
-    background-color: #0074D9;
-    line-height: 22px;
+    border-radius: 0 0 4px 4px;
+    outline: none;
+    background-color: rgba(5, 5, 5, 0.7);
     height: 40px;
     padding: 10px 20px;
     box-sizing: border-box;
-    border: none;
     margin: 0;
-    transition: background-color 0.2s;
+    transition: all 0.3s;
+
+    bottom: 5px;
+    left: 0;
+    right: 0;
+    opacity: 0;
+}
+
+.avatar:hover > .btn_uploadAvatar label {
+    opacity: 1;
 }
 
 .btn_uploadAvatar input[type=file] {
@@ -51,56 +61,62 @@
 }
 
 /* focus */
-.btn_uploadAvatar input[type=file]:focus + span {
+.btn_uploadAvatar input[type=file]:focus + label {
     box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* hover/active */
-.btn_uploadAvatar:hover span {
-    background-color: #787fff;
+.btn_uploadAvatar:hover label {
+    background-color: rgba(5, 5, 5, 0.9);
 }
-.input-file:active span {
+.input-file:active label {
     background-color: #2E703A;
 }
 
 /* Disabled */
-.input-file input[type=file]:disabled + span {
+.input-file input[type=file]:disabled + label {
     background-color: #eee;
 }
 
 .description {
-    padding: 10px;
+    padding: 5px 30px 5px 10px;
+    /*width: 100px;*/
+    flex-grow: 1;
+    border-radius: 5px;
+    background-color: var(--bg_color_primary);
+    border: 1px solid var(--border_color);
 }
 
 
 .facebook {
-    color: #787fff;
+    color: #1877f2;
 }
 
 .website {
-
+    color: #9149f9;
 }
 
 .vk {
-    color: blue;
+    color: #0077ff;
 }
 
 .twitter {
-
+    color: #1d9bf0;
 }
 
 .instagram {
-
+    color: #fe2770;
 }
 
 .youtube {
-
+    color: #e62117;
 }
 
 .github {
-
+    /*color: #161b22;*/
+    color: #ffffff;
 }
 
 .mainLink {
-
+    color: #ffffff;
 }

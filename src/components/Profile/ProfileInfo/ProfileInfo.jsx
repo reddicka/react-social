@@ -5,7 +5,6 @@ import {Link} from "react-router-dom";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import {useState} from "react";
 import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
-import {updateProfileData} from "../../../redux/profile-reducer";
 
 const ProfileInfo = ({profileInfo, ...props}) => {
     const [editMode, setEditMode] = useState(false)
@@ -46,8 +45,8 @@ const ProfileInfo = ({profileInfo, ...props}) => {
                 {
                     props.isOwner &&
                     <div className={styles.btn_uploadAvatar}>
-                        <input type='file' onChange={onNewAvatarSelected}/>
-                        <span>Загрузить</span>
+                        <input id='inputAvatar' type='file' onChange={onNewAvatarSelected}/>
+                        <label htmlFor='inputAvatar' >Загрузить</label>
                     </div>
                 }
             </div>

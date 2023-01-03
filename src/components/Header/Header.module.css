@@ -1,14 +1,12 @@
-.container {
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-header {
-    background-color: rgb(46, 49, 88);
+.header {
     grid-column: 1 / -1;
+    grid-row: 1 / 2;
     position: fixed;
     width: 100%;
     overflow: hidden;
+    border-bottom: 1px solid var(--border_color);
+    background-color: var(--bg_color_primary);
+    z-index: 10;
 }
 
 .header_row {

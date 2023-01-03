@@ -10,6 +10,7 @@ import Navbar from './components/Navbar/Navbar';
 import Preloader from "./components/common/Proloader/Preloader";
 import NotFound from "./components/NotFound/NotFound";
 import Modal from "./components/common/Modal/Modal";
+import Footer from "./components/Footer/Footer";
 
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"));
 const DialogsPageContainer = React.lazy(() => import("./components/Dialogs/DialogsPageContainer"));
@@ -87,6 +88,8 @@ class App extends Component {
                         </Routes>
                     </Suspense>
                 </div>
+
+                <Footer/>
             </div>
         );
     }

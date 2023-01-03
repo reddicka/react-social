@@ -1,20 +1,21 @@
 import React from 'react';
 import styles from './Header.module.css';
-import {Navigate, NavLink} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import avatar from '../../assets/img/user.png'
 
 const Header = (props) => {
     const onLogout = () => {
         props.logout()
-        return <Navigate to={'/login'} />
     }
 
     return (
-        <header>
-            <div className={styles.container}>
+        <header className={styles.header}>
+            <div className='container'>
                 <div className={styles.header_row}>
                     <div className={styles.logo}>
-                        <img src={props.avatarUrl || avatar} alt={props.login} />
+                        {
+                            props.isAuth && <img src={props.avatarUrl || avatar} alt={props.login} />
+                        }
                     </div>
                     <div>
                         {

@@ -6,27 +6,25 @@ import {
     getProfileStatus, updateProfileStatus, updateProfileAvatar, updateProfileData,
 } from "../../redux/profile-reducer";
 import Profile from "./Profile";
-import {Navigate, useLocation, useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
 
 class ProfileContainer extends React.Component {
     refreshProfile() {
-        let userId = this.props.router.params.userId // из адресной строки
-
+        // берем ID из адресной строки
+        let userId = this.props.router.params.userId
         // если в адресной строке пусто, то берем свой id
         if (!userId) {
             userId = this.props.authorizedUserId
-            // если пусто и нет своего id, значит не залогинены
-            if (!userId) {
-                // debugger
-                return <Navigate to={'/login'} />
-                // this.props.router.location({pathname :'/login'})
-            }
         }
-
-        this.props.getUserProfile(userId)
-        this.props.getProfileStatus(userId)
+        // если в адресе пусто и нет своего id, значит не залогинены
+        if (!userId) {
+            console.error("ID should exists in URI params or in state ('authorizedUserId')");
+        } else {
+            this.props.getUserProfile(userId)
+            this.props.getProfileStatus(userId)
+        }
     }
 
     componentDidMount() {
@@ -41,9 +39,9 @@ class ProfileContainer extends React.Component {
 
     render() {
         return (
-            <Profile {...this.props}
-                     isOwner={!this.props.router.params.userId
-                         || (this.props.router.params.userId === this.props.authorizedUserId)}/>
+            <Profile {...this.props} isOwner={!this.props.router.params.userId
+                || (this.props.router.params.userId === this.props.authorizedUserId)}/>
+
         )
     }
 }
@@ -86,6 +84,6 @@ export default compose(
 
         addPost
     }),
-    // WithAuthRedirect,
+    WithAuthRedirect,
     withRouter
 )(ProfileContainer)

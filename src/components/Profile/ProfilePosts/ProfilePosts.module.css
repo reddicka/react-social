@@ -1,6 +1,15 @@
+.posts {
+
+}
+
+.postsList {
+    display: flex;
+    flex-direction: column;
+}
+
 .item {
     width: 500px;
-    padding: 20px;
+    padding: 10px;
     margin-bottom: 10px;
 
     border: 1px solid black;

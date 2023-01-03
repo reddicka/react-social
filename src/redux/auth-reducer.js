@@ -1,5 +1,6 @@
 import {authAPI, profileAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {setProfileStatus, setUserProfile} from "./profile-reducer";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const SET_IS_LOADING = 'auth/SET_IS_LOADING'
@@ -116,6 +117,9 @@ export const logout = () => async (dispatch) => {
     let response = await authAPI.logout()
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false))
+        dispatch(setUserProfile(null))
+        dispatch(setProfileStatus(''))
+        dispatch(setAvatarUrl(null))
     }
 }
 

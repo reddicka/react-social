@@ -1,11 +1,9 @@
 import styles from "./Profile.module.css";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPosts from "./MyPosts/MyPosts";
+import ProfilePosts from "./ProfilePosts/ProfilePosts";
 import React from "react";
-import {updateProfileData} from "../../redux/profile-reducer";
 
 const Profile = (props) => {
-    // console.log(props)
     return (
         <div className={styles.profile}>
             <ProfileInfo
@@ -21,7 +19,7 @@ const Profile = (props) => {
                 updateProfileAvatar={props.updateProfileAvatar}
             />
 
-            <MyPosts
+            <ProfilePosts
                 addPost={props.addPost}
                 posts={props.posts}
             />

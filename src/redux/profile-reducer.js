@@ -13,17 +13,17 @@ let initialState = {
     posts: [
         {
             id: 1,
-            text: 'Пост про письки 1',
+            text: 'Пост про одно 1',
             likes: 12
         },
         {
             id: 2,
-            text: 'Пост про сиськи 2',
+            text: 'Пост про другое 2',
             likes: 15
         },
         {
             id: 3,
-            text: 'Пост про жопки 3',
+            text: 'Пост про третье 3',
             likes: 5
         },
     ],
@@ -145,8 +145,8 @@ export const updateProfileAvatar = (file) => async (dispatch) => {
     }
 }
 
-// Обновить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
-// и запросить новые данные
+// Отправить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
+// и запросить новые данные снова
 export const updateProfileData = (userData) => async (dispatch, getStore) => {
     let response = await profileAPI.updateProfileData(userData)
     if (response.data.resultCode === 0) {

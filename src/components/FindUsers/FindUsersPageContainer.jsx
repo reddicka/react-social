@@ -34,7 +34,8 @@ const mapStateToProps = (state) => ({
     totalUsersCount: setTotalUsersCount(state),
     pageSize: setPageSize(state),
     isLoading: setIsLoading(state),
-    isLockedButtons: setIsLockedButtons(state)
+    isLockedButtons: setIsLockedButtons(state),
+    authorizedUserId: state.auth.userId,
 })
 
 

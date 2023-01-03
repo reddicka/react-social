@@ -1,24 +1,41 @@
+:root {
+    --font_color_primary: #777777;
+    --font_color_secondary: #616161;
+    --bg_color_primary: #1e1f22;
+    --bg_color_secondary: #17181c;
+    --border_color: #353535;
+}
+
 * {
     padding: 0;
     margin: 0;
+    color: var(--font_color_primary);
+}
 
-    color: rgb(27, 27, 27);
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 10px;
 }
 
 .App {
+    min-height: 100vh;
     display: grid;
     grid-template-columns: 1fr 150px minmax(150px, 850px) 1fr;
+    grid-template-rows: 60px min-content 1fr min-content;
 
     /*font-family: sans-serif;*/
     font-weight: 600;
     font-size: 18px;
+
+    background-color: var(--bg_color_secondary);
 }
 
 .content {
     grid-column: 3 / 4;
+    grid-row: 2 / 4;
     max-width: 850px;
-    background-color: #dedede;
-    padding-top: 60px;
+    margin: 30px 10px 30px 30px;
 }
 
 a {
