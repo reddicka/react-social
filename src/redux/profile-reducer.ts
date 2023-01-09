@@ -1,4 +1,4 @@
-import {profileAPI} from "../api/api";
+import {profileAPI, ResultCodesEnum} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
@@ -163,8 +163,8 @@ export const getUserProfile = (userId: number): ThunkType => async (dispatch, ge
     //     userId = responseMe.data.data.id
     // }
 
-    let responseProfile = await profileAPI.getProfile(userId)
-    dispatch(setUserProfile(responseProfile.data))
+    let profileData = await profileAPI.getProfile(userId)
+    dispatch(setUserProfile(profileData))
 
     // тестовая
     // let responseTest = await profileAPI.getProfileStatus(userId)
@@ -173,15 +173,15 @@ export const getUserProfile = (userId: number): ThunkType => async (dispatch, ge
 
 // получить статус какого-то пользователя
 export const getProfileStatus = (userId: number): ThunkType => async (dispatch) => {
-    let response = await profileAPI.getProfileStatus(userId)
-    dispatch(setProfileStatus(response.data))
+    let profileStatus = await profileAPI.getProfileStatus(userId)
+    dispatch(setProfileStatus(profileStatus))
 }
 
 // отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
 export const updateProfileStatus = (status: string): ThunkType => async (dispatch) => {
     try {
-        let response = await profileAPI.updateProfileStatus(status)
-        if (response.data.resultCode === 0) {
+        let data = await profileAPI.updateProfileStatus(status)
+        if (data.resultCode === ResultCodesEnum.Success) {
             dispatch(setProfileStatus(status))
         }
     } catch (error) {
@@ -193,24 +193,25 @@ export const updateProfileStatus = (status: string): ThunkType => async (dispatc
 
 // отправить новый аватар на сервер и задиспатчить в стейт
 export const updateProfileAvatar = (file: any): ThunkType => async (dispatch) => {
-    let response = await profileAPI.updateProfileAvatar(file)
-    if (response.data.resultCode === 0) {
-        dispatch(setProfileAvatar(response.data.data.photos))
+    let data = await profileAPI.updateProfileAvatar(file)
+    if (data.resultCode === ResultCodesEnum.Success) {
+        dispatch(setProfileAvatar(data.data.photos))
     }
 }
 
 // отправить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
 // и запросить новые данные снова
 export const updateProfileData = (userData: ProfileType): ThunkType => async (dispatch, getStore) => {
-    let response = await profileAPI.updateProfileData(userData)
-    if (response.data.resultCode === 0) {
+    let data = await profileAPI.updateProfileData(userData)
+
+    if (data.resultCode === ResultCodesEnum.Success) {
         const userId = getStore().auth.userId
         // @ts-ignore
         await dispatch(getUserProfile(userId)) // проблема, в стейте id может не быть, но запрос null в API - хрень
     } else {
         // @ts-ignore
-        dispatch(stopSubmit("editProfile", {_error: response.data.messages[0]}))
+        dispatch(stopSubmit("editProfile", {_error: data.messages[0]}))
         // выплюнет ошибку если надо ее обработать
-        return Promise.reject(response.data.messages[0])
+        return Promise.reject(data.messages[0])
     }
 }

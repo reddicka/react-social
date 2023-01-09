@@ -1,4 +1,4 @@
-import {usersAPI} from "../api/api";
+import {ResultCodesEnum, usersAPI} from "../api/api";
 import {UserType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
@@ -156,10 +156,10 @@ export const requestUsers = (currentPageNumber: number, pageSize: number): Thunk
     dispatch(setIsLoading(true))
     dispatch(setCurrentPageNumber(currentPageNumber))
 
-    let response = await usersAPI.getUsers(currentPageNumber, pageSize)
-    if (!response.data.error) {
-        dispatch(setUsers(response.data.items))
-        dispatch(setTotalUsersCount(response.data.totalCount))
+    let data = await usersAPI.getUsers(currentPageNumber, pageSize)
+    if (!data.error) {
+        dispatch(setUsers(data.items))
+        dispatch(setTotalUsersCount(data.totalCount))
     }
     dispatch(setIsLoading(false))
 }
@@ -168,8 +168,8 @@ export const requestUsers = (currentPageNumber: number, pageSize: number): Thunk
 export const follow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setIsFollowingProgress(true, userId))
 
-    let response = await usersAPI.follow(userId)
-    if (response.data.resultCode === 0) {
+    let data = await usersAPI.follow(userId)
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(followAccept(userId))
     }
     dispatch(setIsFollowingProgress(false, userId))
@@ -179,8 +179,8 @@ export const follow = (userId: number): ThunkType => async (dispatch) => {
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setIsFollowingProgress(true, userId))
 
-    let response = await usersAPI.unfollow(userId)
-    if (response.data.resultCode === 0) {
+    let data = await usersAPI.unfollow(userId)
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(unfollowAccept(userId))
     }
     dispatch(setIsFollowingProgress(false, userId))

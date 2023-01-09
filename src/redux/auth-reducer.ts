@@ -1,4 +1,4 @@
-import {authAPI, profileAPI, securityAPI} from "../api/api";
+import {authAPI, profileAPI, ResultCodeForCaptcha, ResultCodesEnum, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {
     setProfileStatus,
@@ -152,14 +152,14 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
     // if (!isAuth) {
     dispatch(setIsLoading(true))
 
-    let response = await authAPI.me()
-    if (response.data.resultCode === 0) {
-        let {id, login, email} = response.data.data
+    let data = await authAPI.me()
+    if (data.resultCode === ResultCodesEnum.Success) {
+        let {id, login, email} = data.data
         dispatch(setAuthUserData(id, login, email, true))
 
         // костыль, получающий аватарку для шапки
-        let responseProfile = await profileAPI.getProfile(id)
-        dispatch(setAvatarUrl(responseProfile.data.photos.small))
+        let profileData = await profileAPI.getProfile(id)
+        dispatch(setAvatarUrl(profileData.photos.small))
 
         dispatch(setIsLoading(false))
     }
@@ -169,24 +169,25 @@ export const getAuthUserData = (): ThunkType => async (dispatch) => {
 export const login = (
     email: string, password: string, rememberMe: boolean, captcha: string
 ): ThunkType => async (dispatch) => {
-    let response = await authAPI.login(email, password, rememberMe, captcha)
-    if (response.data.resultCode === 0) {
+    let data = await authAPI.login(email, password, rememberMe, captcha)
+
+    if (data.resultCode === ResultCodesEnum.Success) {
         // успех
         await dispatch(getAuthUserData())
-    } else if (response.data.resultCode === 1) {
+    } else if (data.resultCode === ResultCodesEnum.Error) {
         // неверный логин/пароль
         // @ts-ignore
         await dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
-    } else if (response.data.resultCode === 10) {
-        // превышен лимит попыток
+    } else if (data.resultCode === ResultCodeForCaptcha.CaptchaIsRequired) {
+        // превышен лимит попыток, нужна капча
         await dispatch(getCaptchaUrl())
     }
 }
 
 // выйти из аккаунта
 export const logout = (): ThunkType => async (dispatch) => {
-    let response = await authAPI.logout()
-    if (response.data.resultCode === 0) {
+    let data = await authAPI.logout()
+    if (data.resultCode === ResultCodesEnum.Success) {
         dispatch(setAuthUserData(null, null, null, false))
         dispatch(setUserProfile(null))
         dispatch(setProfileStatus(''))
@@ -196,6 +197,6 @@ export const logout = (): ThunkType => async (dispatch) => {
 
 // получить ссылку для капчи
 export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
-    let response = await securityAPI.getCaptchaUrl()
-    dispatch(setCaptchaUrl(response.data.url))
+    let data = await securityAPI.getCaptchaUrl()
+    dispatch(setCaptchaUrl(data.url))
 }
