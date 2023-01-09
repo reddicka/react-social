@@ -1,5 +1,6 @@
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
+import {PhotosType, PostType, ProfileType} from "../types/types";
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
@@ -7,8 +8,9 @@ const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
 const DELETE_POST = 'profile/DELETE_POST'
 const SET_PROFILE_AVATAR = 'profile/SET_PROFILE_AVATAR'
 
-let initialState = {
-    profileInfo: null,
+
+const initialState = {
+    profileInfo: null as ProfileType | null,
     profileStatus: '',
     posts: [
         {
@@ -26,12 +28,12 @@ let initialState = {
             text: 'Пост про третье 3',
             likes: 5
         },
-    ],
+    ] as Array<PostType> | [],
     newPostText: '',
 }
+type InitialStateType = typeof initialState
 
-
-const profileReducer = (state = initialState, action) => {
+const profileReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             const newPostText = action.newPostText
@@ -72,8 +74,10 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileInfo: {
                     ...state.profileInfo,
-                    photos: {...action.photos}
-                },
+                    photos: {
+                        ...action.photos
+                    }
+                } as ProfileType // затычка, чтоб не ругалось, исправить и убрать
             }
         default:
             return state
@@ -82,20 +86,66 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer
 
-// --- action-creators ---
-// получение информации о пользователе
-export const setUserProfile = (profileInfo) => ({type: SET_USER_PROFILE, profileInfo})
-// установка статуса пользователя
-export const setProfileStatus = (profileStatus) => ({type: SET_PROFILE_STATUS, profileStatus})
-// добавление/удаление поста
-export const addPost = (newPostText) => ({type: ADD_POST, newPostText})
-export const deletePost = (postId) => ({type: DELETE_POST, postId})
-// установка нового аватара
-export const setProfileAvatar = (photos) => ({type: SET_PROFILE_AVATAR, photos})
 
-// --- thunk-creators ---
+
+// ====== ACTION-CREATORS ======
+
+// установка информации о пользователе
+type SetUserProfileActionType = {
+    type: typeof SET_USER_PROFILE
+    profileInfo: ProfileType | null
+}
+export const setUserProfile = (profileInfo: ProfileType | null):SetUserProfileActionType => ({
+    type: SET_USER_PROFILE,
+    profileInfo
+})
+
+// установка статуса пользователя
+type SetProfileStatusActionType = {
+    type: typeof SET_PROFILE_STATUS
+    profileStatus: string
+}
+export const setProfileStatus = (profileStatus: string): SetProfileStatusActionType => ({
+    type: SET_PROFILE_STATUS,
+    profileStatus
+})
+
+// добавить пост
+type AddPostActionType = {
+    type: typeof ADD_POST
+    newPostText: string
+}
+export const addPost = (newPostText: string): AddPostActionType => ({
+    type: ADD_POST,
+    newPostText
+})
+
+// удалить пост
+type DeletePostActionType = {
+    type: typeof DELETE_POST
+    postId: number
+}
+export const deletePost = (postId: number): DeletePostActionType => ({
+    type: DELETE_POST,
+    postId
+})
+
+// установка нового аватара
+type SetProfileAvatarActionType = {
+    type: typeof SET_PROFILE_AVATAR
+    photos: PhotosType
+}
+export const setProfileAvatar = (photos: PhotosType): SetProfileAvatarActionType => ({
+    type: SET_PROFILE_AVATAR,
+    photos
+})
+
+
+
+// ====== THUNK-CREATORS ======
+
 // получить данные для страницы профиля пользователя
-export const getUserProfile = (userId) => async (dispatch, getStore) => {
+export const getUserProfile = (userId: number) => async (dispatch: any, getStore: any) => {
     // ИСПРАВИТЬ
 
     // поидее здесь должен быть просто запрос, а какой ID брать - решается в месте вызова
@@ -117,14 +167,14 @@ export const getUserProfile = (userId) => async (dispatch, getStore) => {
     // dispatch(setProfileStatus(responseTest.data))
 }
 
-// Получить статус какого-то пользователя
-export const getProfileStatus = (userId) => async (dispatch) => {
+// получить статус какого-то пользователя
+export const getProfileStatus = (userId: number) => async (dispatch: any) => {
     let response = await profileAPI.getProfileStatus(userId)
     dispatch(setProfileStatus(response.data))
 }
 
-// Отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
-export const updateProfileStatus = (status) => async (dispatch) => {
+// отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
+export const updateProfileStatus = (status: string) => async (dispatch: any) => {
     try {
         let response = await profileAPI.updateProfileStatus(status)
         if (response.data.resultCode === 0) {
@@ -137,17 +187,17 @@ export const updateProfileStatus = (status) => async (dispatch) => {
     }
 }
 
-// Отправить новый аватар на сервер и задиспатчить в стейт
-export const updateProfileAvatar = (file) => async (dispatch) => {
+// отправить новый аватар на сервер и задиспатчить в стейт
+export const updateProfileAvatar = (file: any) => async (dispatch: any) => {
     let response = await profileAPI.updateProfileAvatar(file)
     if (response.data.resultCode === 0) {
         dispatch(setProfileAvatar(response.data.data.photos))
     }
 }
 
-// Отправить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
+// отправить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
 // и запросить новые данные снова
-export const updateProfileData = (userData) => async (dispatch, getStore) => {
+export const updateProfileData = (userData: ProfileType) => async (dispatch: any, getStore: any) => {
     let response = await profileAPI.updateProfileData(userData)
     if (response.data.resultCode === 0) {
         const userId = getStore().auth.userId

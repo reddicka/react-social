@@ -1,21 +1,16 @@
-const SEND_MESSAGE: string = 'dialogs/SEND_MESSAGE'
+const SEND_MESSAGE = 'dialogs/SEND_MESSAGE'
 
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
 }
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
     type: 'inbox' | 'outbox'
 }
 
-export type InitialStateType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-}
-
-let initialState: InitialStateType = {
+const initialState = {
     dialogs: [
         {
             id: 1,
@@ -33,7 +28,7 @@ let initialState: InitialStateType = {
             id: 4,
             name: 'Танюха'
         }
-    ],
+    ] as Array<DialogType> | [],
     messages: [
         {
             id: 1,
@@ -55,12 +50,13 @@ let initialState: InitialStateType = {
             message: 'Привет писька',
             type: 'outbox'
         }
-    ]
+    ] as Array<MessageType> | []
 }
+type InitialStateType = typeof initialState
 
 const dialogsReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
-        case typeof SEND_MESSAGE: {
+        case SEND_MESSAGE: {
             if (action.newMessageText) {
                 return {
                     ...state,
@@ -80,16 +76,24 @@ const dialogsReducer = (state = initialState, action: any): InitialStateType => 
     }
 }
 
-// --- actions ---
+export default dialogsReducer
+
+
+
+// ====== ACTION-CREATORS ======
+
+// добавить новое сообщение в стейт
 type SendMessageActionType = {
     type: typeof SEND_MESSAGE
     newMessageText: string
 }
-export const setNewMessage = (newMessageText: string):SendMessageActionType => ({type: SEND_MESSAGE, newMessageText})
+export const setNewMessage = (newMessageText: string):SendMessageActionType => ({
+    type: SEND_MESSAGE,
+    newMessageText
+})
 
-// --- thunk-creators ---
+
+
+// ====== THUNK-CREATORS ======
+
 // -
-
-export default dialogsReducer
-
-// export type InitialStateType = typeof initialState

@@ -1,6 +1,11 @@
 import loadAnimation from '../../../assets/img/isLoading.gif'
+import {FC} from "react";
 
-const Preloader = (props) => {
+type PropsType = {
+
+}
+
+const Preloader: FC<PropsType> = (props) => {
     return (
         <div>
             <img src={loadAnimation} alt='loading...' style={{

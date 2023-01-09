@@ -1,6 +1,12 @@
 // import styles from './Friends.module.css'
 
-function Friends() {
+import {FC} from "react";
+
+type PropsType = {
+
+}
+
+const Friends: FC<PropsType> = (props) => {
     return (
         <div>Friends</div>
     )

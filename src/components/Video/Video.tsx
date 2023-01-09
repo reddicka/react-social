@@ -1,6 +1,12 @@
 // import styles from './Video.module.css'
 
-function Video() {
+import {FC} from "react";
+
+type PropsType = {
+
+}
+
+const Video: FC<PropsType> = (props) => {
     return (
         <div>Video</div>
     )

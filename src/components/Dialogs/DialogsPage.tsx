@@ -1,18 +1,24 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from './DialogsPage.module.css';
 import DialogItem from "./DialogItem/DialogItem";
 import MessageItem from "./MessageItem/MessageItem";
 import AddMessage from "./NewMessage";
+import {DialogType, MessageType} from "../../redux/dialogs-reducer";
 
-function DialogsPage(props) {
-    let state = props.dialogsPageData
+type PropsType = {
+    dialogs: Array<DialogType> | []
+    messages: Array<MessageType> | []
+    sendMessage: (newMessageText: string) => void
+}
 
-    let dialogsList = state.dialogs.map(dialog =>
+const DialogsPage: FC<PropsType> = ({dialogs, messages, sendMessage}) => {
+
+    let dialogsList = dialogs.map(dialog =>
         <DialogItem id={dialog.id} name={dialog.name} key={dialog.id} />
     )
 
-    let messagesList = state.messages.map(message =>
-        <MessageItem message={message.message} type={message.type} key={message.id} />
+    let messagesList = messages.map(message =>
+        <MessageItem id={message.id} message={message.message} type={message.type} key={message.id} />
     )
 
     return (
@@ -28,7 +34,7 @@ function DialogsPage(props) {
                     { messagesList }
                 </div>
 
-                <AddMessage sendMessage={props.sendMessage} />
+                <AddMessage sendMessage={sendMessage} />
             </div>
         </div>
     );

@@ -1,10 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, {FC} from "react";
 import styles from './FindUsersPage.module.css'
 import User from "./User/User";
 import Preloader from "../common/Proloader/Preloader";
 import Paginator from "../common/Paginator/Paginator";
+import {UserType} from "../../types/types";
 
-const FindUsersPage = (props) => {
+type PropsType = {
+    isLoading: boolean
+    users: Array<UserType>
+
+    currentPageNumber: number
+    totalUsersCount: number
+    pageSize: number
+    onPageChanged: (page: number) => void
+
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    authorizedUserId: number | null
+
+    isLockedButtons: Array<number>
+}
+
+const FindUsersPage: FC<PropsType> = (props) => {
     // const [isLoading, setIsLoading] = useState(true)
     // useEffect(() => {
     //     setIsLoading(false)
@@ -35,7 +52,7 @@ const FindUsersPage = (props) => {
                                 authorizedUserId={props.authorizedUserId}
 
                                 isLockedButtons={props.isLockedButtons}
-                                setIsFollowingProgress={props.setIsFollowingProgress}
+                                // setIsFollowingProgress={props.setIsFollowingProgress}
                             />)
                         }
                     </ul>

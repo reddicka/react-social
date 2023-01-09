@@ -3,8 +3,22 @@ import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
 import {Link} from "react-router-dom";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
-import {useState} from "react";
+import {ChangeEvent, FC, useState} from "react";
 import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
+import {ProfileType} from "../../../types/types";
+
+// type PropsType = {
+//     isOwner: boolean
+//
+//     profileInfo: ProfileType
+//     updateProfileData: (status: string) => void
+//
+//     profileStatus: string
+//     getProfileStatus: (userId: number) => void
+//     updateProfileStatus: (text: string) => void
+//
+//     updateProfileAvatar: (file: any) => void
+// }
 
 const ProfileInfo = ({profileInfo, ...props}) => {
     const [editMode, setEditMode] = useState(false)
@@ -74,6 +88,10 @@ const ProfileInfo = ({profileInfo, ...props}) => {
         </div>
     )
 }
+
+// type ProfileDataType = {
+//     profileInfo: ProfileType
+// }
 
 // данные о пользователе (ищет ли работу, о его работе, "обо мне", список контактов)
 const ProfileData = ({profileInfo}) => {

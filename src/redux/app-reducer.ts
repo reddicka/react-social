@@ -5,10 +5,11 @@ const SET_GLOBAL_ERROR = 'app/SET_GLOBAL_ERROR'
 
 const initialState = {
     initialized: false,
-    globalError: null
+    globalError: null as string | null
 }
+type InitialStateType = typeof initialState
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
         case INITIALIZED_SUCCESS:
             return {
@@ -27,15 +28,33 @@ const appReducer = (state = initialState, action) => {
 
 export default appReducer
 
-// --- action-creators ---
-// инициализация произошла
-export const setInitializedSuccess = () => ({type: INITIALIZED_SUCCESS})
-// установка флага глобальной ошибки
-export const setGlobalError = (error) => ({type: SET_GLOBAL_ERROR, error})
 
-// --- thunk-creators ---
+
+// ====== ACTION-CREATORS ======
+
+// инициализация произошла
+type SetInitializedSuccessActionType = {
+    type: typeof INITIALIZED_SUCCESS
+}
+export const setInitializedSuccess = (): SetInitializedSuccessActionType => ({
+    type: INITIALIZED_SUCCESS
+})
+
+// установка флага глобальной ошибки
+type SetGlobalErrorActionType = {
+    type: typeof SET_GLOBAL_ERROR
+    error: string
+}
+export const setGlobalError = (error: string): SetGlobalErrorActionType => ({
+    type: SET_GLOBAL_ERROR, error
+})
+
+
+
+// ====== THUNK-CREATORS ======
+
 // начальная инициализация приложения
-export const initializeApp = () => (dispatch) => {
+export const initializeApp = () => (dispatch: any) => {
     let promise = dispatch(getAuthUserData())
     Promise.all([promise])
         .then( () => {
@@ -44,7 +63,7 @@ export const initializeApp = () => (dispatch) => {
 }
 
 // запуск таймера для очистки поля глобальной ошибки
-export const globalErrorHandler = (error) => (dispatch) => {
+export const globalErrorHandler = (error: any) => (dispatch: any) => {
     // установка поля ошибки
     dispatch(setGlobalError(error.reason.message))
     // очистка поля ошибки

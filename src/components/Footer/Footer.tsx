@@ -1,6 +1,11 @@
 import styles from './Footer.module.css'
+import {FC} from "react";
 
-const Footer = (props) => {
+type PropsType = {
+
+}
+
+const Footer: FC<PropsType> = (props) => {
     return (
         <footer className={styles.footer}>
             <div className='container'>

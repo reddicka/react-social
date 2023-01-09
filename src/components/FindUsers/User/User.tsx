@@ -1,8 +1,24 @@
 import style from './User.module.css'
 import avatar from '../../../assets/img/user.png'
 import {NavLink} from "react-router-dom";
+import {FC} from "react";
+import {PhotosType} from "../../../types/types";
 
-const User = (props) => {
+type PropsType = {
+    key: number
+    id: number
+    name: string
+    followed: boolean
+    photos: PhotosType
+    status: string
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
+    authorizedUserId: number | null
+
+    isLockedButtons: Array<number>
+}
+
+const User: FC<PropsType> = (props) => {
 
     let follow = () => {
         props.follow(props.id)

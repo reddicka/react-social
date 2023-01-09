@@ -13,6 +13,14 @@ import styles from './FormsControls.module.css'
         и т.д.
 */
 
+// для ts
+// type PropsType = {
+//     input: object
+//     meta: object
+//     formElement: string
+// }
+// : FC<PropsType>
+
 export const FormControl = ({input, meta, formElement, ...props}) => {
     let hasError = meta.touched && meta.error
 

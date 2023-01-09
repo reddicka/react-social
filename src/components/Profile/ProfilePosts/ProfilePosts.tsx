@@ -1,13 +1,19 @@
-import React, {memo} from "react";
+import React, {FC, memo} from "react";
 import styles from './ProfilePosts.module.css';
 import NewPost from "./NewPost";
+import {PostType} from "../../../types/types";
 
-const ProfilePosts = memo(props => {
+type PropsType = {
+    addPost: (newPostText: string) => void
+    posts: Array<PostType>
+}
+
+const ProfilePosts: FC<PropsType> = memo(props => {
 
     let postsElements = [...props.posts]
         .reverse()
         .map(item =>
-            <Post text={item.text} likes={item.likes} key={item.id}/>
+            <Post id={item.id} text={item.text} likes={item.likes} key={item.id}/>
         )
 
     return (
@@ -21,7 +27,8 @@ const ProfilePosts = memo(props => {
     );
 })
 
-const Post = (props) => {
+
+const Post: FC<PostType> = (props) => {
     return (
         <li className={styles.item}>
             {props.text}

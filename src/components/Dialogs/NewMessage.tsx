@@ -1,11 +1,15 @@
-import React from "react";
+import React, {FC} from "react";
 import {Field, reduxForm} from "redux-form";
 import {FormControl} from "../common/FormsControls/FormsControls";
 import {maxLength, required} from "../../utils/validators/validators";
 
+type PropsType = {
+    sendMessage: (messageBody: string) => void
+}
+
 const maxLengthNum =  maxLength(10)
 
-const AddMessageForm = (props) => {
+const AddMessageForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
@@ -27,8 +31,8 @@ const AddMessageForm = (props) => {
 
 let AddMessageFormRedux = reduxForm({form: "dialogAddMessageForm"})(AddMessageForm)
 
-const AddMessage = (props) => {
-    let addNewMessage = (values) => {
+const AddMessage: FC<PropsType> = (props) => {
+    let addNewMessage = (values: any) => {
         props.sendMessage(values.messageBody)
     }
 

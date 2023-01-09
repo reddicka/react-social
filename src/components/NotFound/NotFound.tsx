@@ -1,6 +1,11 @@
+import {FC} from "react";
 
 
-const NotFound = () => {
+type PropsType = {
+
+}
+
+const NotFound: FC<PropsType> = (props) => {
 
     return (
         <div>

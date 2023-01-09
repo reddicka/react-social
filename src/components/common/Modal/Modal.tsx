@@ -1,6 +1,13 @@
 import styles from './Modal.module.css'
+import {FC} from "react";
 
-const Modal = ({title, text, error}) => {
+type PropsType = {
+    title: string
+    text: string
+    error: string
+}
+
+const Modal: FC<PropsType> = ({title, text, error}) => {
     return (
         <div className={styles.background}>
             <div className={styles.modal}>

@@ -5,29 +5,19 @@ import {setProfileStatus, setUserProfile} from "./profile-reducer";
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const SET_IS_LOADING = 'auth/SET_IS_LOADING'
 const SET_AVATAR_URL = 'auth/SET_AVATAR_URL'
-
 const SET_IS_AUTH = 'auth/SET_IS_AUTH'
 const SET_CAPTCHA_URL = 'auth/SET_CAPTCHA_URL'
 
-export type InitialStateType = {
-    userId: number | null
-    login: string | null
-    email: string | null
-    isAuth: boolean
-    isLoading: boolean
-    avatarUrl: string | null
-    captchaUrl: string | null
-}
-
-const initialState: InitialStateType = {
-    userId: null,
-    login: null,
-    email: null,
+const initialState = {
+    userId: null as number | null,
+    login: null as string | null,
+    email: null as string | null,
     isAuth: false,
     isLoading: false,
-    avatarUrl: null,
-    captchaUrl: null,
+    avatarUrl: null as string | null,
+    captchaUrl: null as string | null, // если null, то капча не обязательна
 }
+type InitialStateType = typeof initialState
 
 const authReducer = (state = initialState, action: any): InitialStateType => {
     switch (action.type) {
@@ -35,7 +25,7 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
             return {
                 ...state,
                 ...action.payload,
-                captchaUrl: null
+                captchaUrl: null,
             }
         case SET_IS_LOADING:
             return {
@@ -77,8 +67,10 @@ const authReducer = (state = initialState, action: any): InitialStateType => {
 
 export default authReducer
 
-// --- action-creators ---
-// засетать данные об авторизованном пользователе в стейт
+
+// ====== ACTION-CREATORS ======
+
+// установить данные об авторизованном пользователе в стейт
 type SetAuthUserDataActionPayloadType = {
     userId: number | null
     login: string | null
@@ -92,38 +84,53 @@ type SetAuthUserDataActionType = {
     // payload: { userId: number, login: string, email: string, isAuth: boolean }
 }
 export const setAuthUserData = (
-    userId: number | any,
-    login: string | any,
-    email: string | any,
+    userId: number | null,
+    login: string | null,
+    email: string | null,
     isAuth: boolean): SetAuthUserDataActionType => ({
     type: SET_USER_DATA,
     payload: {userId, login, email, isAuth}
 })
-// засетать аватар авторизованного пользователя в стейт
+
+// установить аватар авторизованного пользователя в стейт
 type SetAvatarUrlActionType = {
     type: typeof SET_AVATAR_URL,
     avatarUrl: string | null
 }
-export const setAvatarUrl = (avatarUrl: string | null): SetAvatarUrlActionType => ({type: SET_AVATAR_URL, avatarUrl})
-// засетать полученную капчу
+export const setAvatarUrl = (avatarUrl: string | null): SetAvatarUrlActionType => ({
+    type: SET_AVATAR_URL,
+    avatarUrl
+})
+
+// установить полученную капчу
 type SetCaptchaUrlActionType = {
     type: typeof SET_CAPTCHA_URL,
     captchaUrl: string | null
 }
-export const setCaptchaUrl = (captchaUrl: string): SetCaptchaUrlActionType => ({type: SET_CAPTCHA_URL, captchaUrl})
-// засетать флаг авторизован пользователь или нет
+export const setCaptchaUrl = (captchaUrl: string): SetCaptchaUrlActionType => ({
+    type: SET_CAPTCHA_URL,
+    captchaUrl
+})
+
+// установить флаг авторизован пользователь или нет
 type SetIsAuthActionType = {
     type: typeof SET_IS_AUTH,
     isAuth: boolean
 }
-export const setIsAuth = (isAuth: boolean): SetIsAuthActionType => ({type: SET_IS_AUTH, isAuth})
+export const setIsAuth = (isAuth: boolean): SetIsAuthActionType => ({
+    type: SET_IS_AUTH,
+    isAuth
+})
+
+
 
 /* надо вынести это в локальный стейт */
 export const setIsLoading = (isLoading: boolean) => ({type: SET_IS_LOADING, isLoading})
 
 
 
-// --- thunk-creators ---
+// ====== THUNK-CREATORS ======
+
 // получить данные об авторизованном пользователе
 export const getAuthUserData = () => async (dispatch: any) => {
     // if (!isAuth) {

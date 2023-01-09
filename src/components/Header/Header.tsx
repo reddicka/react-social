@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import avatar from '../../assets/img/user.png'
 
-const Header = (props) => {
+type PropsType = {
+    login: string | null
+    isAuth: boolean
+    isLoading: boolean
+    avatarUrl: string | null
+    logout: () => void
+}
+
+const Header: FC<PropsType> = (props) => {
     const onLogout = () => {
         props.logout()
     }
@@ -14,6 +22,7 @@ const Header = (props) => {
                 <div className={styles.header_row}>
                     <div className={styles.logo}>
                         {
+                            // @ts-ignore
                             props.isAuth && <img src={props.avatarUrl || avatar} alt={props.login} />
                         }
                     </div>
