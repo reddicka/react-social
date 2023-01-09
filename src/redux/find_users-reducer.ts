@@ -1,5 +1,7 @@
 import {usersAPI} from "../api/api";
 import {UserType} from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const SET_USERS = 'findUsers/SET_USERS'
 const FOLLOW = 'findUsers/FOLLOW'
@@ -19,7 +21,8 @@ const initialState = {
 }
 type InitialStateType = typeof initialState
 
-const findUsersReducer = (state = initialState, action: any): InitialStateType => {
+
+const findUsersReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -78,6 +81,7 @@ export default findUsersReducer
 
 
 // ====== ACTION-CREATORS ======
+type ActionTypes = FollowAcceptActionType | UnfollowAcceptActionType | SetUsersActionType | SetCurrentPageNumberActionType | SetTotalUsersCountActionType | SetIsLoadingActionType | SetIsFollowingProgressActionType
 
 // устанавливает true, если подписка на человека прошла успешно
 type FollowAcceptActionType = {
@@ -145,9 +149,10 @@ export const setIsFollowingProgress = (isFetching: boolean, userId: number): Set
 
 
 // ====== THUNK-CREATORS ======
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
 // запросить список пользователей
-export const requestUsers = (currentPageNumber: number, pageSize: number) => async (dispatch: any) => {
+export const requestUsers = (currentPageNumber: number, pageSize: number): ThunkType => async (dispatch) => {
     dispatch(setIsLoading(true))
     dispatch(setCurrentPageNumber(currentPageNumber))
 
@@ -160,7 +165,7 @@ export const requestUsers = (currentPageNumber: number, pageSize: number) => asy
 }
 
 // follow
-export const follow = (userId: number) => async (dispatch: any) => {
+export const follow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setIsFollowingProgress(true, userId))
 
     let response = await usersAPI.follow(userId)
@@ -171,7 +176,7 @@ export const follow = (userId: number) => async (dispatch: any) => {
 }
 
 // unfollow
-export const unfollow = (userId: number) => async (dispatch: any) => {
+export const unfollow = (userId: number): ThunkType => async (dispatch) => {
     dispatch(setIsFollowingProgress(true, userId))
 
     let response = await usersAPI.unfollow(userId)

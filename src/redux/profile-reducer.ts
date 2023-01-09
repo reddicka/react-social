@@ -1,6 +1,8 @@
 import {profileAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType} from "../types/types";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
@@ -33,7 +35,7 @@ const initialState = {
 }
 type InitialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action: any): InitialStateType => {
+const profileReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case ADD_POST: {
             const newPostText = action.newPostText
@@ -77,7 +79,7 @@ const profileReducer = (state = initialState, action: any): InitialStateType => 
                     photos: {
                         ...action.photos
                     }
-                } as ProfileType // затычка, чтоб не ругалось, исправить и убрать
+                } as ProfileType // затычка, чтоб не ругалось, исправить и убрать (или нет)
             }
         default:
             return state
@@ -89,19 +91,20 @@ export default profileReducer
 
 
 // ====== ACTION-CREATORS ======
+type ActionsTypes = SetUserProfileActionType | SetProfileStatusActionType | AddPostActionType | DeletePostActionType | SetProfileAvatarActionType
 
 // установка информации о пользователе
-type SetUserProfileActionType = {
+export type SetUserProfileActionType = {
     type: typeof SET_USER_PROFILE
     profileInfo: ProfileType | null
 }
-export const setUserProfile = (profileInfo: ProfileType | null):SetUserProfileActionType => ({
+export const setUserProfile = (profileInfo: ProfileType | null): SetUserProfileActionType => ({
     type: SET_USER_PROFILE,
     profileInfo
 })
 
 // установка статуса пользователя
-type SetProfileStatusActionType = {
+export type SetProfileStatusActionType = {
     type: typeof SET_PROFILE_STATUS
     profileStatus: string
 }
@@ -143,9 +146,10 @@ export const setProfileAvatar = (photos: PhotosType): SetProfileAvatarActionType
 
 
 // ====== THUNK-CREATORS ======
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 // получить данные для страницы профиля пользователя
-export const getUserProfile = (userId: number) => async (dispatch: any, getStore: any) => {
+export const getUserProfile = (userId: number): ThunkType => async (dispatch, getStore) => {
     // ИСПРАВИТЬ
 
     // поидее здесь должен быть просто запрос, а какой ID брать - решается в месте вызова
@@ -168,13 +172,13 @@ export const getUserProfile = (userId: number) => async (dispatch: any, getStore
 }
 
 // получить статус какого-то пользователя
-export const getProfileStatus = (userId: number) => async (dispatch: any) => {
+export const getProfileStatus = (userId: number): ThunkType => async (dispatch) => {
     let response = await profileAPI.getProfileStatus(userId)
     dispatch(setProfileStatus(response.data))
 }
 
 // отправить свой статус на сервер и, если все ок, то задиспатчить его в стейт
-export const updateProfileStatus = (status: string) => async (dispatch: any) => {
+export const updateProfileStatus = (status: string): ThunkType => async (dispatch) => {
     try {
         let response = await profileAPI.updateProfileStatus(status)
         if (response.data.resultCode === 0) {
@@ -188,7 +192,7 @@ export const updateProfileStatus = (status: string) => async (dispatch: any) => 
 }
 
 // отправить новый аватар на сервер и задиспатчить в стейт
-export const updateProfileAvatar = (file: any) => async (dispatch: any) => {
+export const updateProfileAvatar = (file: any): ThunkType => async (dispatch) => {
     let response = await profileAPI.updateProfileAvatar(file)
     if (response.data.resultCode === 0) {
         dispatch(setProfileAvatar(response.data.data.photos))
@@ -197,12 +201,14 @@ export const updateProfileAvatar = (file: any) => async (dispatch: any) => {
 
 // отправить объект с новыми данными профиля на сервер целиком (пустые сервер перетрет)
 // и запросить новые данные снова
-export const updateProfileData = (userData: ProfileType) => async (dispatch: any, getStore: any) => {
+export const updateProfileData = (userData: ProfileType): ThunkType => async (dispatch, getStore) => {
     let response = await profileAPI.updateProfileData(userData)
     if (response.data.resultCode === 0) {
         const userId = getStore().auth.userId
-        dispatch(getUserProfile(userId))
+        // @ts-ignore
+        await dispatch(getUserProfile(userId)) // проблема, в стейте id может не быть, но запрос null в API - хрень
     } else {
+        // @ts-ignore
         dispatch(stopSubmit("editProfile", {_error: response.data.messages[0]}))
         // выплюнет ошибку если надо ее обработать
         return Promise.reject(response.data.messages[0])

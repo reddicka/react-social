@@ -54,7 +54,7 @@ const initialState = {
 }
 type InitialStateType = typeof initialState
 
-const dialogsReducer = (state = initialState, action: any): InitialStateType => {
+const dialogsReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             if (action.newMessageText) {
@@ -81,6 +81,7 @@ export default dialogsReducer
 
 
 // ====== ACTION-CREATORS ======
+type ActionsTypes = SendMessageActionType
 
 // добавить новое сообщение в стейт
 type SendMessageActionType = {

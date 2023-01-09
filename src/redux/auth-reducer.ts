@@ -1,6 +1,13 @@
 import {authAPI, profileAPI, securityAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
-import {setProfileStatus, setUserProfile} from "./profile-reducer";
+import {
+    setProfileStatus,
+    SetProfileStatusActionType,
+    setUserProfile,
+    SetUserProfileActionType
+} from "./profile-reducer";
+import {ThunkAction} from "redux-thunk";
+import {AppStateType} from "./redux-store";
 
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const SET_IS_LOADING = 'auth/SET_IS_LOADING'
@@ -19,7 +26,7 @@ const initialState = {
 }
 type InitialStateType = typeof initialState
 
-const authReducer = (state = initialState, action: any): InitialStateType => {
+const authReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {
@@ -69,6 +76,7 @@ export default authReducer
 
 
 // ====== ACTION-CREATORS ======
+type ActionsTypes = SetAuthUserDataActionType | SetAvatarUrlActionType | SetCaptchaUrlActionType | SetIsAuthActionType | SetIsLoadingActionType | SetProfileStatusActionType | SetUserProfileActionType
 
 // установить данные об авторизованном пользователе в стейт
 type SetAuthUserDataActionPayloadType = {
@@ -78,7 +86,7 @@ type SetAuthUserDataActionPayloadType = {
     isAuth: boolean
 }
 type SetAuthUserDataActionType = {
-    type: typeof SET_USER_DATA,
+    type: typeof SET_USER_DATA
     payload: SetAuthUserDataActionPayloadType
     // либо
     // payload: { userId: number, login: string, email: string, isAuth: boolean }
@@ -94,7 +102,7 @@ export const setAuthUserData = (
 
 // установить аватар авторизованного пользователя в стейт
 type SetAvatarUrlActionType = {
-    type: typeof SET_AVATAR_URL,
+    type: typeof SET_AVATAR_URL
     avatarUrl: string | null
 }
 export const setAvatarUrl = (avatarUrl: string | null): SetAvatarUrlActionType => ({
@@ -104,7 +112,7 @@ export const setAvatarUrl = (avatarUrl: string | null): SetAvatarUrlActionType =
 
 // установить полученную капчу
 type SetCaptchaUrlActionType = {
-    type: typeof SET_CAPTCHA_URL,
+    type: typeof SET_CAPTCHA_URL
     captchaUrl: string | null
 }
 export const setCaptchaUrl = (captchaUrl: string): SetCaptchaUrlActionType => ({
@@ -114,7 +122,7 @@ export const setCaptchaUrl = (captchaUrl: string): SetCaptchaUrlActionType => ({
 
 // установить флаг авторизован пользователь или нет
 type SetIsAuthActionType = {
-    type: typeof SET_IS_AUTH,
+    type: typeof SET_IS_AUTH
     isAuth: boolean
 }
 export const setIsAuth = (isAuth: boolean): SetIsAuthActionType => ({
@@ -125,14 +133,22 @@ export const setIsAuth = (isAuth: boolean): SetIsAuthActionType => ({
 
 
 /* надо вынести это в локальный стейт */
-export const setIsLoading = (isLoading: boolean) => ({type: SET_IS_LOADING, isLoading})
+type SetIsLoadingActionType = {
+    type: typeof SET_IS_LOADING
+    isLoading: boolean
+}
+export const setIsLoading = (isLoading: boolean): SetIsLoadingActionType => ({
+    type: SET_IS_LOADING,
+    isLoading
+})
 
 
 
 // ====== THUNK-CREATORS ======
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsTypes>
 
 // получить данные об авторизованном пользователе
-export const getAuthUserData = () => async (dispatch: any) => {
+export const getAuthUserData = (): ThunkType => async (dispatch) => {
     // if (!isAuth) {
     dispatch(setIsLoading(true))
 
@@ -150,22 +166,25 @@ export const getAuthUserData = () => async (dispatch: any) => {
 }
 
 // отправить форму для входа в аккаунт
-export const login = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
+export const login = (
+    email: string, password: string, rememberMe: boolean, captcha: string
+): ThunkType => async (dispatch) => {
     let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         // успех
-        dispatch(getAuthUserData())
+        await dispatch(getAuthUserData())
     } else if (response.data.resultCode === 1) {
         // неверный логин/пароль
-        dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
+        // @ts-ignore
+        await dispatch(stopSubmit("login", {_error: 'Неверный логин/пароль'}))
     } else if (response.data.resultCode === 10) {
         // превышен лимит попыток
-        dispatch(getCaptchaUrl())
+        await dispatch(getCaptchaUrl())
     }
 }
 
 // выйти из аккаунта
-export const logout = () => async (dispatch: any) => {
+export const logout = (): ThunkType => async (dispatch) => {
     let response = await authAPI.logout()
     if (response.data.resultCode === 0) {
         dispatch(setAuthUserData(null, null, null, false))
@@ -176,7 +195,7 @@ export const logout = () => async (dispatch: any) => {
 }
 
 // получить ссылку для капчи
-export const getCaptchaUrl = () => async (dispatch: any) => {
+export const getCaptchaUrl = (): ThunkType => async (dispatch) => {
     let response = await securityAPI.getCaptchaUrl()
     dispatch(setCaptchaUrl(response.data.url))
 }
