@@ -3,12 +3,13 @@ import {connect} from "react-redux";
 import {
     addPost,
     getUserProfile,
-    getProfileStatus, updateProfileStatus, updateProfileAvatar, updateProfileData,
+    getProfileStatus, updateProfileStatus, updateProfileAvatar, updateProfileData, getFollowingStatus,
 } from "../../redux/profile-reducer";
 import Profile from "./Profile";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {compose} from "redux";
+import {follow, unfollow} from "../../redux/profile-reducer";
 
 class ProfileContainer extends React.Component {
     refreshProfile() {
@@ -24,6 +25,7 @@ class ProfileContainer extends React.Component {
         } else {
             this.props.getUserProfile(userId)
             this.props.getProfileStatus(userId)
+            this.props.getFollowingStatus(userId)
         }
     }
 
@@ -52,7 +54,9 @@ const mapStateToProps = (state) => ({
     authorizedUserId: state.auth.userId,
     isAuth: state.auth.isAuth,
 
-    profileStatus: state.profilePage.profileStatus
+    profileStatus: state.profilePage.profileStatus,
+
+    followingStatus: state.profilePage.followingStatus
 })
 
 // костыль, сейчас делается через хуки
@@ -78,6 +82,10 @@ export default compose(
         getUserProfile,
         updateProfileData,
         getProfileStatus,
+
+        getFollowingStatus,
+        follow,
+        unfollow,
 
         updateProfileStatus,
         updateProfileAvatar,

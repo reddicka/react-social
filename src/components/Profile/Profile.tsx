@@ -3,7 +3,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import ProfilePosts from "./ProfilePosts/ProfilePosts";
 import React, {FC} from "react";
 import {PostType, ProfileType} from "../../types/types";
-
+import {follow, unfollow} from "../../redux/find_users-reducer";
 
 type PropsType = {
     isOwner: boolean
@@ -16,6 +16,10 @@ type PropsType = {
     updateProfileStatus: (text: string) => void
 
     updateProfileAvatar: (file: any) => void
+
+    followingStatus: boolean
+    follow: (userId: number) => void
+    unfollow: (userId: number) => void
 
     addPost: (newPostText: string) => void
     posts: Array<PostType>
@@ -35,6 +39,10 @@ const Profile: FC<PropsType> = (props) => {
                 updateProfileStatus={props.updateProfileStatus}
 
                 updateProfileAvatar={props.updateProfileAvatar}
+
+                followingStatus={props.followingStatus}
+                follow={props.follow}
+                unfollow={props.unfollow}
             />
 
             <ProfilePosts

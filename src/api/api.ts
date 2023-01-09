@@ -1,5 +1,6 @@
 import axios from "axios";
 import {PhotosType, ProfileType, UserType} from "../types/types";
+import {getFollowingStatus} from "../redux/profile-reducer";
 
 // коды ответа сервера
 export enum ResultCodesEnum {
@@ -43,8 +44,8 @@ export const usersAPI = {
     getUsers(pageNumber: number = 1, pageSize: number = 10) {
         return instance.get<GetUsersResponseType>(`users?page=${pageNumber}&count=${pageSize}`).then(res => res.data)
     },
-    isFollow(userId: number) {
-        return instance.get<boolean>(`follow/${userId}`)
+    getFollowingStatus(userId: number) {
+        return instance.get<boolean>(`follow/${userId}`).then(res => res.data)
     },
     follow(userId: number) {
         return instance.post<FollowResponseType>(`follow/${userId}`).then(res => res.data)

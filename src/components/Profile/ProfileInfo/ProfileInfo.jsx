@@ -3,22 +3,9 @@ import avatar from '../../../assets/img/user.png'
 import Preloader from "../../common/Proloader/Preloader";
 import {Link} from "react-router-dom";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
-import {ChangeEvent, FC, useState} from "react";
+import {useState} from "react";
 import ProfileDataForm from "./ProfileDataForm/ProfileDataForm";
-import {ProfileType} from "../../../types/types";
 
-// type PropsType = {
-//     isOwner: boolean
-//
-//     profileInfo: ProfileType
-//     updateProfileData: (status: string) => void
-//
-//     profileStatus: string
-//     getProfileStatus: (userId: number) => void
-//     updateProfileStatus: (text: string) => void
-//
-//     updateProfileAvatar: (file: any) => void
-// }
 
 const ProfileInfo = ({profileInfo, ...props}) => {
     const [editMode, setEditMode] = useState(false)
@@ -45,6 +32,14 @@ const ProfileInfo = ({profileInfo, ...props}) => {
                     setEditMode(false)
                 }
             )
+    }
+
+    const onClickFollow = () => {
+        props.follow(profileInfo.userId)
+    }
+
+    const onClickUnfollow = () => {
+        props.unfollow(profileInfo.userId)
     }
 
     return (
@@ -83,6 +78,13 @@ const ProfileInfo = ({profileInfo, ...props}) => {
                 }
 
                 {props.isOwner && <button onClick={toggleEditMode}>Редактировать</button>}
+
+                { // не подписан, отобразить кнопку FOLLOW
+                    !props.isOwner && !props.followingStatus && <button onClick={onClickFollow}>FOLLOW</button>
+                }
+                { // подписан, отобразить кнопку UNFOLLOW
+                    !props.isOwner && props.followingStatus && <button onClick={onClickUnfollow}>UNFOLLOW</button>
+                }
 
             </div>
         </div>

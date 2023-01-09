@@ -1,19 +1,22 @@
-import {profileAPI, ResultCodesEnum} from "../api/api";
+import {profileAPI, ResultCodesEnum, usersAPI} from "../api/api";
 import {stopSubmit} from "redux-form";
 import {PhotosType, PostType, ProfileType} from "../types/types";
 import {ThunkAction} from "redux-thunk";
 import {AppStateType} from "./redux-store";
+import {followAccept, setIsFollowingProgress, unfollowAccept} from "./find_users-reducer";
 
 const ADD_POST = 'profile/ADD_POST'
 const SET_USER_PROFILE = 'profile/SET_USER_PROFILE'
 const SET_PROFILE_STATUS = 'profile/SET_PROFILE_STATUS'
 const DELETE_POST = 'profile/DELETE_POST'
 const SET_PROFILE_AVATAR = 'profile/SET_PROFILE_AVATAR'
+const SET_FOLLOWING_STATUS = 'profile/SET_FOLLOWING_STATUS'
 
 
 const initialState = {
     profileInfo: null as ProfileType | null,
     profileStatus: '',
+    followingStatus: null as boolean | null,
     posts: [
         {
             id: 1,
@@ -81,6 +84,11 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
                     }
                 } as ProfileType // затычка, чтоб не ругалось, исправить и убрать (или нет)
             }
+        case SET_FOLLOWING_STATUS:
+            return {
+                ...state,
+                followingStatus: action.followingStatus
+            }
         default:
             return state
     }
@@ -91,7 +99,8 @@ export default profileReducer
 
 
 // ====== ACTION-CREATORS ======
-type ActionsTypes = SetUserProfileActionType | SetProfileStatusActionType | AddPostActionType | DeletePostActionType | SetProfileAvatarActionType
+type ActionsTypes = SetUserProfileActionType | SetProfileStatusActionType |
+    AddPostActionType | DeletePostActionType | SetProfileAvatarActionType | SetFollowingStatusActionType
 
 // установка информации о пользователе
 export type SetUserProfileActionType = {
@@ -141,6 +150,16 @@ type SetProfileAvatarActionType = {
 export const setProfileAvatar = (photos: PhotosType): SetProfileAvatarActionType => ({
     type: SET_PROFILE_AVATAR,
     photos
+})
+
+// установка флага "друг/не друг"
+type SetFollowingStatusActionType = {
+    type: typeof SET_FOLLOWING_STATUS
+    followingStatus: boolean | null
+}
+export const setFollowingStatus = (followingStatus: boolean | null): SetFollowingStatusActionType => ({
+    type: SET_FOLLOWING_STATUS,
+    followingStatus
 })
 
 
@@ -213,5 +232,28 @@ export const updateProfileData = (userData: ProfileType): ThunkType => async (di
         dispatch(stopSubmit("editProfile", {_error: data.messages[0]}))
         // выплюнет ошибку если надо ее обработать
         return Promise.reject(data.messages[0])
+    }
+}
+
+// узнать, зафолловлен на человека или нет, и установить значение в стейт
+export const getFollowingStatus = (userId: number): ThunkType => async (dispatch) => {
+    let data = await usersAPI.getFollowingStatus(userId)
+
+    dispatch(setFollowingStatus(data))
+}
+
+// follow
+export const follow = (userId: number): ThunkType => async (dispatch) => {
+    let data = await usersAPI.follow(userId)
+    if (data.resultCode === ResultCodesEnum.Success) {
+        dispatch(setFollowingStatus(true))
+    }
+}
+
+// unfollow
+export const unfollow = (userId: number): ThunkType => async (dispatch) => {
+    let data = await usersAPI.unfollow(userId)
+    if (data.resultCode === ResultCodesEnum.Success) {
+        dispatch(setFollowingStatus(false))
     }
 }
