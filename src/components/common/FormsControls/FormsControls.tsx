@@ -1,5 +1,6 @@
-import React from "react";
+import React, {FC} from "react";
 import styles from './FormsControls.module.css'
+import {WrappedFieldMetaProps} from "redux-form";
 
 /*
     Шаблонный компонент для input'ов (<Field /> формы).
@@ -13,23 +14,23 @@ import styles from './FormsControls.module.css'
         и т.д.
 */
 
-// для ts
-// type PropsType = {
-//     input: object
-//     meta: object
-//     formElement: string
-// }
-// : FC<PropsType>
+type FormControlPropsType = {
+    input: {}
+    meta: WrappedFieldMetaProps
+    formElement: 'input' | 'textarea'
+}
 
-export const FormControl = ({input, meta, formElement, ...props}) => {
-    let hasError = meta.touched && meta.error
+export const FormControl: FC<FormControlPropsType> = (
+    {input, meta: {touched, error}, formElement, ...props}
+) => {
+    let hasError = touched && error
 
     // console.log({input, meta, formElement, ...props})
 
     return (
         <div className={styles.formControl + ' ' + (hasError ? styles.error : '')}>
             {React.createElement(formElement, {...input, ...props})}
-            {hasError && <p>{meta.error}</p>}
+            {hasError && <p>{error}</p>}
         </div>
     )
 }
